@@ -1,0 +1,10 @@
+{
+  "resolution": "main",
+  "tree": {
+    "src": "https://raw.githubusercontent.com/types/npm-serve-static/6529d016fbdf1707767140e848002ef9fa0be2e2/typings.json",
+    "raw": "registry:npm/serve-static#1.11.1+20161113104247",
+    "main": "index.d.ts",
+    "version": "1.11.1",
+    "name": "serve-static"
+  }
+}

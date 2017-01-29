@@ -1,0 +1,35 @@
+{
+  "name": "boat",
+  "version": "0.1.0",
+  "description": "Boat is a NodeJS library for making your backends faster than ever using MongoDB, Express, and TypeScript.",
+  "main": "dist/index",
+  "scripts": {
+    "test": "test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/wbhob/boat.git"
+  },
+  "keywords": [
+    "node",
+    "typescript",
+    "mongodb",
+    "express"
+  ],
+  "author": "Canal, Co.",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/wbhob/boat/issues"
+  },
+  "homepage": "https://github.com/wbhob/boat#readme",
+  "devDependencies": {
+    "typescript": "^2.1.5"
+  },
+  "dependencies": {
+    "body-parser": "^1.16.0",
+    "compression": "^1.6.2",
+    "express": "^4.14.0",
+    "helmet": "^3.4.0",
+    "mongodb": "^2.2.21"
+  }
+}
