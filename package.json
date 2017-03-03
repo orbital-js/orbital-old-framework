@@ -23,7 +23,7 @@
   },
   "homepage": "https://github.com/wbhob/boat#readme",
   "devDependencies": {
-    "typescript": "^2.1.5"
+    "typescript": "^2.2.0"
   },
   "dependencies": {
     "body-parser": "^1.16.0",
