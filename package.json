@@ -23,6 +23,8 @@
   },
   "homepage": "https://github.com/wbhob/boat#readme",
   "devDependencies": {
+    "commitizen": "^2.9.6",
+    "cz-conventional-changelog": "^2.0.0",
     "typescript": "^2.2.0"
   },
   "dependencies": {
