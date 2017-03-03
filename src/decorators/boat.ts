@@ -1,7 +1,8 @@
-import { Config } from './types';
+import { Config } from '../types';
 import * as express from 'express';
+import { Express } from 'express';
 
-let app = express();
+let app: Express = express();
 
 export function Boat(annotation: Config): Function {
 

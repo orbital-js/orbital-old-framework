@@ -8,5 +8,6 @@ export interface Config {
     res?: Response;
     routes: Route[];
     controllers: Function[];
-    middlewares: (RequestHandler | ErrorRequestHandler)[];
+    middlewares?: (RequestHandler | ErrorRequestHandler)[];
+    models?: Function[];
 }

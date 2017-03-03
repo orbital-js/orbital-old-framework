@@ -1,7 +1,8 @@
+import { Controller } from '../../decorators/controller';
 import { RequestHandler, ErrorRequestHandler } from 'express';
 
-export interface Route {
+export interface RouteConfig {
     method: 'get' | 'put' | 'post' | 'delete' | 'patch';
     path: string;
-    implementation: (RequestHandler | ErrorRequestHandler)[];
+    controller: class[];
 }
