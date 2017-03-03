@@ -1,38 +1,34 @@
-import { Response } from 'express';
-import { Errors, Error } from './errors';
-import { Route } from './types/route';
+import { Config } from './types';
+import * as express from 'express';
 
-interface Type<T> extends Function {
-    new (...args: any[]): T;
-}
+let app = express();
 
-interface TypeDecorator {
-    annotations: any[];
-    Class(obj: ClassDefinition): Type<any>;
-}
+export function Boat(annotation: Config): Function {
 
-interface ClassDefinition {
-    extends: Type<any>;
-    constructor: Function | any[];
-}
-
-export function Boat(annotation?: Config): Function {
     return (target: Function) => {
         let original = target;
-        let error = (error: Error) => {
-            Errors.handle(annotation.res, error);
-        };
+        for (let i = 0; i < annotation.middlewares.length; i++) {
+            app.use(annotation.middlewares[i]);
+        }
+        for (let i = 0; i < annotation.routes.length; i++) {
+            app[annotation.routes[i].method](annotation.routes[i].path, annotation.routes[i].implementation);
+        }
         return original;
     };
-}
-export interface Config {
-    res?: Response;
-    routes: Route[];
 
 }
+
 
 
 @Boat({
-
+    controllers: [],
+    routes: [],
+    middlewares: [],
+    database: {
+        hosts: [{
+            host: '',
+            port: 12
+        }]
+    }
 })
 export class Hello { }
