@@ -1,14 +1,38 @@
 import { Response } from 'express';
 import { Errors, Error } from './errors';
-export function Boat(config: Config) {
-    return (constructor: Function) => {
-        let original = constructor;
+import { Route } from './types/route';
+
+interface Type<T> extends Function {
+    new (...args: any[]): T;
+}
+
+interface TypeDecorator {
+    annotations: any[];
+    Class(obj: ClassDefinition): Type<any>;
+}
+
+interface ClassDefinition {
+    extends: Type<any>;
+    constructor: Function | any[];
+}
+
+export function Boat(annotation?: Config): Function {
+    return (target: Function) => {
+        let original = target;
         let error = (error: Error) => {
-            Errors.handle(config.res, error);
+            Errors.handle(annotation.res, error);
         };
         return original;
     };
 }
-interface Config {
+export interface Config {
     res?: Response;
+    routes: Route[];
+
 }
+
+
+@Boat({
+
+})
+export class Hello { }
