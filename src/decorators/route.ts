@@ -1,18 +1,20 @@
 import { RouteConfig } from '../types/route';
 
 export function Route(annotation: RouteConfig): Function {
-    return (target: Function) => {
-        let original = target;
+    return (constructor: Function) => {
+        let original = constructor;
 
         return original;
     };
 }
 
+import {Ctrl} from './controller';
+
 @Route({
     path: '/',
     method: 'put',
-    controller: class { }
+    controller: Ctrl
 })
-export class Rte {
+export class getUser {
 
 }
