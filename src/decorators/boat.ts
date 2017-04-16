@@ -5,7 +5,6 @@ import { Method } from '../types/method';
 
 export function Boat(config: BoatConfig): ClassDecorator {
     return (klass: any) => {
-        console.log("BOAT STARTED");
         let original = klass;
         let methods: Method[] = [];
         let middlewares: Function[] = [];
@@ -17,7 +16,7 @@ export function Boat(config: BoatConfig): ClassDecorator {
                     methods.push(route);
                 }
             } else {
-                console.log(typeof feature)
+                console.log(feature);
                 let klassStr: string;
                 if ((typeof feature).toLowerCase() == 'function') {
                     klassStr = feature.toString().slice(9);
@@ -40,8 +39,6 @@ export function Boat(config: BoatConfig): ClassDecorator {
         if (middlewares) {
             original.middlewares = middlewares;
         }
-
-        console.log("BOAT FINISHED")
         return original;
     };
 }

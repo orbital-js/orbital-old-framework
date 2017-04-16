@@ -2,7 +2,7 @@ import { RouteConfig, RouteDescriptor } from '../types/route';
 import { Request, Response } from 'express';
 
 export function Route(config: RouteConfig) {
-    return function (target: any, property: string) {
+    return function (target: any, property: string, desc: any) {
         let executor = function (req: Request, res: Response) {
             console.log(target);
             let args;
@@ -27,10 +27,10 @@ export function Route(config: RouteConfig) {
                 method: config.method,
                 route: true
             }
-        })
-        return;
+        });
+
+        return target;
         // console.log('target: ', target);
         // console.log('property: ', property);
-        // console.log('descriptor: ', Object.getOwnPropertyDescriptor(target, property));
     };
 }

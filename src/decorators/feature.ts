@@ -12,9 +12,13 @@ export function Feature(config: FeatureConfig): ClassDecorator {
         }
 
 
-        for (let property in klass) {
-            if (original[property].route) {
-                let route = original[property];
+        for (let property in original) {
+            console.log(original);
+            console.log(original[property]);
+            let val = Object.getOwnPropertyDescriptor(original, property).value;
+            console.log(val.toString());
+            if (val.route) {
+                let route = val;
 
                 if (route.path.substring(route.path.length - 1) == "/") {
                     route.path = route.path.substring(0, route.path.length - 1);
