@@ -4,14 +4,12 @@ import { Request, Response } from 'express';
 export function Route(config: RouteConfig) {
     return function (target: any, property: string, desc: any) {
         let executor = function (req: Request, res: Response) {
-            console.log(target);
             let args;
             if (config.method == 'get' || config.method == 'delete') {
                 args == null;
             } else {
                 args = req.body;
             }
-            console.log("CONFIG: ", config);
             config.function(args).then((success: any) => {
                 res.status(success.status | 200).json(success);
             }).catch((error: any) => {
@@ -30,7 +28,5 @@ export function Route(config: RouteConfig) {
         });
 
         return target;
-        // console.log('target: ', target);
-        // console.log('property: ', property);
     };
 }

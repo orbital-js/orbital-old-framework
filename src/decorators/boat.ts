@@ -16,7 +16,6 @@ export function Boat(config: BoatConfig): ClassDecorator {
                     methods.push(route);
                 }
             } else {
-                console.log(feature);
                 let klassStr: string;
                 if ((typeof feature).toLowerCase() == 'function') {
                     klassStr = feature.toString().slice(9);

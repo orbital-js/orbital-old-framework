@@ -13,10 +13,7 @@ export function Feature(config: FeatureConfig): ClassDecorator {
 
 
         for (let property in original) {
-            console.log(original);
-            console.log(original[property]);
             let val = Object.getOwnPropertyDescriptor(original, property).value;
-            console.log(val.toString());
             if (val.route) {
                 let route = val;
 
@@ -32,7 +29,6 @@ export function Feature(config: FeatureConfig): ClassDecorator {
                 throw new Error('Non-route method "' + property + '" found on feature "' + klassStr + '"');
             }
         }
-        console.log(routes);
 
         if (!routes) {
             routes = [];
