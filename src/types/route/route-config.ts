@@ -1,8 +1,10 @@
 import { Controller } from '../../decorators/controller';
 import { RequestHandler, ErrorRequestHandler } from 'express';
+import { Type } from '../../type';
+import { Methods } from '../methods';
 
 export interface RouteConfig {
-    method: 'get' | 'put' | 'post' | 'delete' | 'patch';
+    method: Methods;
     path: string;
-    controller: Function;
+    function: Function;
 }

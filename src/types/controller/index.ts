@@ -1,1 +1,1 @@
-export * from './controller-config';
+export { ControllerConfig } from './controller-config';

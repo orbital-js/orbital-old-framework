@@ -8,10 +8,17 @@
         "outDir": "dist",
         "experimentalDecorators": true,
         "declaration": true,
-        "target": "ES5"
+        "target": "ES5",
+        "lib": [
+            "es6",
+            "es2015"
+        ],
+        "emitDecoratorMetadata": true,
+        "typeRoots": [
+            "node_modules/@types"
+        ]
     },
     "include": [
-        "typings/index.d.ts",
         "src/**/*"
     ],
     "exclude": [
