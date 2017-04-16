@@ -41,5 +41,10 @@
     "express": "^4.14.0",
     "helmet": "^3.4.0",
     "mongodb": "^2.2.21"
+  },
+  "config": {
+    "commitizen": {
+      "path": "./node_modules/cz-conventional-changelog"
+    }
   }
 }

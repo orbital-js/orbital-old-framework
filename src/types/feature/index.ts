@@ -1,0 +1,1 @@
+export { FeatureConfig } from './feature-config';

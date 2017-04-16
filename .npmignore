@@ -1,0 +1,6 @@
+test
+src
+node_modules
+.vscode
+.git
+typings
