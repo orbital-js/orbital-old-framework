@@ -20,10 +20,9 @@ export function Boat(config: BoatConfig): ClassDecorator {
         for (let i = 0; i < config.features.length; i++) {
             let feature = config.features[i];
             if (feature.feature) {
-                for (let j = 0; j < feature.routes.length; j++) {
-                    let route = feature.routes[i];
+                feature.routes.forEach((route: any) => {
                     methods.push(route);
-                }
+                });
             } else {
                 let klassStr: string;
                 if ((typeof feature).toLowerCase() == 'function') {

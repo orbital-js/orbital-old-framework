@@ -9,6 +9,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/) and this p
 
 ### Fixed
 - Make path optional in `BootstrapConfig`
+- Make more than one path in a feature file work normally (basically, if you put multiple routes in one file, only the first would work)
 
 ## [1.0.0-alpha.2](https://github.com/getcanal/boat/releases/tag/v1.0.0-alpha.2) - 2017-04-16
 ### Fixed

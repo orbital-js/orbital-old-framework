@@ -1,7 +1,9 @@
+import { Router } from 'express';
+import { Request, Response } from '_debugger';
 import { Boat } from '../decorators/boat';
 import * as express from 'express';
-import { Express } from 'express';
 import { BootstrapConfig } from '../types/bootstrap';
+let router: any = express.Router();
 
 
 /**
@@ -27,9 +29,9 @@ export function bootstrap(mod: any, config?: BootstrapConfig): void {
             app.use(mod.middlewares);
         }
     }
-
-    for (let i = 0; i < mod.methods.length; i++) {
-        let route = mod.methods[i];
-        app[route.method](route.path, route.executor);
-    }
+    mod.methods.forEach((route: any) => {
+        app[route.method](route.path, (req: Request, res: Response) => {
+            route.executor(req, res);
+        });
+    });
 }

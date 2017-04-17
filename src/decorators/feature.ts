@@ -22,7 +22,6 @@ export function Feature(config: FeatureConfig): ClassDecorator {
             let val = Object.getOwnPropertyDescriptor(original, property).value;
             if (val.route) {
                 let route = val;
-
                 if (route.path.substring(route.path.length - 1) == "/") {
                     route.path = route.path.substring(0, route.path.length - 1);
                 }
