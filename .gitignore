@@ -3,4 +3,5 @@ node_modules
 dist 
 .vscode
 npm-debug.log
+docs
 *.js
