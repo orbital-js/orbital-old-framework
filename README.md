@@ -7,3 +7,6 @@ Boat uses TypeScript, Express, and MongoDB, as these are industry standard. They
 
 ### Inspiration
 I was writing an API for Canal, and I found that I had to write a significant amount of extra code to just get and save data from my database. Then it hit me: there should be a framework for this. So I am making it right now! Any help would be greatly appreciated.
+
+### Getting Started
+The best way to start using Boat is to check out the [starter project](https://github.com/getcanal/boat-starter). It has thorough documentation and a detailed hello-world app to get you started using Boat. Feel free to use it for your own projects, too! We're currently working on writing detailed docs for Boat, but when they are available, they will be listed here.
