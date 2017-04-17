@@ -1,9 +1,12 @@
 import { Router } from 'express';
 import { Request, Response } from '_debugger';
 import { Boat } from '../decorators/boat';
-import * as express from 'express';
 import { BootstrapConfig } from '../types/bootstrap';
-let router: any = express.Router();
+
+import * as express from 'express';
+import * as bodyParser from 'body-parser';
+import * as helmet from 'helmet';
+import * as compression from 'compression';
 
 
 /**
@@ -23,11 +26,13 @@ export function bootstrap(mod: any, config?: BootstrapConfig): void {
         app.listen(process.env.PORT | 8080);
         console.log("LISTENING ON PORT " + process.env.PORT || 8080);
     }
-
+    app.use(bodyParser.json());
+    app.use(helmet());
+    app.use(compression());
     if (mod.middlewares) {
-        for (let i = 0; i < mod.middlewares.length; i++) {
-            app.use(mod.middlewares);
-        }
+        mod.middlewares.forEach((middleware: any) => {
+            app.use(middleware);
+        });
     }
     mod.methods.forEach((route: any) => {
         app[route.method](route.path, (req: Request, res: Response) => {
