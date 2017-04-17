@@ -1,7 +1,13 @@
 import { FeatureConfig } from '../types/feature';
 import { RouteDescriptor } from '../types/route';
 
-
+/**
+ * Feature
+ * @description the decorator to wrap a feature
+ * @param config {FeatureConfig} configuration on your feature declaration 
+ * @param config.path {string} the parent path for your feature 
+ * @returns decorator {ClassDecorator} to decorate your feature class
+ */
 export function Feature(config: FeatureConfig): ClassDecorator {
     return <T extends { new (...args: any[]): {} }>(klass: T) => {
         let original: any = klass;

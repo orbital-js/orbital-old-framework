@@ -1,6 +1,16 @@
 import { RouteConfig, RouteDescriptor } from '../types/route';
 import { Request, Response } from 'express';
 
+
+/**
+ * Route
+ * @description the decorator to wrap a route
+ * @param config {RouteConfig} configuration on your route declaration 
+ * @param config.path {string} the path for your route 
+ * @param config.method {string} the method for your route, either 'get', 'post', 'put', 'patch', or 'delete'.
+ * @returns decorator {MethodDecorator} to decorate your route method
+ */
+
 export function Route(config: RouteConfig) {
     return function (target: any, property: string, desc: any) {
         let executor = function (req: Request, res: Response) {

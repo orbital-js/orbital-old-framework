@@ -4,7 +4,12 @@ import { Express } from 'express';
 import { BootstrapConfig } from '../types/bootstrap';
 
 
-
+/**
+ * bootstrap
+ * @param mod {Boat} The AppModule to bootstrap
+ * @param config {BootstrapConfig} the optional configuration for your app
+ * @param config.port {number} the port on which to run your app
+ */
 
 export function bootstrap(mod: any, config?: BootstrapConfig): void {
     let app: any = express();

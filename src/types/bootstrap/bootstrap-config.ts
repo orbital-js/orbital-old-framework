@@ -1,3 +1,6 @@
 export interface BootstrapConfig {
-    port: number;
+    /**
+     * The port on which to operate your app server
+     */
+    port?: number;
 }
