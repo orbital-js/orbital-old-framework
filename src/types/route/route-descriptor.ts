@@ -1,4 +1,7 @@
 import { Methods } from '../methods';
+/**
+ * @name route-descriptor
+ */
 export interface RouteDescriptor {
     /**
     * The path where the resource will be available. It will be a child of the Feature's path property.

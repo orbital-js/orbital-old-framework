@@ -1,4 +1,4 @@
-/** @module Boat */
+/** @module @boat/core */
 
 /* Decorators */
 export { Boat } from './decorators/boat';
