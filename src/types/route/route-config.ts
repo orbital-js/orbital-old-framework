@@ -15,5 +15,5 @@ export interface RouteConfig {
     /**
      * The operation to execute when the endpoint is hit. Do not call the function, just reference it by not using ()
      */
-    function: Function;
+    function: () => Promise<any>;
 }

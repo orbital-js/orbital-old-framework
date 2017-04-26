@@ -7,17 +7,17 @@ import * as express from 'express';
 import * as bodyParser from 'body-parser';
 import * as helmet from 'helmet';
 import * as compression from 'compression';
+import * as bearerToken from 'express-bearer-token';
 
 
 /**
  * bootstrap
  * @param mod {Boat} The AppModule to bootstrap
- * @param config {BootstrapConfig} the optional configuration for your app
- * @param config.port {number} the port on which to run your app
  */
 
-export function bootstrap(mod: any, config?: BootstrapConfig): void {
+export function bootstrap(mod: any): void {
     let app: any = express();
+    let config = mod.config;
 
     if (config && config.port) {
         app.listen(config.port);
@@ -29,6 +29,9 @@ export function bootstrap(mod: any, config?: BootstrapConfig): void {
     app.use(bodyParser.json());
     app.use(helmet());
     app.use(compression());
+    if (config.bearerToken) {
+        app.use(bearerToken());
+    }
     if (mod.middlewares) {
         mod.middlewares.forEach((middleware: any) => {
             app.use(middleware);

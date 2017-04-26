@@ -14,4 +14,18 @@ export interface BoatConfig {
      * An array of each of the features you have created. Do not include controllers.
      */
     features?: any[];
+    /**
+     * Options for built-in middlewares you can use
+     */
+    config?: {
+        /**
+         * You have the option to use bearer tokens with your methods
+         */
+        bearerToken?: boolean;
+
+        /**
+         * The port on which to operate your app server
+         */
+        port?: number;
+    }
 }
