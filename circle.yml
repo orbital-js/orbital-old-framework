@@ -1,0 +1,14 @@
+machine:
+  timezone:
+    America/New_York
+  node:
+    version: 6.9.0
+dependencies:
+  override:
+    - npm install
+deployment:
+  release:
+      tag: /v[0-9]+(\.[0-9]+)*/
+      owner: getcanal
+      commands:
+        - ./deploy_master.sh

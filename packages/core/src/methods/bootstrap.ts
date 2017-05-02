@@ -7,7 +7,6 @@ import * as express from 'express';
 import * as bodyParser from 'body-parser';
 import * as helmet from 'helmet';
 import * as compression from 'compression';
-import * as bearerToken from 'express-bearer-token';
 
 
 /**
@@ -29,9 +28,6 @@ export function bootstrap(mod: any): void {
     app.use(bodyParser.json());
     app.use(helmet());
     app.use(compression());
-    if (config.bearerToken) {
-        app.use(bearerToken());
-    }
     if (mod.middlewares) {
         mod.middlewares.forEach((middleware: any) => {
             app.use(middleware);

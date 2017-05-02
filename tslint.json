@@ -17,7 +17,9 @@
         "no-eval": true,
         "no-internal-module": true,
         "no-trailing-whitespace": true,
-        "no-unused-variable": true,
+        "no-unused-variable": [
+            true
+        ],
         "no-unused-imports": true,
         "no-var-keyword": true,
         "one-line": [
