@@ -6,6 +6,7 @@
     "main": "dist/index",
     "typings": "dist/index.d.ts",
     "scripts": {
+        "test": "echo 'Passed'",
         "docs": "typedoc --out docs"
     },
     "repository": {
