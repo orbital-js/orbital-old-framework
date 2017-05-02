@@ -7,7 +7,6 @@
     "typings": "dist/index.d.ts",
     "scripts": {
         "test": "test",
-        "prepublish": "tsc",
         "docs": "typedoc --out docs"
     },
     "repository": {

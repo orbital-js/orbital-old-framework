@@ -12,3 +12,6 @@ deployment:
       owner: getcanal
       commands:
         - ./deploy_master.sh
+compile: 
+  override:
+    - scripts/build.sh
