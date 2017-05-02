@@ -12,12 +12,11 @@ compile:
   override:
     - sh ./scripts/ci/build.sh
 deployment:
-  release:
-      tag: /v[0-9]+(\.[0-9]+)*/
-      owner: getcanal
+  production:
+      branch: master
       command: |
             if [ "${CIRCLE_BRANCH}" == "master" ]; then
-              ./scripts/ci/deploy.sh
+              sh ./scripts/ci/deploy.sh
             else
               echo "We are on ${CIRCLE_BRANCH} branch, not going to update docs."
             fi
