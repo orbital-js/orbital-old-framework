@@ -14,4 +14,4 @@ deployment:
         - ./deploy_master.sh
 compile: 
   override:
-    - ./scripts/build.sh
+    - sh ./scripts/build.sh
