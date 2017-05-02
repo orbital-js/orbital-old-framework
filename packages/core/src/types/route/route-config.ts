@@ -17,7 +17,7 @@ export interface RouteConfig {
     /**
      * The operation to execute when the endpoint is hit. 
      */
-    function: MethodWithData<object> | Method<object>;
+    function: (data?: any) => () => Promise<any>;
     /**
      * Whether or not the function should take data inputs. Default true.
      */

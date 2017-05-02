@@ -1,4 +1,4 @@
-import { Feature, Route } from '../../../src';
+import { Feature, Route } from '../../../';
 import { TestController } from './test-feature.controller';
 
 @Feature({
@@ -8,7 +8,7 @@ export class TestFeature {
     @Route({
         path: '/',
         method: 'get',
-        function: TestController.getThings()
+        function: TestController.getThings
     })
     getThings() { }
 

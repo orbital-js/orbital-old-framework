@@ -1,1 +1,1 @@
-export type MethodWithData<T> = (data: any) => Promise<T>;
+export type MethodWithData<T> = (data: any) => () => Promise<T>;

@@ -4,14 +4,20 @@ machine:
   node:
     version: 6.9.0
 dependencies:
+  pre:
+    - echo "//registry.npmjs.org/:_authToken=$NPM_TOKEN" >> ~/.npmrc
   override:
     - npm install
+compile: 
+  override:
+    - sh ./scripts/ci/build.sh
 deployment:
   release:
       tag: /v[0-9]+(\.[0-9]+)*/
       owner: getcanal
-      commands:
-        - ./deploy_master.sh
-compile: 
-  override:
-    - sh ./scripts/build.sh
+      command: |
+            if [ "${CIRCLE_BRANCH}" == "master" ]; then
+              ./scripts/ci/deploy.sh
+            else
+              echo "We are on ${CIRCLE_BRANCH} branch, not going to update docs."
+            fi

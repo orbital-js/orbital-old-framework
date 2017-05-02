@@ -13,7 +13,7 @@ import { Request, Response } from 'express';
  */
 
 export function Route(config: RouteConfig) {
-    return function (target: any, property: string, desc: any) {
+    return function(target: any, property: string, desc: any) {
         let executor = (req: Request, res: Response) => {
             let args: any;
             if (config.method !== 'get' && config.method !== 'delete') {
@@ -22,7 +22,7 @@ export function Route(config: RouteConfig) {
             if (req['token']) {
                 args.token = req['token'];
             }
-            config.function(args).then((success: any) => {
+            config.function(args)().then((success: any) => {
                 res.status(success.status | 200).json(success);
             }).catch((error: any) => {
                 let otherErr: any = { 'message': 'An error has occurred.', code: 'UNCAUGHT_ERROR' };

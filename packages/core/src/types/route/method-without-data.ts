@@ -1,1 +1,1 @@
-export type Method<T> = () => Promise<T>;
+export type Method<T> = () => Function;
