@@ -8,7 +8,9 @@ export class TestFeature {
     @Route({
         path: '/',
         method: 'get',
-        function: TestController.getThings
+        function: TestController.getThings()
     })
     getThings() { }
+
+    
 }

@@ -1,0 +1,22 @@
+{
+    "name": "@boat/core",
+    "version": "0.0.0-PLACEHOLDER",
+    "description": "Boat - the core framework",
+    "main": "./bundles/core.umd.js",
+    "module": "./@angular/core.es5.js",
+    "es2015": "./@angular/core.js",
+    "typings": "./core.d.ts",
+    "author": "wbhob",
+    "license": "MIT",
+    "peerDependencies": {
+        "body-parser": "^1.16.0",
+        "compression": "^1.6.2",
+        "express": "^4.14.0",
+        "helmet": "^3.4.0",
+        "mongodb": "^2.2.21"
+    },
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/getcanal/boat.git"
+    }
+}

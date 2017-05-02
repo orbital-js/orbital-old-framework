@@ -1,3 +1,4 @@
+import { MethodWithData } from '../types/route/method-with-data';
 import { RouteConfig, RouteDescriptor } from '../types/route';
 import { Request, Response } from 'express';
 
@@ -13,7 +14,7 @@ import { Request, Response } from 'express';
 
 export function Route(config: RouteConfig) {
     return function (target: any, property: string, desc: any) {
-        let executor = function (req: Request, res: Response) {
+        let executor = (req: Request, res: Response) => {
             let args: any;
             if (config.method !== 'get' && config.method !== 'delete') {
                 args.body = req.body;

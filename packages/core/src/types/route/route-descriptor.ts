@@ -1,4 +1,4 @@
-import { Methods } from '../methods';
+import { HttpMethods } from '../http-methods';
 /**
  * @name route-descriptor
  */
@@ -14,7 +14,7 @@ export interface RouteDescriptor {
     /**
     * The HTTP-compatible method for the endpoint.
     */
-    method: Methods;
+    method: HttpMethods;
     /**
     * A boolean recognizing a class as a route.
     */
