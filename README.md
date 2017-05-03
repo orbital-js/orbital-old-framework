@@ -1,5 +1,6 @@
 # Boat by Canal
 [![npm version](https://badge.fury.io/js/%40boat%2Fcore.svg)](https://badge.fury.io/js/%40boat%2Fcore)
+[![CircleCI](https://circleci.com/gh/getcanal/boat/tree/master.svg?style=svg)](https://circleci.com/gh/getcanal/boat/tree/master)
 [![CII Best Practices](https://bestpractices.coreinfrastructure.org/projects/848/badge)](https://bestpractices.coreinfrastructure.org/projects/848)
 
 Boat is a one-stop shop for making awesome Node.js/Express APIs in TypeScript. Inspired by [Angular](https://www.github.com/angular/angular), we want to make it easy to make Node.js APIs for anyone.
