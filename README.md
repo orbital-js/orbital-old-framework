@@ -17,3 +17,7 @@ I was writing an API for Canal, and I found that I had to write a significant am
 The best way to start using Boat is to check out the [starter project](https://github.com/getcanal/boat-starter). It has thorough documentation and a detailed hello-world app to get you started using Boat. Feel free to use it for your own projects, too! We're currently working on writing detailed docs for Boat, but when they are available, they will be listed here.
 
 You can also start by running `npm install --save @boat/core` to your project and starting from scratch!
+
+## Vulnerabilities
+
+Security issues can be sent to boat@getcanal.com. Please do not make an issue on the repository, as this could expose the vulnerability to potential hackers.
