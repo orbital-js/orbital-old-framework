@@ -6,6 +6,7 @@ machine:
 dependencies:
   pre:
     - echo "//registry.npmjs.org/:_authToken=$NPM_TOKEN" >> ~/.npmrc
+    - sudo apt-get install jq
   override:
     - npm install
 compile: 
@@ -16,7 +17,7 @@ deployment:
       branch: master
       command: |
             if [ "${CIRCLE_BRANCH}" == "master" ]; then
-              sh ./scripts/ci/deploy.sh
+              node ./scripts/ci/deploy.js
             else
               echo "We are on ${CIRCLE_BRANCH} branch, not going to update docs."
             fi
