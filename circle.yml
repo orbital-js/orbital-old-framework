@@ -12,12 +12,9 @@ dependencies:
 compile: 
   override:
     - sh ./scripts/ci/build.sh
-deployment:
-  production:
-      branch: master
-      command: |
-            if [ "${CIRCLE_BRANCH}" == "master" ]; then
-              node ./scripts/ci/deploy.js
-            else
-              echo "We are on ${CIRCLE_BRANCH} branch, not going to update docs."
-            fi
+    - |
+      if [ "${CIRCLE_BRANCH}" == "master" ]; then
+        node ./scripts/ci/deploy.js
+      else
+        echo "We are on ${CIRCLE_BRANCH} branch, not going to update docs."
+      fi
