@@ -35,7 +35,7 @@ function removeLeadingSlashes(path: string): string {
 function getRoutes(cls: any, path: string): RouteDescriptor[] {
     let routes: RouteDescriptor[] = [];
     for (let property in cls) {
-        let val = Object.getOwnPropertyDescriptor(cls, property).value;
+        const val = Object.getOwnPropertyDescriptor(cls, property).value;
         if (val.route) {
             let route = val;
             if (route.path.substring(route.path.length - 1) === '/') {

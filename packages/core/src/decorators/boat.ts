@@ -16,28 +16,24 @@ import { Method } from '../types/method';
 export function Boat(config: BoatConfig): ClassDecorator {
     return (cls: any) => {
         let original = cls;
-        let methods: Method[] = [];
-        let middlewares: Function[] = [];
-
-        methods = configureRoutes(config.features);
-
-        if (methods) {
-            original.methods = methods;
-        }
-        if (config.middlewares) {
-            for (let i = 0; i < config.middlewares.length; i++) {
-                middlewares.push(config.middlewares[i]);
-            }
-        }
-        if (middlewares) {
-            original.middlewares = middlewares;
-        }
+        original.methods = configureRoutes(config.features);
+        original.middlewares = configureMiddlewares(config.middlewares);
         return original;
     };
 }
 
-function configureRoutes(features: any[]) {
-    let methods: any[];
+function configureMiddlewares(middlewares: Function[]): Function[] {
+    let middlewareArray = [];
+    if (middlewares) {
+        for (let i = 0; i < middlewares.length; i++) {
+            middlewareArray.push(middlewares[i]);
+        }
+        return middlewareArray;
+    } else return [];
+}
+
+function configureRoutes(features: any[]): Method[] {
+    let methods: Method[] = [];
     if (features) {
         for (let i = 0; i < features.length; i++) {
             let feature = features[i];
@@ -59,5 +55,10 @@ function configureRoutes(features: any[]) {
             }
         }
     }
-    return methods;
+    if (methods && methods[0]) {
+        return methods;
+    } else {
+        return [];
+    }
+
 }
