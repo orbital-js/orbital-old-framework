@@ -1,4 +1,4 @@
-import { Boat } from '../../src';
+import { Boat } from '../../';
 import { TestFeature } from './test-feature/test-feature.feature'
 
 @Boat({

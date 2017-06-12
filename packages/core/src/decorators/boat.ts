@@ -1,6 +1,7 @@
-import { BoatConfig } from '../types/boat';
 import * as express from 'express';
 import { Express } from 'express';
+import { FeatureConfig } from './../../../../dist/packages/core/src/types/feature/feature-config.d';
+import { BoatConfig } from '../types/boat';
 import { Method } from '../types/method';
 
 /**
@@ -13,31 +14,12 @@ import { Method } from '../types/method';
  */
 
 export function Boat(config: BoatConfig): ClassDecorator {
-    return (klass: any) => {
-        let original = klass;
+    return (cls: any) => {
+        let original = cls;
         let methods: Method[] = [];
         let middlewares: Function[] = [];
-        if (config.features) {
-            for (let i = 0; i < config.features.length; i++) {
-                let feature = config.features[i];
-                if (feature.feature) {
-                    feature.routes.forEach((route: any) => {
-                        methods.push(route);
-                    });
-                } else {
-                    let klassStr: string;
-                    if ((typeof feature).toLowerCase() == 'function') {
-                        klassStr = feature.toString().slice(9);
-                        let index = klassStr.indexOf('()');
-                        klassStr = klassStr.slice(0, index);
-                        klassStr = ', ' + klassStr + ','
-                    } else {
-                        klassStr = ' is not a class and therefore'
-                    }
-                    throw new Error('A feature you imported' + klassStr + ` is not a valid feature. Remove it from your 'features' import in app.module.ts.`);
-                }
-            }
-        }
+
+        methods = configureRoutes(config.features);
 
         if (methods) {
             original.methods = methods;
@@ -52,4 +34,30 @@ export function Boat(config: BoatConfig): ClassDecorator {
         }
         return original;
     };
+}
+
+function configureRoutes(features: any[]) {
+    let methods: any[];
+    if (features) {
+        for (let i = 0; i < features.length; i++) {
+            let feature = features[i];
+            if (feature.feature) {
+                feature.routes.forEach((route: any) => {
+                    methods.push(route);
+                });
+            } else {
+                let clsStr: string;
+                if ((typeof feature).toLowerCase() === 'function') {
+                    clsStr = feature.toString().slice(9);
+                    let index = clsStr.indexOf('()');
+                    clsStr = clsStr.slice(0, index);
+                    clsStr = ', ' + clsStr + ',';
+                } else {
+                    clsStr = ' is not a class and therefore';
+                }
+                throw new Error('A feature you imported' + clsStr + ` is not a valid feature. Remove it from your 'features' import in app.module.ts.`);
+            }
+        }
+    }
+    return methods;
 }

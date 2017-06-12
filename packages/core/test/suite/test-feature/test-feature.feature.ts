@@ -2,15 +2,20 @@ import { Feature, Route } from '../../../';
 import { TestController } from './test-feature.controller';
 
 @Feature({
-    path: '/',
+    path: '',
 })
 export class TestFeature {
+
+
+    constructor() {
+    }
+
     @Route({
         path: '/',
         method: 'get',
-        function: TestController.getThings
+        function: this
     })
     getThings() { }
 
-    
+
 }
