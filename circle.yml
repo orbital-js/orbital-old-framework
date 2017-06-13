@@ -11,7 +11,7 @@ dependencies:
     - npm install
 compile: 
   override:
-    - node ./node_modules/.bin/tslint packages/**/*.ts --type-check
+    - node ./node_modules/.bin/tslint packages/**/*.ts
     - sh ./scripts/ci/build.sh
     - |
       if [ "${CIRCLE_BRANCH}" == "master" ]; then
