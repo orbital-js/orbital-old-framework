@@ -35,30 +35,34 @@ function configureMiddlewares(middlewares: Function[]): Function[] {
 function configureRoutes(features: any[]): Method[] {
     let methods: Method[] = [];
     if (features) {
-        for (let i = 0; i < features.length; i++) {
-            let feature = features[i];
-            if (feature.feature) {
-                feature.routes.forEach((route: any) => {
-                    methods.push(route);
-                });
-            } else {
-                let clsStr: string;
-                if ((typeof feature).toLowerCase() === 'function') {
-                    clsStr = feature.toString().slice(9);
-                    let index = clsStr.indexOf('()');
-                    clsStr = clsStr.slice(0, index);
-                    clsStr = ', ' + clsStr + ',';
-                } else {
-                    clsStr = ' is not a class and therefore';
-                }
-                throw new Error('A feature you imported' + clsStr + ` is not a valid feature. Remove it from your 'features' import in app.module.ts.`);
-            }
+        methods = generateMethods(features);
+    }
+    if (methods && methods[0]) return methods;
+    else return [];
+}
+
+function generateMethods(features: any[]) {
+    let methods: Method[];
+    for (let i = 0; i < features.length; i++) {
+        let feature = features[i];
+        if (feature.feature) {
+            feature.routes.forEach((route: any) => { methods.push(route); });
+        } else {
+            throwError(feature);
         }
     }
-    if (methods && methods[0]) {
-        return methods;
-    } else {
-        return [];
-    }
+    return methods;
+}
 
+function throwError(feature: any) {
+    let clsStr: string;
+    if ((typeof feature).toLowerCase() === 'function') {
+        clsStr = feature.toString().slice(9);
+        let index = clsStr.indexOf('()');
+        clsStr = clsStr.slice(0, index);
+        clsStr = ', ' + clsStr + ',';
+    } else {
+        clsStr = ' is not a class and therefore';
+    }
+    throw new Error('A feature you imported' + clsStr + ` is not a valid feature. Remove it from your 'features' import in app.module.ts.`);
 }
