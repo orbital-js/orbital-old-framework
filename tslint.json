@@ -65,7 +65,7 @@
         ],
         "no-duplicate-variable": true,
         "no-eval": true,
-        "no-trailing-whitespace": true,
+        "no-trailing-whitespace": false,
         "one-line": [
             true,
             "check-open-brace",

@@ -1,13 +1,14 @@
 {
   "name": "@boat/core",
-  "version": "1.0.0-alpha.3",
+  "version": "1.0.0-alpha.4",
   "private": false,
   "description": "Boat is a NodeJS library for making your backends faster than ever using MongoDB, Express, and TypeScript.",
   "main": "dist/index",
   "typings": "dist/index.d.ts",
   "scripts": {
     "test": "sh ./scripts/tests.sh",
-    "docs": "typedoc --out docs"
+    "docs": "typedoc --out docs",
+    "prepublish": "sh ./scripts/ci/build.sh"
   },
   "repository": {
     "type": "git",

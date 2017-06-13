@@ -1,4 +1,4 @@
-import { HttpMethods } from '../http-methods';
+import { HttpMethods } from '../types/http-methods';
 /**
  * @name route-descriptor
  */

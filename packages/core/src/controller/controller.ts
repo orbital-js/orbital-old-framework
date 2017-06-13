@@ -1,9 +1,9 @@
-import { ControllerConfig } from '../types/controller';
+import { ControllerConfig } from './controller-config';
 
 /**
  * Controller
  * @description the decorator to wrap a controller
- * @param config {ControllerConfig} configuration on your controller 
+ * @param config {ControllerConfig} configuration on your controller
  * @returns decorator {ClassDecorator} to decorate your controller class
  */
 export function Controller(config?: ControllerConfig): ClassDecorator {

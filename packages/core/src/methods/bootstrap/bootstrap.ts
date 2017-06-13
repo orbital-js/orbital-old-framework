@@ -1,11 +1,10 @@
-import { Request, Response } from '_debugger';
 import * as bodyParser from 'body-parser';
 import * as compression from 'compression';
-import { Router } from 'express';
+import { Request, Response, Router } from 'express';
 import * as express from 'express';
 import * as helmet from 'helmet';
-import { Boat } from '../decorators/boat';
-import { BootstrapConfig } from '../types/bootstrap';
+import { BootstrapConfig } from './bootstrap-config';
+import { Boat } from '../../boat';
 
 
 

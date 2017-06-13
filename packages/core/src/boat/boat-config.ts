@@ -1,5 +1,5 @@
-import { RequestHandler, ErrorRequestHandler } from 'express';
-import { Response } from 'express';
+import { ErrorRequestHandler, RequestHandler, Response } from 'express';
+import { IMiddleware } from './../middlewares/middleware';
 
 /**
  * @interface BoatConfig
@@ -9,7 +9,7 @@ export interface BoatConfig {
     /**
      * An array of Express middlewares, in the order that they are needed by your app
      */
-    middlewares?: (RequestHandler | ErrorRequestHandler)[];
+    middlewares?: any[];
     /**
      * An array of each of the features you have created. Do not include controllers.
      */

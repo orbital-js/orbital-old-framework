@@ -1,6 +1,7 @@
 import { Request, Response } from 'express';
-import { RouteConfig, RouteDescriptor } from '../types/route';
-import { MethodWithData } from '../types/route/method-with-data';
+import { MethodWithData } from './method-with-data';
+import { RouteConfig } from './route-config';
+import { RouteDescriptor } from './route-descriptor';
 
 
 /**

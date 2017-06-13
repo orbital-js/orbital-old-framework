@@ -1,9 +1,8 @@
-import { Controller } from '../../decorators/controller';
-import { RequestHandler, ErrorRequestHandler } from 'express';
-import { Type } from '../../type';
-import { HttpMethods } from '../http-methods';
+import { ErrorRequestHandler, RequestHandler } from 'express';
 import { MethodWithData } from './method-with-data';
 import { Method } from './method-without-data';
+import { Controller } from '../controller';
+import { HttpMethods } from '../types/http-methods';
 
 export interface RouteConfig {
     /**

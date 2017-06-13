@@ -1,5 +1,5 @@
-import { FeatureConfig } from '../types/feature';
-import { RouteDescriptor } from '../types/route';
+import { FeatureConfig } from '../feature';
+import { RouteDescriptor } from '../route';
 
 /**
  * Feature
@@ -30,6 +30,7 @@ function removeLeadingSlashes(path: string): string {
     if (path.substring(path.length - 1) === '/') {
         return path.substring(0, path.length - 1);
     }
+    return '';
 }
 
 function getRoutes(cls: any, path: string): RouteDescriptor[] {
