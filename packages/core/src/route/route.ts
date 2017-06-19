@@ -12,4 +12,4 @@ export interface RouteDecorator {
 
 
 export const Route: RouteDecorator =
-    <RouteDecorator>makeDecorator('Route', (rte: Route = {}) => rte);
+    <RouteDecorator>makeDecorator('Route', (route: Route = {}) => route);

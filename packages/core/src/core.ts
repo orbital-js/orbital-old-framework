@@ -4,7 +4,7 @@
 export { Module } from './module/module';
 export { Route } from './route/route';
 export { Middleware } from './middlewares/middleware';
-export {Injectable} from 'injection-js';
+export { Injectable, Inject } from 'injection-js';
 
 /* Interfaces */
 export { Get } from './interfaces/get';
