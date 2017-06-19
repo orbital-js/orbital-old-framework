@@ -1,1 +1,0 @@
-export type Method<T> = () => Promise<any>;

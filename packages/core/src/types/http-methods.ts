@@ -1,1 +1,0 @@
-export type HttpMethods = 'get' | 'put' | 'post' | 'delete' | 'patch';

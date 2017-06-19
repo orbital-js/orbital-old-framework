@@ -1,6 +1,6 @@
 {
     "name": "@boat/core",
-    "version": "0.0.0-PLACEHOLDER",
+    "version": "1.0.0-alpha.7",
     "description": "Boat - the core framework",
     "main": "./bundles/core.umd.js",
     "module": "./@angular/core.es5.js",
@@ -14,6 +14,10 @@
         "express": "^4.14.0",
         "helmet": "^3.4.0",
         "mongodb": "^2.2.21"
+    },
+    "dependencies": {
+        "injection-js": "^2.1.0",
+        "reflect-metadata": "^0.1.10"
     },
     "repository": {
         "type": "git",

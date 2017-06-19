@@ -4,6 +4,7 @@
 [![CircleCI](https://circleci.com/gh/getcanal/boat.svg?style=shield&circle-token=13c11361db0d0a364102edc7dfad00c19697bd69)](https://circleci.com/gh/getcanal/boat/tree/master)
 [![CII Best Practices](https://bestpractices.coreinfrastructure.org/projects/848/badge)](https://bestpractices.coreinfrastructure.org/projects/848)
 [![codebeat badge](https://codebeat.co/badges/991f3d43-fcef-4fb2-8fed-470a7080388a)](https://codebeat.co/projects/github-com-getcanal-boat-master)
+
 Boat is a one-stop shop for making awesome Node.js/Express APIs in TypeScript. Inspired by [Angular](https://www.github.com/angular/angular), we want to make it easy to make Node.js APIs for anyone.
 
 Boat uses TypeScript, Express, and MongoDB, as these are industry standard. They're a friggin pleasure to use, and Boat makes it even easier to use them.
