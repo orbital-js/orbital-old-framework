@@ -40,14 +40,11 @@ export function bootstrap(mod: any, item?: any): void {
 
     let toInject = [...routes, ...providers];
     let injector: ReflectiveInjector = ReflectiveInjector.resolveAndCreate(<any[]>toInject);
-    console.log(routes);
 
     routes.forEach((route: any) => {
         const rt = injector.get(route, 'hello');
         let routeAnnotation = Reflect.getMetadata('annotations', route);
         if (!routeAnnotation.path) routeAnnotation.path = '/';
-        console.log('path', routeAnnotation.path);
-
 
         if (rt.get) {
             app.get(routeAnnotation.path, rt.get);
@@ -96,8 +93,6 @@ function cycleRoutes(modules: Module[], prefix: string = '/'): Route[] {
         const modPath = (mod.config ? mod.config.path || '/' : '/');
         (mod.routes || []).forEach((route, j) => {
             let routeAnnotation = Reflect.getOwnMetadata('annotations', route)[0];
-            console.log(routeAnnotation.path);
-            console.log(prefix, modPath, routeAnnotation.path);
             routeAnnotation.path = path.join(prefix, modPath, routeAnnotation.path);
             Reflect.defineMetadata('annotations', routeAnnotation, route);
             routes.push(route);
@@ -107,7 +102,6 @@ function cycleRoutes(modules: Module[], prefix: string = '/'): Route[] {
             const p = path.join(prefix, modPath);
             routes = routes.concat(cycleRoutes(mod.imports, p));
         }
-        console.log(routes);
 
     });
 
