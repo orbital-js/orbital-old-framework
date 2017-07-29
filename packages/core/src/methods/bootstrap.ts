@@ -2,10 +2,11 @@ import * as bodyParser from 'body-parser';
 import * as compression from 'compression';
 import * as express from 'express';
 import * as helmet from 'helmet';
-import { ReflectiveInjector } from 'injection-js';
+import { Injector, Provider, ReflectiveInjector } from 'injection-js';
 import * as path from 'path';
 import 'reflect-metadata';
-import { Module } from './../module/module';
+import { joinPath, unique } from './util';
+import { Module } from '../module/module';
 import { Route } from '../route/route';
 import { app } from '../server';
 
@@ -18,7 +19,7 @@ import { app } from '../server';
  * @param {Module} mod 
  * @returns {void} 
  */
-export function bootstrap(mod: any): void {
+export function bootstrap(mod: any, item?: any): void {
     /* Here, we start with some simple instantiation code.
        Boat includes a few middlewares we suggest, just to keep you safe. */
     app.use(bodyParser.json());
@@ -27,6 +28,8 @@ export function bootstrap(mod: any): void {
 
     /* We strip some data from the type annotation on the module. */
     let annotations: Module = Reflect.getMetadata('annotations', mod)[0];
+    let routes: Route[] = cycleRoutes([annotations]);
+    let providers: Provider[] = cycleProviders([annotations]);
 
     /* If we have any middleware classes, they can be referenced here. */
     if (annotations.middlewares) {
@@ -35,19 +38,17 @@ export function bootstrap(mod: any): void {
         });
     }
 
-    if (annotations.imports) {
-        let cycled = cycleImports(annotations.imports, mod.config);
-        annotations.providers = unique((annotations.providers || []).concat(cycled.providers));
-        annotations.routes = unique((annotations.routes || []).concat(cycled.routes));
-    }
-    console.log(annotations.routes);
-    /* Here we inject all of the dependencies for the module. */
-    let injector = ReflectiveInjector.resolveAndCreate([...(annotations.providers || []), ...(annotations.routes || [])]);
+    let toInject = [...routes, ...providers];
+    let injector: ReflectiveInjector = ReflectiveInjector.resolveAndCreate(<any[]>toInject);
+    console.log(routes);
 
-    (annotations.routes || []).forEach((route: Route) => {
-        let rt = injector.get(route);
+    routes.forEach((route: any) => {
+        const rt = injector.get(route, 'hello');
         let routeAnnotation = Reflect.getMetadata('annotations', route);
-        console.log(routeAnnotation);
+        if (!routeAnnotation.path) routeAnnotation.path = '/';
+        console.log('path', routeAnnotation.path);
+
+
         if (rt.get) {
             app.get(routeAnnotation.path, rt.get);
         }
@@ -78,51 +79,37 @@ export function bootstrap(mod: any): void {
     return;
 }
 
-function cycleImports(mods: any[], ...config: any[]) {
-    let providers: any[] = [], routes: any[] = [];
-    for (let modul of mods) {
-        let mod = Reflect.getMetadata('annotations', modul)[0];
-        console.log(mod);
-        if (mod.providers) {
-            providers.concat(mod.providers);
-        }
-        if (mod.routes) {
-            mod.routes.forEach((route: any) => {
-                let rt = Reflect.getMetadata('annotations', route)[0];
-                rt.path = joinPath(config, mod, rt);
-                Reflect.defineMetadata('annotations', rt, route);
-                routes.push(route);
-            });
-        }
+function cycleProviders(modules: Module[]): Provider[] {
+    let providers: Provider[] = [];
+    for (let mod of modules) {
+        providers = providers.concat(mod.providers || []);
         if (mod.imports) {
-            config.push(mod.config);
-            for (let imp of mod.imports) {
-                cycleImports(imp, config);
-            }
+            providers = providers.concat(cycleProviders(mod.imports));
         }
     }
-    return { providers, routes };
+    return providers;
 }
 
-function joinPath(...config: any[]) {
-    let pth = ['/'];
-    config.forEach((conf: any) => {
-        if (conf.path) {
-            console.log(conf.path);
-            pth.push(conf.path);
+function cycleRoutes(modules: Module[], prefix: string = '/'): Route[] {
+    let routes: Route[] = [];
+    modules.forEach((mod, i) => {
+        const modPath = (mod.config ? mod.config.path || '/' : '/');
+        (mod.routes || []).forEach((route, j) => {
+            let routeAnnotation = Reflect.getOwnMetadata('annotations', route)[0];
+            console.log(routeAnnotation.path);
+            console.log(prefix, modPath, routeAnnotation.path);
+            routeAnnotation.path = path.join(prefix, modPath, routeAnnotation.path);
+            Reflect.defineMetadata('annotations', routeAnnotation, route);
+            routes.push(route);
+        });
+
+        if (mod.imports) {
+            const p = path.join(prefix, modPath);
+            routes = routes.concat(cycleRoutes(mod.imports, p));
         }
+        console.log(routes);
+
     });
-    return path.join(pth.join('/'));
-}
 
-function unique(array: any) {
-    let a = array.concat();
-    for (let i = 0; i < a.length; ++i) {
-        for (let j = i + 1; j < a.length; ++j) {
-            if (a[i] === a[j])
-                a.splice(j--, 1);
-        }
-    }
-
-    return a;
+    return routes;
 }

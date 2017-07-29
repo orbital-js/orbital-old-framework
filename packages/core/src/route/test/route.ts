@@ -1,7 +1,7 @@
-import { Response, Request } from 'express';
-import { ReflectiveInjector, Injectable } from 'injection-js';
-import { Route } from '../route';
+import { Request, Response } from 'express';
+import { Injectable, ReflectiveInjector } from 'injection-js';
 import 'reflect-metadata';
+import { Route } from '../route';
 
 @Injectable()
 export class Item {

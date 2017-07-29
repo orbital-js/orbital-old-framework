@@ -1,4 +1,5 @@
-import { TypeDecorator, makeDecorator } from '../util/decorators';
+import { makeDecorator, TypeDecorator } from '../util/decorators';
+import {} from 'injection-js'
 
 export interface Route {
     path?: string;
@@ -7,7 +8,7 @@ export interface Route {
 export interface RouteDecorator {
     (obj: Route): TypeDecorator;
 
-    new (obj: Route): Route;
+    new(obj: Route): Route;
 }
 
 

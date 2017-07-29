@@ -12,10 +12,11 @@
         "preserveConstEnums": true,
         "sourceMap": true,
         "outDir": "../../dist/packages/core",
-        "target": "es5",
+        "target": "es6",
         "lib": [
             "es6",
-            "es2015"
+            "es2015",
+            "es7"
         ],
         "skipLibCheck": true,
         "emitDecoratorMetadata": true,

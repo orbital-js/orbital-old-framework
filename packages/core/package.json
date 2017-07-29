@@ -1,6 +1,6 @@
 {
     "name": "@boat/core",
-    "version": "0.0.0-PLACEHOLDER",
+    "version": "1.0.0-alpha.8",
     "description": "Boat - the core framework",
     "main": "./bundles/core.umd.js",
     "module": "./@angular/core.es5.js",
