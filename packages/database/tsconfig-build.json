@@ -1,0 +1,30 @@
+{
+    "compilerOptions": {
+        "baseUrl": ".",
+        "declaration": true,
+        "stripInternal": true,
+        "experimentalDecorators": true,
+        "strictNullChecks": true,
+        "moduleResolution": "node",
+        "module": "commonjs",
+        "noImplicitAny": true,
+        "removeComments": false,
+        "preserveConstEnums": true,
+        "sourceMap": true,
+        "outDir": "../../dist/packages/core",
+        "target": "es6",
+        "lib": [
+            "es6",
+            "es2015",
+            "es7"
+        ],
+        "skipLibCheck": true,
+        "emitDecoratorMetadata": true,
+        "typeRoots": [
+            "node_modules/@types"
+        ]
+    },
+    "files": [
+        "index.ts"
+    ]
+}
