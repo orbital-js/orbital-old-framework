@@ -17,4 +17,13 @@ export class Http {
             });
         });
     }
+
+    post(url: string, options: request.Options): Observable<request.RequestResponse> {
+        return Observable.create((observer: Observer<request.RequestResponse>) => {
+            request.post(url, options, (err, response: request.RequestResponse, body) => {
+                observer.next(response);
+                observer.complete();
+            });
+        });
+    }
 }
