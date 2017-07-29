@@ -15,4 +15,3 @@ export { Delete } from './interfaces/delete';
 
 /* Methods */
 export { bootstrap } from './methods/bootstrap';
-export { exportModule } from './methods/export-module';
