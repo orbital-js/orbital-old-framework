@@ -8,7 +8,9 @@
     "typings": "./core.d.ts",
     "author": "wbhob",
     "license": "MIT",
-    "peerDependencies": {},
+    "peerDependencies": {
+        "typescript": ">=2.1.0"
+    },
     "dependencies": {
         "body-parser": "^1.16.0",
         "compression": "^1.6.2",

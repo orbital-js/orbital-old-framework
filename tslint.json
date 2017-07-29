@@ -1,82 +1,22 @@
 {
     "rules": {
-        "class-name": true,
-        "comment-format": [
-            true,
-            "check-space"
-        ],
         "indent": [
             true,
             "spaces"
         ],
-        "semicolon": [
-            true,
-            "always"
-        ],
         "no-duplicate-variable": true,
         "no-eval": true,
-        "no-internal-module": true,
         "no-trailing-whitespace": false,
-        "no-unused-variable": [
-            true
-        ],
-        "no-unused-imports": [
-            true
-        ],
-        "no-var-keyword": true,
         "one-line": [
             true,
             "check-open-brace",
-            "check-whitespace"
+            "check-whitespace",
+            "check-else"
         ],
         "quotemark": [
             true,
             "single"
         ],
-        "triple-equals": [
-            true,
-            "allow-null-check"
-        ],
-        "typedef-whitespace": [
-            true,
-            {
-                "call-signature": "nospace",
-                "index-signature": "nospace",
-                "parameter": "nospace",
-                "property-declaration": "nospace",
-                "variable-declaration": "nospace"
-            }
-        ],
-        "variable-name": [
-            true,
-            "ban-keywords"
-        ],
-        "whitespace": [
-            true,
-            "check-branch",
-            "check-decl",
-            "check-operator",
-            "check-separator",
-            "check-type"
-        ]
-    },
-    "jsRules": {
-        "indent": [
-            true,
-            "spaces"
-        ],
-        "no-duplicate-variable": true,
-        "no-eval": true,
-        "no-trailing-whitespace": false,
-        "one-line": [
-            true,
-            "check-open-brace",
-            "check-whitespace"
-        ],
-        "quotemark": [
-            true,
-            "double"
-        ],
         "semicolon": [
             true,
             "always"
@@ -87,7 +27,8 @@
         ],
         "variable-name": [
             true,
-            "ban-keywords"
+            "ban-keywords",
+            "allow-leading-underscore"
         ],
         "whitespace": [
             true,
@@ -96,6 +37,16 @@
             "check-operator",
             "check-separator",
             "check-type"
+        ],
+        "class-name": true,
+        "interface-name": [
+            true,
+            "never-prefix"
+        ],
+        "switch-default": true,
+        "only-arrow-functions": [
+            true,
+            "allow-named-functions"
         ]
     }
 }

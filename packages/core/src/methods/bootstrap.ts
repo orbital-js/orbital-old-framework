@@ -38,12 +38,13 @@ export function bootstrap(mod: any, item?: any): void {
         });
     }
 
-    let toInject = [...routes, ...providers];
-    let injector: ReflectiveInjector = ReflectiveInjector.resolveAndCreate(<any[]>toInject);
+    /* Use Angular's dependency injection to assosciate all providers to their respective places */
+    let injector: ReflectiveInjector = ReflectiveInjector.resolveAndCreate(<any[]>[...routes, ...providers]);
 
+    /* Notify express of all of the routes */
     routes.forEach((route: any) => {
-        const rt = injector.get(route, 'hello');
-        let routeAnnotation = Reflect.getMetadata('annotations', route);
+        const rt = injector.get(route);
+        const routeAnnotation = Reflect.getMetadata('annotations', route);
         if (!routeAnnotation.path) routeAnnotation.path = '/';
 
         if (rt.get) {
@@ -64,15 +65,10 @@ export function bootstrap(mod: any, item?: any): void {
     });
 
     /* Now we set up the listener and are ready to take requests. */
-    let config = annotations.config;
-    if (config && config.port) {
-        app.listen(config.port);
-        console.log('LISTENING ON PORT ' + config.port);
-    } else {
-        let port = process.env.PORT ? process.env.PORT : 8080;
-        app.listen(port);
-        console.log('LISTENING ON PORT ' + port);
-    }
+    const config = annotations.config;
+    const port = config && config.port ? config.port : process.env.PORT ? process.env.PORT : 8080;
+    app.listen(port);
+    console.info('LISTENING ON PORT ' + port);
     return;
 }
 

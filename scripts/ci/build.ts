@@ -16,20 +16,27 @@ rimraf(path.join(process.cwd(), 'dist'), (err) => {
         let pack = path.join(projectHome, directory);
         let stat = fs.statSync(pack);
         if (stat && stat.isDirectory()) {
+
             let dest = path.join(process.cwd(), 'dist/packages', directory);
             fs.mkdirSync(dest);
-            console.log(path.join(pack, 'tsconfig-build.json'));
 
             shell.exec(`node_modules/.bin/tsc -p ${path.join(pack, 'tsconfig-build.json')} --outDir ${dest}`);
             cp.sync(path.join(pack, 'package.json'), path.join(dest, 'package.json'));
             cp.sync(path.join(pack, 'package-lock.json'), path.join(dest, 'package-lock.json'));
+
+            let readme: string = fs.readFileSync(path.join(process.cwd(), 'packages/README.md')).toString();
+            readme = readme.replace(/PACKAGE_NAME/g, convertPackageName(directory));
+            fs.writeFileSync(path.join(dest, 'README.md'), readme);
+
         }
     });
 });
 
-
-// ts.transpileModule(null, )
-
-// node--max- old - space - size=3000 node_modules/.bin / tsc - p packages/ core / tsconfig - build.json
-
-// cp packages/ core / package.json dist/ packages / core / package.json
+function convertPackageName(pack: string) {
+    const arr = pack.split('-');
+    for (let i = 0; i < arr.length; i++) {
+        arr[i] = arr[i].substr(0, 1).toUpperCase() + arr[i].slice(1);
+    }
+    console.log(arr);
+    return arr.join(' ');
+}
