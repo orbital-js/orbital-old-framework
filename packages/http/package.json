@@ -1,5 +1,5 @@
 {
-    "name": "@boat/core",
+    "name": "@boat/http",
     "version": "0.0.0-PLACEHOLDER",
     "description": "Boat - the core framework",
     "main": "./bundles/core.umd.js",
@@ -17,10 +17,18 @@
     },
     "dependencies": {
         "injection-js": "^2.1.0",
-        "reflect-metadata": "^0.1.10"
+        "lodash": "^4.17.4",
+        "reflect-metadata": "^0.1.10",
+        "request": "^2.81.0"
     },
     "repository": {
         "type": "git",
         "url": "https://github.com/getcanal/boat.git"
+    },
+    "devDependencies": {
+        "@boat/core": "^1.0.0-alpha.11",
+        "@types/lodash": "^4.14.71",
+        "@types/request": "^2.0.0",
+        "rxjs": "^5.4.2"
     }
 }

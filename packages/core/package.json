@@ -8,19 +8,19 @@
     "typings": "./core.d.ts",
     "author": "wbhob",
     "license": "MIT",
-    "peerDependencies": {
+    "peerDependencies": {},
+    "dependencies": {
         "body-parser": "^1.16.0",
         "compression": "^1.6.2",
         "express": "^4.14.0",
         "helmet": "^3.4.0",
-        "mongodb": "^2.2.21"
-    },
-    "dependencies": {
         "injection-js": "^2.1.0",
+        "mongodb": "^2.2.21",
         "reflect-metadata": "^0.1.10"
     },
     "repository": {
         "type": "git",
         "url": "https://github.com/getcanal/boat.git"
-    }
+    },
+    "devDependencies": {}
 }

@@ -1,5 +1,5 @@
 {
-  "name": "@boat/core",
+  "name": "boat-dev",
   "version": "1.0.0-alpha.11",
   "private": false,
   "description": "Boat is a NodeJS library for making your backends faster than ever using MongoDB, Express, and TypeScript.",
