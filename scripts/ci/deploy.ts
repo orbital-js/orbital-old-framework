@@ -1,3 +1,4 @@
+import * as async from 'async';
 import * as fs from 'fs';
 import * as moment from 'moment';
 import * as npm from 'npm';
@@ -5,7 +6,7 @@ import * as path from 'path';
 import * as shell from 'shelljs';
 const config = require('../../package.json');
 
-
+let projectHome: string;
 npm.load(() => {
   npm.commands.show(['@orbital/core'], (err: Error, old: any) => {
     if (err) {
@@ -22,7 +23,7 @@ function detectRelease(err: Error, old: string) {
   const version = config.version;
   console.log(version);
 
-  let is_release;
+  let is_release: boolean;
   let versioncode: string;
   if (old !== version) {
     is_release = true;
@@ -31,27 +32,34 @@ function detectRelease(err: Error, old: string) {
     is_release = false;
     versioncode = 'nightly';
   }
+  projectHome = path.join(process.cwd(), 'dist/packages/');
 
-  cycleOverPackages(is_release, versioncode);
+  let dirs = fs.readdirSync(projectHome);
+  async.eachSeries(dirs, async (directory, callback) => {
+    await cycleOverPackages(is_release, versioncode, directory);
+    callback();
+  });
+
 }
 
-function cycleOverPackages(release: boolean, version: string) {
-  let projectHome = path.join(process.cwd(), 'dist/packages/');
-
-  fs.readdirSync(projectHome).forEach(directory => {
+async function cycleOverPackages(release: boolean, version: string, directory: string): Promise<any> {
+  return new Promise((resolve, reject) => {
     let pack = path.join(projectHome, directory);
     let stat = fs.statSync(pack);
-    process.chdir(pack);
     if (stat && stat.isDirectory()) {
+      process.chdir(pack);
+      console.log(pack);
+
       fs.readFile('package.json', 'utf-8', (err, data) => {
 
         if (release) {
           console.log('RELEASE DETECTED');
 
-          const res = data.replace(/0.0.0-PLACEHOLDER/g, version);
+          const res = data.replace('0.0.0-PLACEHOLDER', version);
 
           fs.writeFile('package.json', res, 'utf-8', () => {
             shell.exec('npm publish --access public');
+            resolve();
           });
 
         } else {
@@ -61,11 +69,15 @@ function cycleOverPackages(release: boolean, version: string) {
           let ver = `${config.version}-${datecode}`;
 
 
-          const res = data.replace(/0.0.0-PLACEHOLDER/g, ver);
-          fs.writeFileSync('package.json', res, 'utf-8');
-          shell.exec('npm publish --tag nightly --access public');
+          const res = data.replace('0.0.0-PLACEHOLDER', ver);
+          fs.writeFile('package.json', res, () => {
+            shell.exec('npm publish --tag nightly --access public');
+            resolve();
+          });
         }
       });
+    } else {
+      resolve();
     }
   });
 }

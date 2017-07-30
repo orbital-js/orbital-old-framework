@@ -12,7 +12,7 @@ import { app } from '../server';
 
 
 /**
- * @description The method to start up a Boat instance. 
+ * @description The method to start up a Orbital instance. 
  * This compiles all of the dependencies and prepares them to be served.
  * 
  * @export
@@ -21,7 +21,7 @@ import { app } from '../server';
  */
 export function bootstrap(mod: any, item?: any): void {
     /* Here, we start with some simple instantiation code.
-       Boat includes a few middlewares we suggest, just to keep you safe. */
+       Orbital includes a few middlewares we suggest, just to keep you safe. */
     app.use(bodyParser.json());
     app.use(helmet());
     app.use(compression());

@@ -1,7 +1,7 @@
-import { Boat } from '../../';
+import { Orbital } from '../../';
 import { TestFeature } from './test-feature/test-feature.feature'
 
-@Boat({
+@Orbital({
     features: [
         TestFeature
     ],

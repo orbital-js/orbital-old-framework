@@ -14,7 +14,7 @@ export interface IMiddleware extends Middleware {
 }
 
 /**
- * @description Interface for making middlewares compatible with Boat.
+ * @description Interface for making middlewares compatible with Orbital.
  * 
  * @export
  * @interface Middleware

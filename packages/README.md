@@ -1,2 +1,2 @@
 # PACKAGE_NAME
-This is the PACKAGE_NAME package of the Boat framework for Node.JS. The source code is located in the main [Boat](https://github.com/orbital-js/orbital) repository. Please file issues and pull requests against that repository.
+This is the PACKAGE_NAME package of the Orbital framework for Node.JS. The source code is located in the main [Orbital](https://github.com/orbital-js/orbital) repository. Please file issues and pull requests against that repository.

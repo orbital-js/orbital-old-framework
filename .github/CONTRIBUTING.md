@@ -1,6 +1,6 @@
 # Contributing
 
-Thanks for your interest in contributing to the Boat Framework! :tada:
+Thanks for your interest in contributing to the Orbital Framework! :tada:
 
 
 ## Contributing Etiquette
