@@ -7,7 +7,7 @@ const config = require('../../package.json');
 
 
 npm.load(() => {
-  npm.commands.show(['@boat/core'], (err: Error, old: any) => {
+  npm.commands.show(['@orbital/core'], (err: Error, old: any) => {
     if (err) {
       throw err;
     } else {

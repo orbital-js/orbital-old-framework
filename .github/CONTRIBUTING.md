@@ -5,7 +5,7 @@ Thanks for your interest in contributing to the Boat Framework! :tada:
 
 ## Contributing Etiquette
 
-Please see our [Contributor Code of Conduct](https://github.com/getcanal/boat/blob/master/CODE_OF_CONDUCT.md) for information on our rules of conduct.
+Please see our [Contributor Code of Conduct](https://github.com/orbital-js/orbital/blob/master/CODE_OF_CONDUCT.md) for information on our rules of conduct.
 
 
 ## Creating an Issue
@@ -18,16 +18,16 @@ Please see our [Contributor Code of Conduct](https://github.com/getcanal/boat/bl
 
 * Issues with no clear repro steps will not be triaged. If an issue labeled "need reply" receives no further input from the issue author for more than 5 days, it will be closed.
 
-* If you think you have found a bug, or have a new feature idea, please start by making sure it hasn't already been [reported](https://github.com/getcanal/boat/issues?utf8=%E2%9C%93&q=is%3Aissue). You can search through existing issues to see if there is a similar one reported. Include closed issues as it may have been closed with a solution.
+* If you think you have found a bug, or have a new feature idea, please start by making sure it hasn't already been [reported](https://github.com/orbital-js/orbital/issues?utf8=%E2%9C%93&q=is%3Aissue). You can search through existing issues to see if there is a similar one reported. Include closed issues as it may have been closed with a solution.
 
-* Next, [create a new issue](https://github.com/getcanal/boat/issues/new) that thoroughly explains the problem. Please fill out the populated issue form before submitting the issue.
+* Next, [create a new issue](https://github.com/orbital-js/orbital/issues/new) that thoroughly explains the problem. Please fill out the populated issue form before submitting the issue.
 
 
 ## Creating a Pull Request
 
 * We appreciate you taking the time to contribute! Before submitting a pull request, we ask that you please [create an issue](#creating-an-issue) that explains the bug or feature request and let us know that you plan on creating a pull request for it. If an issue already exists, please comment on that issue letting us know you would like to submit a pull request for it. This helps us to keep track of the pull request and make sure there isn't duplicated effort.
 
-* Looking for an issue to fix? Make sure to look through our issues with the [help wanted](https://github.com/getcanal/boat/issues?q=is%3Aopen+is%3Aissue+label%3A%22help+wanted%22) label!
+* Looking for an issue to fix? Make sure to look through our issues with the [help wanted](https://github.com/orbital-js/orbital/issues?q=is%3Aopen+is%3Aissue+label%3A%22help+wanted%22) label!
 
 ### Setup
 
@@ -109,7 +109,7 @@ Please see our [Contributor Code of Conduct](https://github.com/getcanal/boat/bl
 
 ## Commit Message Format
 
-We have very precise rules over how our git commit messages should be formatted. This leads to readable messages that are easy to follow when looking through the project history. We also use the git commit messages to generate our [changelog](https://github.com/getcanal/boat/blob/master/CHANGELOG.md). (Ok you got us, it's basically Angular's commit message format).
+We have very precise rules over how our git commit messages should be formatted. This leads to readable messages that are easy to follow when looking through the project history. We also use the git commit messages to generate our [changelog](https://github.com/orbital-js/orbital/blob/master/CHANGELOG.md). (Ok you got us, it's basically Angular's commit message format).
 
 `type(scope): subject`
 
@@ -126,7 +126,7 @@ Must be one of the following:
 * **chore**: Changes to the build process or auxiliary tools and libraries such as documentation generation
 
 #### Scope
-The scope can be anything specifying place of the commit change. For example `feature`, `boat`, `route`, `controller`, etc. If you make multiple commits for the same component, please keep the naming of this component consistent. For example, if you make a change to the boat module definition and the first commit is `fix(boat)`, you should continue to use `boat` for any more commits related to the boat module.
+The scope can be anything specifying place of the commit change. For example `core`, `http`, `db`, etc. If you make multiple commits for the same component, please keep the naming of this component consistent. For example, if you make a change to the core module definition and the first commit is `fix(database)`, you should continue to use `database` for any more commits related to the database module.
 
 #### Subject
 The subject contains succinct description of the change:
@@ -141,4 +141,4 @@ The subject contains succinct description of the change:
 
 ## License
 
-By contributing your code to the getcanal/boat GitHub Repository, you agree to license your contribution under the MIT license.
+By contributing your code to the orbital-js/orbital GitHub Repository, you agree to license your contribution under the MIT license.

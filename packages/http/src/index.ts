@@ -1,3 +1,3 @@
-/** @module @boat/http */
+/** @module @orbital/http */
 
 export { HttpModule } from './module';

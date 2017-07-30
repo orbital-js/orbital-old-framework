@@ -1,5 +1,3 @@
-/** @module @boat/core */
-
 /* Decorators */
 export { Module } from './module/module';
 export { Route } from './route/route';

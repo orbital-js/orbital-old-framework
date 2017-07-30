@@ -1,10 +1,8 @@
 {
-    "name": "@boat/core",
+    "name": "@orbital/core",
     "version": "0.0.0-PLACEHOLDER",
-    "description": "Boat - the core framework",
-    "main": "./bundles/core.umd.js",
-    "module": "./@angular/core.es5.js",
-    "es2015": "./@angular/core.js",
+    "description": "Orbital - the core framework",
+    "main": "./core",
     "typings": "./core.d.ts",
     "author": "wbhob",
     "license": "MIT",
@@ -22,7 +20,7 @@
     },
     "repository": {
         "type": "git",
-        "url": "https://github.com/getcanal/boat.git"
+        "url": "https://github.com/orbital-js/orbital.git"
     },
     "devDependencies": {}
 }

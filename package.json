@@ -1,5 +1,5 @@
 {
-  "name": "boat-dev",
+  "name": "orbital-dev",
   "version": "1.0.0-alpha.11",
   "private": false,
   "description": "Boat is a NodeJS library for making your backends faster than ever using MongoDB, Express, and TypeScript.",
@@ -8,11 +8,13 @@
   "scripts": {
     "test": "sh ./scripts/tests.sh",
     "docs": "typedoc --out docs",
-    "prepublish": "sh ./scripts/ci/build.sh"
+    "prepublish": "npm run build",
+    "publish": "ts-node scripts/ci/deploy.ts",
+    "build": "ts-node scripts/ci/build.ts"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/wbhob/boat.git"
+    "url": "git+https://github.com/orbital-js/orbital.git"
   },
   "keywords": [
     "node",
@@ -20,12 +22,12 @@
     "mongodb",
     "express"
   ],
-  "author": "Canal, Co.",
+  "author": "wbhob",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/wbhob/boat/issues"
+    "url": "https://github.com/orbital-js/orbital/issues"
   },
-  "homepage": "https://github.com/wbhob/boat#readme",
+  "homepage": "https://github.com/orbital-js/orbital#readme",
   "devDependencies": {
     "@types/body-parser": "^1.16.4",
     "@types/chai": "^3.5.2",

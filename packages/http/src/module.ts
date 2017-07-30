@@ -1,4 +1,4 @@
-import { Module } from '@boat/core';
+import { Module } from '@orbital/core';
 
 
 @Module({

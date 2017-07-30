@@ -1,4 +1,4 @@
-import { Injectable } from '@boat/core';
+import { Injectable } from '@orbital/core';
 import * as _ from 'lodash';
 import * as request from 'request';
 import { Observable } from 'rxjs/Observable';
