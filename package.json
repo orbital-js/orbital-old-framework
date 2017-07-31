@@ -1,6 +1,6 @@
 {
   "name": "orbital-src",
-  "version": "1.0.0-alpha.17",
+  "version": "1.0.0-alpha.18",
   "private": true,
   "description": "Orbital is a NodeJS library for making your backends faster than ever using MongoDB, Express, and TypeScript.",
   "main": "dist/index",
