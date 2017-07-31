@@ -11,4 +11,4 @@ export interface MiddlewareDecorator {
 
 
 export const Middleware: MiddlewareDecorator =
-    <MiddlewareDecorator>makeDecorator('Middleware', (mod: Middleware = {}) => mod);
+    <MiddlewareDecorator>makeDecorator('Middleware', () => void);
