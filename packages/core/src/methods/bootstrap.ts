@@ -27,9 +27,9 @@ export function bootstrap(mod: any, item?: any): void {
     app.use(compression());
 
     /* We strip some data from the type annotation on the module. */
+    let routes: Route[] = cycleRoutes([mod]);
+    let providers: Provider[] = cycleProviders([mod]);
     let annotations: Module = Reflect.getMetadata('annotations', mod)[0];
-    let routes: Route[] = cycleRoutes([annotations]);
-    let providers: Provider[] = cycleProviders([annotations]);
 
     /* If we have any middleware classes, they can be referenced here. */
     if (annotations.middlewares) {
@@ -48,19 +48,19 @@ export function bootstrap(mod: any, item?: any): void {
         if (!routeAnnotation.path) routeAnnotation.path = '/';
 
         if (rt.get) {
-            app.get(routeAnnotation.path, rt.get);
+            app.get(routeAnnotation.path, (req: express.Request, res: express.Response, next: express.NextFunction) => rt.get(req, res, next));
         }
         if (rt.post) {
-            app.get(routeAnnotation.path, rt.post);
+            app.post(routeAnnotation.path, (req: express.Request, res: express.Response, next: express.NextFunction) => rt.post(req, res, next));
         }
         if (rt.patch) {
-            app.get(routeAnnotation.path, rt.patch);
+            app.patch(routeAnnotation.path, (req: express.Request, res: express.Response, next: express.NextFunction) => rt.patch(req, res, next));
         }
         if (rt.put) {
-            app.get(routeAnnotation.path, rt.put);
+            app.put(routeAnnotation.path, (req: express.Request, res: express.Response, next: express.NextFunction) => rt.put(req, res, next));
         }
         if (rt.delete) {
-            app.get(routeAnnotation.path, rt.delete);
+            app.delete(routeAnnotation.path, (req: express.Request, res: express.Response, next: express.NextFunction) => rt.delete(req, res, next));
         }
     });
 
@@ -72,34 +72,40 @@ export function bootstrap(mod: any, item?: any): void {
     return;
 }
 
-function cycleProviders(modules: Module[]): Provider[] {
+const cycleProviders = (modules: Module[]): Provider[] => {
     let providers: Provider[] = [];
-    for (let mod of modules) {
-        providers = providers.concat(mod.providers || []);
-        if (mod.imports) {
-            providers = providers.concat(cycleProviders(mod.imports));
+    modules.forEach(mod => {
+        let annotation: Module = Reflect.getMetadata('annotations', mod)[0];
+        providers = providers.concat(annotation.providers || []);
+        if (annotation.imports) {
+            providers = providers.concat(cycleProviders(annotation.imports));
         }
-    }
+    })
     return providers;
-}
+};
 
-function cycleRoutes(modules: Module[], prefix: string = '/'): Route[] {
+const cycleRoutes = (modules: Module[], prefix: string = '/'): Route[] => {
     let routes: Route[] = [];
     modules.forEach((mod, i) => {
-        const modPath = (mod.config ? mod.config.path || '/' : '/');
-        (mod.routes || []).forEach((route, j) => {
+        let annotation: Module = Reflect.getMetadata('annotations', mod)[0];
+
+        const modPath = (annotation.config ? annotation.config.path || '/' : '/');
+
+        (annotation.routes || []).forEach((route, j) => {
             let routeAnnotation = Reflect.getOwnMetadata('annotations', route)[0];
-            routeAnnotation.path = path.join(prefix, modPath, routeAnnotation.path);
+            routeAnnotation.path = path.join(prefix || '/', modPath || '/', routeAnnotation.path || '/');
             Reflect.defineMetadata('annotations', routeAnnotation, route);
             routes.push(route);
         });
 
-        if (mod.imports) {
+        if (annotation.imports) {
             const p = path.join(prefix, modPath);
-            routes = routes.concat(cycleRoutes(mod.imports, p));
+            console.log(p);
+
+            routes = routes.concat(cycleRoutes(annotation.imports, p));
         }
 
     });
 
     return routes;
-}
+};

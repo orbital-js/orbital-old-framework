@@ -2,7 +2,7 @@
 export { Module } from './module/module';
 export { Route } from './route/route';
 export { Middleware } from './middlewares/middleware';
-export { Injectable, Inject } from 'injection-js';
+export { Injectable, Inject, InjectionToken} from 'injection-js';
 
 /* Interfaces */
 export { Get } from './interfaces/get';
@@ -13,3 +13,4 @@ export { Delete } from './interfaces/delete';
 
 /* Methods */
 export { bootstrap } from './methods/bootstrap';
+export {Request, Response, NextFunction} from 'express';
