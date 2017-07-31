@@ -3,7 +3,7 @@
 [![npm version](https://badge.fury.io/js/%40orbital%2Fcore.svg)](https://badge.fury.io/js/%40orbital%2Fcore)
 [![CircleCI](https://circleci.com/gh/orbital-js/orbital.svg?style=shield&circle-token=13c11361db0d0a364102edc7dfad00c19697bd69)](https://circleci.com/gh/orbital-js/orbital/tree/master)
 [![CII Best Practices](https://bestpractices.coreinfrastructure.org/projects/848/badge)](https://bestpractices.coreinfrastructure.org/projects/848)
-[![codebeat badge](https://codebeat.co/badges/991f3d43-fcef-4fb2-8fed-470a7080388a)](https://codebeat.co/projects/github-com-orbital-js-orbital-master)
+[![codebeat badge](https://codebeat.co/badges/8f944502-769c-4816-a7c9-768c3b701061)](https://codebeat.co/projects/github-com-orbital-js-orbital-master)
 
 Orbital is a one-stop shop for making awesome Node.js/Express APIs in TypeScript. Inspired by [Angular](https://www.github.com/angular/angular), we want to make it easy to make Node.js APIs for anyone.
 
