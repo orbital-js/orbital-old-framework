@@ -1,3 +1,13 @@
+<a name="1.0.0-alpha.19"></a>
+# [1.0.0-alpha.19](https://github.com/orbital-js/orbital/compare/v1.0.0-alpha.18...v1.0.0-alpha.19) (2017-07-31)
+
+
+### Bug Fixes
+
+* **core:** remove extraneous config properties from middleware ([dd27e0e](https://github.com/orbital-js/orbital/commit/dd27e0e))
+
+
+
 <a name="1.0.0-alpha.18"></a>
 # [1.0.0-alpha.18](https://github.com/orbital-js/orbital/compare/1.0.0-alpha.17...v1.0.0-alpha.18) (2017-07-31)
 
