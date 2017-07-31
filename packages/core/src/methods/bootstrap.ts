@@ -10,7 +10,6 @@ import { Module } from '../module/module';
 import { Route } from '../route/route';
 import { app } from '../server';
 
-
 /**
  * @description The method to start up a Orbital instance. 
  * This compiles all of the dependencies and prepares them to be served.
@@ -20,6 +19,7 @@ import { app } from '../server';
  * @returns {void} 
  */
 export function bootstrap(mod: any, item?: any): void {
+    let router: express.Router & { [propName: string]: any } = express.Router();
     /* Here, we start with some simple instantiation code.
        Orbital includes a few middlewares we suggest, just to keep you safe. */
     app.use(bodyParser.json());
@@ -46,23 +46,14 @@ export function bootstrap(mod: any, item?: any): void {
         const rt = injector.get(route);
         const routeAnnotation = Reflect.getMetadata('annotations', route);
         if (!routeAnnotation.path) routeAnnotation.path = '/';
-
-        if (rt.get) {
-            app.get(routeAnnotation.path, (req: express.Request, res: express.Response, next: express.NextFunction) => rt.get(req, res, next));
-        }
-        if (rt.post) {
-            app.post(routeAnnotation.path, (req: express.Request, res: express.Response, next: express.NextFunction) => rt.post(req, res, next));
-        }
-        if (rt.patch) {
-            app.patch(routeAnnotation.path, (req: express.Request, res: express.Response, next: express.NextFunction) => rt.patch(req, res, next));
-        }
-        if (rt.put) {
-            app.put(routeAnnotation.path, (req: express.Request, res: express.Response, next: express.NextFunction) => rt.put(req, res, next));
-        }
-        if (rt.delete) {
-            app.delete(routeAnnotation.path, (req: express.Request, res: express.Response, next: express.NextFunction) => rt.delete(req, res, next));
+        let methods = ['get', 'post', 'patch', 'put', 'delete', 'options', 'all', 'head'];
+        for (let method of methods) {
+            if (rt[method]) {
+                router[method](routeAnnotation.path, (req: express.Request, res: express.Response, next: express.NextFunction) => rt[method](req, res, next));
+            }
         }
     });
+    app.use(router);
 
     /* Now we set up the listener and are ready to take requests. */
     const config = annotations.config;
