@@ -87,7 +87,7 @@ const cycleMiddlewares = (modules: Module[]): Middleware[] => {
     modules.forEach(mod => {
         let annotation: Module = Reflect.getMetadata('annotations', mod)[0];
         middlewares = middlewares.concat(annotation.middlewares || []);
-        if (annotation.imports) middlewares = middlewares.concat(cycleMiddlewares(annotation.middlewares));
+        if (annotation.imports) middlewares = middlewares.concat(cycleMiddlewares(annotation.imports));
     });
 
     return middlewares;
