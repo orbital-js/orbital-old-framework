@@ -1,9 +1,10 @@
-<a name="1.0.0-alpha.19"></a>
-# [1.0.0-alpha.19](https://github.com/orbital-js/orbital/compare/v1.0.0-alpha.18...v1.0.0-alpha.19) (2017-07-31)
+<a name="1.0.0-alpha.20"></a>
+# [1.0.0-alpha.20](https://github.com/orbital-js/orbital/compare/v1.0.0-alpha.18...v1.0.0-alpha.20) (2017-07-31)
 
 
 ### Bug Fixes
 
+* **core:** middleware decorator takes no args ([f3d9166](https://github.com/orbital-js/orbital/commit/f3d9166))
 * **core:** remove extraneous config properties from middleware ([dd27e0e](https://github.com/orbital-js/orbital/commit/dd27e0e))
 
 

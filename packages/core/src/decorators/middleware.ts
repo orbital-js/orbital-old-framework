@@ -4,11 +4,11 @@ import { makeDecorator, TypeDecorator } from './util';
 export interface Middleware { }
 
 export interface MiddlewareDecorator {
-    (obj: Middleware): TypeDecorator;
+    (): TypeDecorator;
 
-    new(obj: Middleware): Middleware;
+    new(): Middleware;
 }
 
 
 export const Middleware: MiddlewareDecorator =
-    <MiddlewareDecorator>makeDecorator('Middleware', () => void);
+    <MiddlewareDecorator>makeDecorator('Middleware');
