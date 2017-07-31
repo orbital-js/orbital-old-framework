@@ -15,7 +15,6 @@ export function joinPath(...config: any[]) {
     let pth = ['/'];
     config.forEach((conf: any) => {
         if (conf.path) {
-            console.log(conf.path);
             pth.push(conf.path);
         }
     });

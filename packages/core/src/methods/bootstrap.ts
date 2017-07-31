@@ -100,8 +100,6 @@ const cycleRoutes = (modules: Module[], prefix: string = '/'): Route[] => {
 
         if (annotation.imports) {
             const p = path.join(prefix, modPath);
-            console.log(p);
-
             routes = routes.concat(cycleRoutes(annotation.imports, p));
         }
 
