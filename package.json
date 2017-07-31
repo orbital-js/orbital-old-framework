@@ -10,7 +10,7 @@
     "prepublish": "npm run build",
     "pub": "npm run build; ts-node scripts/ci/deploy.ts",
     "build": "ts-node scripts/ci/build.ts",
-    "cl": "conventional-changelog -p angular -i CHANGELOG.md -s"
+    "cl": "conventional-changelog -p angular -i CHANGELOG.md -s -r 0"
   },
   "repository": {
     "type": "git",
