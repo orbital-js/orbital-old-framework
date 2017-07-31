@@ -5,7 +5,7 @@ import * as helmet from 'helmet';
 import { Injector, Provider, ReflectiveInjector } from 'injection-js';
 import * as path from 'path';
 import 'reflect-metadata';
-import { joinPath, unique } from './util';
+import { joinPath, methods, unique } from './util';
 import { Middleware } from '../decorators/middleware';
 import { Module } from '../decorators/module';
 import { Route } from '../decorators/route';
@@ -46,15 +46,7 @@ export function bootstrap(mod: any, item?: any): void {
 
     /* Notify express of all of the routes */
     routes.forEach((route: any) => {
-        const rt = injector.get(route);
-        const routeAnnotation = Reflect.getMetadata('annotations', route);
-        if (!routeAnnotation.path) routeAnnotation.path = '/';
-        let methods = ['get', 'post', 'patch', 'put', 'delete', 'options', 'all', 'head'];
-        for (let method of methods) {
-            if (rt[method]) {
-                router[method](routeAnnotation.path, (req: express.Request, res: express.Response, next: express.NextFunction) => rt[method](req, res, next));
-            }
-        }
+        useRoute(injector, route, router);
     });
     app.use(router);
 
@@ -64,6 +56,17 @@ export function bootstrap(mod: any, item?: any): void {
     app.listen(port);
     console.info('LISTENING ON PORT ' + port);
     return;
+}
+
+function useRoute(injector: Injector, route: Route, router: any) {
+    const rt = injector.get(route);
+    const routeAnnotation = Reflect.getMetadata('annotations', route);
+    if (!routeAnnotation.path) routeAnnotation.path = '/';
+    for (let method of methods) {
+        if (rt[method]) {
+            router[method](routeAnnotation.path, (req: express.Request, res: express.Response, next: express.NextFunction) => rt[method](req, res, next));
+        }
+    }
 }
 
 const cycleProviders = (modules: Module[]): Provider[] => {
@@ -80,18 +83,19 @@ const cycleProviders = (modules: Module[]): Provider[] => {
 
 const cycleMiddlewares = (modules: Module[]): Middleware[] => {
     let middlewares: Middleware[] = [];
+
     modules.forEach(mod => {
         let annotation: Module = Reflect.getMetadata('annotations', mod)[0];
         middlewares = middlewares.concat(annotation.middlewares || []);
-        if (annotation.imports) {
-            middlewares = middlewares.concat(cycleMiddlewares(annotation.middlewares));
-        }
+        if (annotation.imports) middlewares = middlewares.concat(cycleMiddlewares(annotation.middlewares));
     });
+
     return middlewares;
 };
 
 const cycleRoutes = (modules: Module[], prefix: string = '/'): Route[] => {
     let routes: Route[] = [];
+
     modules.forEach((mod, i) => {
         let annotation: Module = Reflect.getMetadata('annotations', mod)[0];
 

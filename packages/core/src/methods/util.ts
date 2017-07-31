@@ -20,3 +20,5 @@ export function joinPath(...config: any[]) {
     });
     return path.join(pth.join('/'));
 }
+
+export const methods = ['get', 'post', 'patch', 'put', 'delete', 'options', 'all', 'head'];
