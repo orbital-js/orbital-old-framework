@@ -1,16 +1,18 @@
 /* Decorators */
-export { Module } from './module/module';
-export { Route } from './route/route';
-export { Middleware } from './middlewares/middleware';
-export { Injectable, Inject, InjectionToken} from 'injection-js';
+export { Module } from './decorators/module';
+export { Route } from './decorators/route';
+export { Middleware } from './decorators/middleware';
+export { Injectable, Inject, InjectionToken } from 'injection-js';
 
 /* Interfaces */
-export { Get } from './interfaces/get';
-export { Post } from './interfaces/post';
-export { Patch } from './interfaces/patch';
-export { Put } from './interfaces/put';
+export { All } from './interfaces/all';
 export { Delete } from './interfaces/delete';
+export { Get } from './interfaces/get';
+export { Patch } from './interfaces/patch';
+export { Post } from './interfaces/post';
+export { Put } from './interfaces/put';
+export { Use } from './interfaces/use';
+export { Request, Response, NextFunction } from 'express';
 
 /* Methods */
 export { bootstrap } from './methods/bootstrap';
-export {Request, Response, NextFunction} from 'express';

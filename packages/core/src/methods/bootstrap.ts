@@ -6,8 +6,9 @@ import { Injector, Provider, ReflectiveInjector } from 'injection-js';
 import * as path from 'path';
 import 'reflect-metadata';
 import { joinPath, unique } from './util';
-import { Module } from '../module/module';
-import { Route } from '../route/route';
+import { Middleware } from '../decorators/middleware';
+import { Module } from '../decorators/module';
+import { Route } from '../decorators/route';
 import { app } from '../server';
 
 /**
@@ -29,17 +30,19 @@ export function bootstrap(mod: any, item?: any): void {
     /* We strip some data from the type annotation on the module. */
     let routes: Route[] = cycleRoutes([mod]);
     let providers: Provider[] = cycleProviders([mod]);
+    let middlewares: Middleware[] = cycleMiddlewares([mod]);
     let annotations: Module = Reflect.getMetadata('annotations', mod)[0];
 
-    /* If we have any middleware classes, they can be referenced here. */
-    if (annotations.middlewares) {
-        annotations.middlewares.forEach((middleware: any) => {
-            app.use(new middleware().use);
-        });
-    }
 
     /* Use Angular's dependency injection to assosciate all providers to their respective places */
-    let injector: ReflectiveInjector = ReflectiveInjector.resolveAndCreate(<any[]>[...routes, ...providers]);
+    let injector: ReflectiveInjector = ReflectiveInjector.resolveAndCreate(<any[]>[...routes, ...providers, ...middlewares]);
+
+    /* If we have any middleware classes, they can be referenced here. */
+
+    middlewares.forEach((middleware: any) => {
+        let m = injector.get(middleware);
+        app.use((req: express.Request, res: express.Response, next: express.NextFunction) => m.use(req, res, next));
+    });
 
     /* Notify express of all of the routes */
     routes.forEach((route: any) => {
@@ -71,8 +74,20 @@ const cycleProviders = (modules: Module[]): Provider[] => {
         if (annotation.imports) {
             providers = providers.concat(cycleProviders(annotation.imports));
         }
-    })
+    });
     return providers;
+};
+
+const cycleMiddlewares = (modules: Module[]): Middleware[] => {
+    let middlewares: Middleware[] = [];
+    modules.forEach(mod => {
+        let annotation: Module = Reflect.getMetadata('annotations', mod)[0];
+        middlewares = middlewares.concat(annotation.middlewares || []);
+        if (annotation.imports) {
+            middlewares = middlewares.concat(cycleMiddlewares(annotation.middlewares));
+        }
+    });
+    return middlewares;
 };
 
 const cycleRoutes = (modules: Module[], prefix: string = '/'): Route[] => {

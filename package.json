@@ -1,13 +1,12 @@
 {
-  "name": "orbital-dev",
+  "name": "orbital-src",
   "version": "1.0.0-alpha.17",
-  "private": false,
+  "private": true,
   "description": "Orbital is a NodeJS library for making your backends faster than ever using MongoDB, Express, and TypeScript.",
   "main": "dist/index",
   "typings": "dist/index.d.ts",
   "scripts": {
     "test": "sh ./scripts/tests.sh",
-    "docs": "typedoc --out docs",
     "prepublish": "npm run build",
     "pub": "npm run build; ts-node scripts/ci/deploy.ts",
     "build": "ts-node scripts/ci/build.ts",
