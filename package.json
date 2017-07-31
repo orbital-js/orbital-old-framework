@@ -9,7 +9,7 @@
     "test": "sh ./scripts/tests.sh",
     "docs": "typedoc --out docs",
     "prepublish": "npm run build",
-    "publish": "ts-node scripts/ci/deploy.ts",
+    "pub": "npm run build; ts-node scripts/ci/deploy.ts",
     "build": "ts-node scripts/ci/build.ts"
   },
   "repository": {
@@ -19,8 +19,8 @@
   "keywords": [
     "node",
     "typescript",
-    "mongodb",
-    "express"
+    "express",
+    "orbital"
   ],
   "author": "wbhob",
   "license": "MIT",
