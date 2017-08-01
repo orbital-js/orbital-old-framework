@@ -22,3 +22,9 @@ export function joinPath(...config: any[]) {
 }
 
 export const methods = ['get', 'post', 'patch', 'put', 'delete', 'options', 'all', 'head'];
+export type Methods = 'get' | 'post' | 'patch' | 'put' | 'delete' | 'options' | 'all' | 'head';
+
+export function isFunction(functionToCheck: Function) {
+    var getType = {};
+    return functionToCheck && getType.toString.call(functionToCheck) === '[object Function]';
+}

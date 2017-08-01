@@ -5,10 +5,11 @@ import * as helmet from 'helmet';
 import { Injector, Provider, ReflectiveInjector } from 'injection-js';
 import * as path from 'path';
 import 'reflect-metadata';
-import { joinPath, methods, unique } from './util';
+import { Route } from './../decorators/route';
+import { isFunction, joinPath, methods, unique } from './util';
 import { Middleware } from '../decorators/middleware';
 import { Module } from '../decorators/module';
-import { Route } from '../decorators/route';
+import { Orbital } from '../decorators/orbital';
 import { app } from '../server';
 
 /**
@@ -28,7 +29,7 @@ export function bootstrap(mod: any, item?: any): void {
     app.use(compression());
 
     /* We strip some data from the type annotation on the module. */
-    let routes: Route[] = cycleRoutes([mod]);
+    let routes: Orbital[] = cycleRoutes([mod]);
     let providers: Provider[] = cycleProviders([mod]);
     let middlewares: Middleware[] = cycleMiddlewares([mod]);
     let annotations: Module = Reflect.getMetadata('annotations', mod)[0];
@@ -67,6 +68,15 @@ function useRoute(injector: Injector, route: Route, router: any) {
             router[method](routeAnnotation.path, (req: express.Request, res: express.Response, next: express.NextFunction) => rt[method](req, res, next));
         }
     }
+    const propAnnotation: { [propName: string]: Route }[] = Reflect.getMetadata('propMetadata', rt['constructor']);
+    for (let prop in propAnnotation) {
+        const method: Route = propAnnotation[prop][0];
+        method.method = method.method || 'get';
+        method.path = method.path || '/';
+        console.log('annotation', method);
+        router[method.method](path.join(routeAnnotation.path, method.path), (req: express.Request, res: express.Response, next: express.NextFunction) => rt[prop](req, res, next));
+
+    }
 }
 
 const cycleProviders = (modules: Module[]): Provider[] => {
@@ -93,8 +103,8 @@ const cycleMiddlewares = (modules: Module[]): Middleware[] => {
     return middlewares;
 };
 
-const cycleRoutes = (modules: Module[], prefix: string = '/'): Route[] => {
-    let routes: Route[] = [];
+const cycleRoutes = (modules: Module[], prefix: string = '/'): Orbital[] => {
+    let routes: Orbital[] = [];
 
     modules.forEach((mod, i) => {
         let annotation: Module = Reflect.getMetadata('annotations', mod)[0];
