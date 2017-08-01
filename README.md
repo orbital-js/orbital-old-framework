@@ -1,4 +1,6 @@
-# Orbital by Canal
+# Orbital
+
+###### WARNING: ORBITAL IS CURRENTLY IN ALPHA. That means that some APIs may be subject to change. When building larger-scale applications in alpha, please be sure to lock in your dependency version to avoid conflicts.
 
 [![npm version](https://badge.fury.io/js/%40orbital%2Fcore.svg)](https://badge.fury.io/js/%40orbital%2Fcore)
 [![CircleCI](https://circleci.com/gh/orbital-js/orbital.svg?style=shield&circle-token=13c11361db0d0a364102edc7dfad00c19697bd69)](https://circleci.com/gh/orbital-js/orbital/tree/master)
