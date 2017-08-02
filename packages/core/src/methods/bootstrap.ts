@@ -10,7 +10,7 @@ import { isFunction, joinPath, methods, unique } from './util';
 import { Middleware } from '../decorators/middleware';
 import { Module } from '../decorators/module';
 import { Orbital } from '../decorators/orbital';
-import { app } from '../server';
+import { App } from '../server';
 
 /**
  * @description The method to start up a Orbital instance. 
@@ -22,11 +22,6 @@ import { app } from '../server';
  */
 export function bootstrap(mod: any, item?: any): void {
     let router: express.Router & { [propName: string]: any } = express.Router();
-    /* Here, we start with some simple instantiation code.
-       Orbital includes a few middlewares we suggest, just to keep you safe. */
-    app.use(bodyParser.json());
-    app.use(helmet());
-    app.use(compression());
 
     /* We strip some data from the type annotation on the module. */
     let routes: Orbital[] = cycleRoutes([mod]);
@@ -37,8 +32,12 @@ export function bootstrap(mod: any, item?: any): void {
 
     /* Use Angular's dependency injection to assosciate all providers to their respective places */
     let injector: ReflectiveInjector = ReflectiveInjector.resolveAndCreate(<any[]>[...routes, ...providers, ...middlewares]);
-
-    /* If we have any middleware classes, they can be referenced here. */
+    const app = injector.get(App);
+    /* Here, we start with some simple instantiation code.
+       Orbital includes a few middlewares we suggest, just to keep you safe. */
+    app.use(bodyParser.json());
+    app.use(helmet());
+    app.use(compression());
 
     middlewares.forEach((middleware: any) => {
         let m = injector.get(middleware);
