@@ -1,6 +1,7 @@
-import { Injectable } from '@orbital/core';
 import * as _ from 'lodash';
 import * as request from 'request';
+
+import { Injectable } from '@orbital/core';
 import { Observable } from 'rxjs/Observable';
 import { Observer } from 'rxjs/Observer';
 import { mergeOptions } from './http_util';
@@ -21,31 +22,31 @@ export class Http {
         });
     }
 
-    get(url: string, options: request.Options): Observable<request.RequestResponse> {
+    get(url: string, options: request.Options = <any>{}): Observable<request.RequestResponse> {
         return this.request(mergeOptions(options, { url: url, method: 'get' }));
     }
 
-    post(url: string, body: any, options: request.Options): Observable<request.RequestResponse> {
+    post(url: string, body: any, options: request.Options = <any>{}): Observable<request.RequestResponse> {
         return this.request(mergeOptions(options, { url: url, method: 'post', body: body }));
     }
 
-    put(url: string, body: any, options: request.Options): Observable<request.RequestResponse> {
+    put(url: string, body: any, options: request.Options = <any>{}): Observable<request.RequestResponse> {
         return this.request(mergeOptions(options, { url: url, method: 'put', body: body }));
     }
 
-    patch(url: string, body: any, options: request.Options): Observable<request.RequestResponse> {
+    patch(url: string, body: any, options: request.Options = <any>{}): Observable<request.RequestResponse> {
         return this.request(mergeOptions(options, { url: url, method: 'patch', body: body }));
     }
 
-    delete(url: string, options: request.Options): Observable<request.RequestResponse> {
+    delete(url: string, options: request.Options = <any>{}): Observable<request.RequestResponse> {
         return this.request(mergeOptions(options, { url: url, method: 'delete' }));
     }
 
-    head(url: string, options: request.Options): Observable<request.RequestResponse> {
+    head(url: string, options: request.Options = <any>{}): Observable<request.RequestResponse> {
         return this.request(mergeOptions(options, { url: url, method: 'head' }));
     }
 
-    options(url: string, options: request.Options): Observable<request.RequestResponse> {
+    options(url: string, options: request.Options = <any>{}): Observable<request.RequestResponse> {
         return this.request(mergeOptions(options, { url: url, method: 'options' }));
     }
 
