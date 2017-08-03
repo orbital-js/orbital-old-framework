@@ -1,10 +1,11 @@
+import { TypeDecorator, makeDecorator } from './util';
+
 import { Provider } from 'injection-js';
-import { makeDecorator, TypeDecorator } from './util';
 
 export interface Module {
     imports?: any[];
     providers?: Provider[];
-    routes?: any[];
+    orbitals?: any[];
     middlewares?: any[];
     config?: {
         port?: number;
