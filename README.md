@@ -17,7 +17,7 @@ I was writing an API for Canal, and I found that I had to write a significant am
 
 ## Getting Started
 
-The best way to start using Orbital is to check out the [starter project](https://github.com/orbital-js/orbital-starter). It has thorough documentation and a detailed hello-world app to get you started using Orbital. Feel free to use it for your own projects, too! We're currently working on writing detailed docs for Orbital, but when they are available, they will be listed here.
+The best way to start using Orbital is to check out the [starter project](https://github.com/orbital-js/starter). It has thorough documentation and a detailed hello-world app to get you started using Orbital. Feel free to use it for your own projects, too! We're currently working on writing detailed docs for Orbital, but when they are available, they will be listed here.
 
 You can also start by running `npm install --save @orbital/core` to your project and starting from scratch!
 
