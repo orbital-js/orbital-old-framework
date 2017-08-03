@@ -75,7 +75,6 @@ function useRoute(injector: Injector, route: Route, router: any) {
         const method: Route = propAnnotation[prop][0];
         method.method = method.method || 'get';
         method.path = method.path || '/';
-        console.log('annotation', method);
         router[method.method](path.join(routeAnnotation.path, method.path), (req: express.Request, res: express.Response, next: express.NextFunction) => rt[prop](req, res, next));
 
     }
