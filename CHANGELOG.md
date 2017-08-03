@@ -1,12 +1,32 @@
-<a name="1.0.0-alpha.21"></a>
-# [1.0.0-alpha.21](https://github.com/orbital-js/orbital/compare/v1.0.0-alpha.18...v1.0.0-alpha.21) (2017-07-31)
+<a name="1.0.0-alpha.22"></a>
+# [1.0.0-alpha.22](https://github.com/orbital-js/orbital/compare/v1.0.0-alpha.18...v1.0.0-alpha.22) (2017-08-03)
 
 
 ### Bug Fixes
 
 * **core:** middleware decorator takes no args ([f3d9166](https://github.com/orbital-js/orbital/commit/f3d9166))
 * **core:** remove extraneous config properties from middleware ([dd27e0e](https://github.com/orbital-js/orbital/commit/dd27e0e))
+* **core:** remove extraneous console logs ([72183eb](https://github.com/orbital-js/orbital/commit/72183eb))
 * **http:** export http provider ([8be53c3](https://github.com/orbital-js/orbital/commit/8be53c3))
+* **http:** remove requirement for options argument ([13a78bc](https://github.com/orbital-js/orbital/commit/13a78bc))
+
+
+### Code Refactoring
+
+* **core:** rename route -> orbital ([0dd008a](https://github.com/orbital-js/orbital/commit/0dd008a))
+
+
+### Features
+
+* **core:** add route decorator! ([2fd7327](https://github.com/orbital-js/orbital/commit/2fd7327))
+* **http:** depend on RxJS ([e5e1a8c](https://github.com/orbital-js/orbital/commit/e5e1a8c))
+
+
+### BREAKING CHANGES
+
+* **core:** rename @Route to @Orbital, and change `routes`	 property of  Module to orbitals.
+* **core:** The @Route decorator is now @Orbital. @Route has changed to a property decorator
+for use on multiple methods in a single Orbital. Mind this change when upgrading.
 
 
 

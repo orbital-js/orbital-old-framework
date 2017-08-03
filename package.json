@@ -1,6 +1,6 @@
 {
   "name": "orbital-src",
-  "version": "1.0.0-alpha.21",
+  "version": "1.0.0-alpha.22",
   "private": true,
   "description": "Orbital is a NodeJS library for making your backends faster than ever using MongoDB, Express, and TypeScript.",
   "main": "dist/index",
@@ -10,7 +10,7 @@
     "prepublish": "npm run build",
     "pub": "npm run build; ts-node scripts/ci/deploy.ts",
     "build": "ts-node scripts/ci/build.ts",
-    "cl": "conventional-changelog -p angular -i CHANGELOG.md -s -r 0"
+    "cl": "./node_modules/.bin/conventional-changelog -p angular -i CHANGELOG.md -s -r 0"
   },
   "repository": {
     "type": "git",
@@ -45,6 +45,7 @@
     "async": "^2.5.0",
     "chai": "^3.5.0",
     "commitizen": "^2.9.6",
+    "conventional-changelog-cli": "^1.3.2",
     "cp": "^0.2.0",
     "cz-conventional-changelog": "^2.0.0",
     "esdoc": "^1.0.1",
