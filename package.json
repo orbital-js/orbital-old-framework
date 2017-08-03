@@ -6,11 +6,12 @@
   "main": "dist/index",
   "typings": "dist/index.d.ts",
   "scripts": {
-    "test": "sh ./scripts/tests.sh",
+    "build": "ts-node scripts/ci/build.ts",
+    "cl": "./node_modules/.bin/conventional-changelog -p angular -i CHANGELOG.md -s -r 0",
+    "postinstall": "sh ./scripts/ci/install.sh",
     "prepublish": "npm run build",
     "pub": "npm run build; ts-node scripts/ci/deploy.ts",
-    "build": "ts-node scripts/ci/build.ts",
-    "cl": "./node_modules/.bin/conventional-changelog -p angular -i CHANGELOG.md -s -r 0"
+    "test": "sh ./scripts/tests.sh"
   },
   "repository": {
     "type": "git",

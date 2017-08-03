@@ -8,14 +8,14 @@ dependencies:
     - echo "//registry.npmjs.org/:_authToken=$NPM_TOKEN" >> ~/.npmrc
     - sudo apt-get install jq
   override:
-    - npm install
+    - sh ./scripts/ci/install.sh
 compile: 
   override:
-    - node ./node_modules/.bin/tslint packages/**/*.ts
-    - sh ./scripts/ci/build.sh
+    - ./node_modules/.bin/tslint packages/**/*.ts
+    - ./node_modules/.bin/ts-node ./scripts/ci/build.ts
     - |
       if [ "${CIRCLE_BRANCH}" == "master" ]; then
-        node ./scripts/ci/deploy.js
+        ./node_modules/.bin/ts-node ./scripts/ci/deploy.ts
       else
         echo "We are on ${CIRCLE_BRANCH} branch, not going to update docs."
       fi
