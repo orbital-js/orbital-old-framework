@@ -11,7 +11,7 @@ import { Injector, Provider, ReflectiveInjector } from 'injection-js';
 import { isFunction, joinPath, methods, unique } from './util';
 
 import { Middleware } from '../decorators/middleware';
-import { ModWithProviders } from '../interfaces/module-with-providers';
+import { ModWithProviders } from '../interfaces/module_with_providers';
 import { Module } from '../decorators/module';
 import { Orbital } from '../decorators/orbital';
 import { Route } from '../decorators/route';
