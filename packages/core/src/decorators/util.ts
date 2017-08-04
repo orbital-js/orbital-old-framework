@@ -1,3 +1,8 @@
+import 'reflect-metadata';
+
+import { Type } from '../type';
+import { stringify } from '../util';
+
 /**
  * @license
  * Copyright Google Inc. All Rights Reserved.
@@ -6,11 +11,8 @@
  * found in the LICENSE file at https://angular.io/license
  */
 
-import { Type } from '../type';
-import { stringify } from '../util';
 
 let _nextClassId = 0;
-import 'reflect-metadata';
 
 /**
  * Declares the interface to be used with {@link Class}.

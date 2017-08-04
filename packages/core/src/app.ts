@@ -2,7 +2,6 @@ import * as express from 'express';
 
 import { Application, ApplicationRequestHandler, ErrorRequestHandler, IRoute, IRouterHandler, IRouterMatcher, Request, RequestHandler, RequestParamHandler, Response } from 'express-serve-static-core';
 
-import { Express } from 'express';
 import { Injectable } from 'injection-js';
 import { Server } from 'http';
 

@@ -6,7 +6,10 @@
   ],
   "plugins": [
     {
-      "name": "esdoc-typescript-plugin"
+      "name": "esdoc-typescript-plugin",
+      "option": {
+        "enable": true
+      }
     }
   ]
 }
