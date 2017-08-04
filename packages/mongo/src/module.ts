@@ -1,16 +1,20 @@
 import { InjectionToken } from 'injection-js';
 import { Module } from '@orbital/core';
 import { Mongo } from './mongo';
+import { MongoClientConfig } from './db_configuration';
 
-export const DB_URI = new InjectionToken('');
-
-@Module({})
+@Module({
+    providers: [
+        MongoClientConfig,
+        Mongo
+    ]
+})
 export class MongoModule {
-    static forRoot(dbUri: string) {
+    static forRoot(dbConfig: MongoClientConfig) {
         return {
             module: MongoModule,
             providers: [
-                { provider: DB_URI, useValue: dbUri },
+                { provider: MongoClientConfig, useValue: dbConfig },
                 Mongo
             ]
         };
