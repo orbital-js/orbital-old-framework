@@ -1,4 +1,4 @@
-import { Request, Response, NextFunction } from 'express';
+import { ApplicationRequestHandler } from 'express-serve-static-core';
 export interface Use {
-    use(req: Request, res: Response, next?: NextFunction): void;
+    use: ApplicationRequestHandler<this>;
 }
