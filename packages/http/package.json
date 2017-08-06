@@ -10,14 +10,13 @@
         "rxjs": "^5.4.2"
     },
     "devDependencies": {
-        "@orbital/core": "^1.0.0-alpha.11",
+        "@orbital/core": "^1.0.0-alpha.22",
         "@types/lodash": "^4.14.71",
         "@types/request": "^2.0.0",
-        "rxjs": "^5.4.2"
+        "rxjs": "^5.4.2",
+        "typescript": "^2.4.2"
     },
     "dependencies": {
-        "injection-js": "^2.1.0",
-        "lodash": "^4.17.4",
         "reflect-metadata": "^0.1.10",
         "request": "^2.81.0"
     },

@@ -1,4 +1,9 @@
+import 'reflect-metadata';
+
 import * as path from 'path';
+
+import { ModWithProviders } from '../interfaces/module_with_providers';
+import { Module } from '../decorators/module';
 
 export function unique(array: any) {
     let a = array.concat();
@@ -27,4 +32,17 @@ export type Methods = 'get' | 'post' | 'patch' | 'put' | 'delete' | 'options' | 
 export function isFunction(functionToCheck: Function) {
     var getType = {};
     return functionToCheck && getType.toString.call(functionToCheck) === '[object Function]';
+}
+
+export function getModule(mod: any): Module {
+    console.log(mod);
+
+    if ((<ModWithProviders>mod).obModule) {
+        console.log('ob', Reflect.getOwnMetadataKeys(mod.obModule));
+        return Reflect.getMetadata('annotations', (<ModWithProviders>mod).obModule)[0];
+    } else {
+        console.log('!ob', Reflect.getOwnMetadataKeys(mod));
+        return Reflect.getMetadata('annotations', mod)[0];
+    }
+
 }
