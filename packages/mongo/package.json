@@ -1,5 +1,5 @@
 {
-    "name": "@orbital/mongo",
+    "name": "@wbhob/mongo",
     "version": "0.0.0-PLACEHOLDER",
     "description": "Orbital - MongoDB driver wrappers for Orbital",
     "main": "./index",
@@ -10,8 +10,8 @@
         "rxjs": "^5.4.2"
     },
     "devDependencies": {
-        "@orbital/core": "^1.0.0-alpha.22",
         "@types/mongodb": "^2.2.9",
+        "@wbhob/core": "^1.0.0-alpha.22-20170806115133",
         "rxjs": "^5.4.2",
         "typescript": "^2.4.2"
     },

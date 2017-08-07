@@ -1,6 +1,6 @@
 import * as request from 'request';
 
-import { Injectable } from '@orbital/core';
+import { Injectable } from '@wbhob/core';
 import { Observable } from 'rxjs/Observable';
 import { Observer } from 'rxjs/Observer';
 import { mergeOptions } from './http_util';

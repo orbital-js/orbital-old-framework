@@ -35,11 +35,10 @@ function detectRelease(err: Error, old: string) {
   projectHome = path.join(process.cwd(), 'dist/packages/');
 
   let dirs = fs.readdirSync(projectHome);
-  async.eachSeries(dirs, async (directory, callback) => {
+  (<any>async).eachSeries(dirs, async (directory: any, callback: any) => {
     await cycleOverPackages(is_release, versioncode, directory);
     callback();
   });
-
 }
 
 async function cycleOverPackages(release: boolean, version: string, directory: string): Promise<any> {

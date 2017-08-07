@@ -21,15 +21,12 @@
             true,
             "always"
         ],
-        "triple-equals": [
-            true,
-            "allow-null-check"
-        ],
         "variable-name": [
             true,
             "ban-keywords",
             "allow-leading-underscore"
         ],
+        "prefer-const": true,
         "whitespace": [
             true,
             "check-branch",
@@ -38,7 +35,6 @@
             "check-separator",
             "check-type"
         ],
-        "class-name": true,
         "interface-name": [
             true,
             "never-prefix"
@@ -46,7 +42,7 @@
         "switch-default": true,
         "only-arrow-functions": [
             true,
-            "allow-named-functions"
+            "allow-declarations"
         ]
     }
 }

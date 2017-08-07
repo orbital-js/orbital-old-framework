@@ -1,5 +1,5 @@
 {
-    "name": "@orbital/core",
+    "name": "@wbhob/core",
     "version": "0.0.0-PLACEHOLDER",
     "description": "Orbital - the core framework",
     "main": "./core",

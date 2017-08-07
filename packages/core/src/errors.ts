@@ -1,15 +1,33 @@
-import { Response } from 'express';
-export class Errors {
-    public static handle(res: Response, error: Error) {
-        res.status(error.status).json({ message: error.message, code: error.code, status: error.status });
-        throw new Error(error.message);
-    }
+/**
+ * @license
+ * Copyright Google Inc. All Rights Reserved.
+ *
+ * Use of this source code is governed by an MIT-style license that can be
+ * found in the LICENSE file at https://angular.io/license
+ */
+
+
+
+export const ERROR_TYPE = 'ngType';
+export const ERROR_COMPONENT_TYPE = 'ngComponentType';
+export const ERROR_DEBUG_CONTEXT = 'ngDebugContext';
+export const ERROR_ORIGINAL_ERROR = 'ngOriginalError';
+export const ERROR_LOGGER = 'ngErrorLogger';
+
+
+export function getType(error: Error): Function {
+  return (error as any)[ERROR_TYPE];
 }
 
-type HttpCode = number | 500;
+export function getOriginalError(error: Error): Error {
+  return (error as any)[ERROR_ORIGINAL_ERROR];
+}
 
-export interface Error {
-    message: string;
-    code: string | number;
-    status?: 500 | 404 | 200 | number;
+export function getErrorLogger(error: Error): (console: Console, ...values: any[]) => void {
+  return (error as any)[ERROR_LOGGER] || defaultErrorLogger;
+}
+
+
+function defaultErrorLogger(console: Console, ...values: any[]) {
+  (<any>console.error)(...values);
 }

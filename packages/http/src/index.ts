@@ -1,4 +1,4 @@
-/** @module @orbital/http */
+/** @module @wbhob/http */
 
 export { HttpModule } from './module';
 export { Http } from './http';

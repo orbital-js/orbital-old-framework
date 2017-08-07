@@ -1,21 +1,31 @@
-import { InjectionToken, Module } from '@orbital/core';
+import { AsyncFactoryProvider, InjectionToken, Module } from '@wbhob/core';
+import { Db, MongoClient } from 'mongodb';
 
 import { Mongo } from './mongo';
-import { MongoClientConfig } from './db_configuration';
+import { MongoClientConfig } from './mongo_client_config';
+import { MongoFactory } from './mongo_factory';
+
+export const MongoConfigProvider = new InjectionToken<MongoClientConfig>('config');
 
 @Module({
     providers: [
-        MongoClientConfig,
         Mongo
     ]
 })
 export class MongoModule {
-    static forRoot(dbConfig: MongoClientConfig) {
+    static async forRoot(config: MongoClientConfig) {
         return {
             obModule: MongoModule,
             providers: [
-                { provider: MongoClientConfig, useValue: dbConfig },
-                Mongo
+                {
+                    provide: MongoConfigProvider,
+                    useValue: config
+                },
+                {
+                    provide: Mongo,
+                    useAsyncFactory: await MongoFactory,
+                    deps: [MongoConfigProvider]
+                }
             ]
         };
     }

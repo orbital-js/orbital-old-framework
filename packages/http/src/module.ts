@@ -1,7 +1,7 @@
 import 'reflect-metadata';
 
 import { Http } from './http';
-import { Module } from '@orbital/core';
+import { Module } from '@wbhob/core';
 
 @Module({
     providers: [Http]

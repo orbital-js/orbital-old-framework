@@ -1,21 +1,21 @@
 import 'reflect-metadata';
 
-import * as async from 'async';
 import * as bodyParser from 'body-parser';
 import * as compression from 'compression';
 import * as express from 'express';
 import * as helmet from 'helmet';
-import * as http from 'http';
 import * as path from 'path';
 
-import { Injector, Provider, ReflectiveInjector } from 'injection-js';
+import { FactoryProvider, Provider, TypeProvider } from '../di/provider';
 import { getModule, isFunction, joinPath, methods, unique } from './util';
 
-import { Middleware } from '../decorators/middleware';
+import { Injector } from '../di/injector';
+import { Middleware } from '../metadata/middleware';
 import { ModWithProviders } from '../interfaces/module_with_providers';
-import { Module } from '../decorators/module';
-import { Orbital } from '../decorators/orbital';
-import { Route } from '../decorators/route';
+import { Module } from '../metadata/module';
+import { Orbital } from '../metadata/orbital';
+import { ReflectiveInjector } from '../di/reflective_injector';
+import { Route } from '../metadata/route';
 
 /**
  * @description The method to start up a Orbital instance. 
@@ -25,18 +25,22 @@ import { Route } from '../decorators/route';
  * @param {Module} mod 
  * @returns {void} 
  */
-export function bootstrap(mod: any, item?: any): void {
+export async function bootstrap(mod: any, item?: any): Promise<void> {
 
     /* We strip some data from the type annotation on the module. */
-    let middlewares: any[] = cycleMiddlewares([mod]);
-    let providers: Provider[] = cycleProviders([mod]);
-    let orbitals: Orbital[] = cycleOrbitals([mod]);
-    let annotations: Module = Reflect.getMetadata('annotations', mod)[0];
+    const middlewares: any[] = cycleMiddlewares([mod]);
+    const providers: Provider[] = cycleProviders(mod);
+    const orbitals: Orbital[] = cycleOrbitals([mod]);
+    const annotations: Module = Reflect.getMetadata('annotations', mod)[0];
+
 
 
     /* Use Angular's dependency injection to assosciate all providers to their respective places */
-    let injector: ReflectiveInjector = ReflectiveInjector.resolveAndCreate(<any[]>[...orbitals, ...providers, ...middlewares]);
+
+    const injector: ReflectiveInjector = await ReflectiveInjector.resolveAndCreate(<any[]>[...providers, ...orbitals, ...middlewares]);
+
     const app = express();
+
     /* Here, we start with some simple instantiation code.
        Orbital includes a few middlewares we suggest, just to keep you safe. */
 
@@ -44,35 +48,39 @@ export function bootstrap(mod: any, item?: any): void {
     app.use(helmet());
     app.use(compression());
 
-    middlewares.forEach((middleware: any) => {
-        let m = injector.get(middleware);
+
+    for (const middleware of middlewares) {
+        const m = await injector.get(middleware);
         app.use((req: express.Request, res: express.Response, next: express.NextFunction) => m.use(req, res, next));
-    });
+    }
 
     /* Notify express of all of the routes */
-    orbitals.forEach((route: any) => {
-        useRoute(injector, route, app);
-    });
+    for (const route of orbitals) {
+        await useRoute(injector, route, app);
+    }
+
 
     /* Now we set up the listener and are ready to take requests. */
     const config = annotations.config;
     const port = config && config.port ? config.port : process.env.PORT ? process.env.PORT : 8080;
+
     app.listen(port);
     console.info('LISTENING ON PORT ' + port);
     return;
 }
 
-function useRoute(injector: Injector, route: Route, router: any) {
-    const rt = injector.get(route);
+async function useRoute(injector: Injector, route: Route, router: any) {
+    const rt = await injector.get(route);
     const routeAnnotation = Reflect.getMetadata('annotations', route);
+    console.log(routeAnnotation);
     if (!routeAnnotation.path) routeAnnotation.path = '/';
-    for (let method of methods) {
+    for (const method of methods) {
         if (rt[method]) {
             router[method](routeAnnotation.path, (req: express.Request, res: express.Response, next: express.NextFunction) => rt[method](req, res, next));
         }
     }
     const propAnnotation: { [propName: string]: Route }[] = Reflect.getMetadata('propMetadata', rt['constructor']);
-    for (let prop in propAnnotation) {
+    for (const prop in propAnnotation) {
         const method: Route = propAnnotation[prop][0];
         method.method = method.method || 'get';
         method.path = method.path || '/';
@@ -80,30 +88,37 @@ function useRoute(injector: Injector, route: Route, router: any) {
     }
 }
 
-const cycleProviders = (modules: (Module | ModWithProviders)[] = []): Provider[] => {
-    let providers: Provider[] = [];
-    modules.forEach(mod => {
-        let annotation: Module = getModule(mod);
-        if ((<ModWithProviders>mod).obModule && (<ModWithProviders>mod).providers) {
-            providers = providers.concat(mod.providers || []);
-        } else {
-            providers = providers.concat(annotation.providers || []);
-        }
+function cycleProviders(module: (Module | ModWithProviders)): Provider[] {
+    const providers: Provider[] = [];
 
-        if (annotation.imports) {
-            providers = providers.concat(cycleProviders(annotation.imports));
-        }
-    });
-    console.log(providers);
-    
+    const annotation: Module = getModule(module);
+
+    let moduleProviders: Provider[] = [];
+    if ((<ModWithProviders>module).obModule && (<ModWithProviders>module).providers) {
+        moduleProviders = (<ModWithProviders>module).providers;
+    } else {
+        moduleProviders = annotation.providers || [];
+    }
+
+    for (const provider of moduleProviders) {
+        providers.push((<Provider>provider));
+    }
+
+    for (const mod of (annotation.imports || [])) {
+        const importsProviderArray = cycleProviders(mod);
+        importsProviderArray.forEach(provider => {
+            providers.push(provider);
+        });
+    }
+
     return providers;
-};
+}
 
 const cycleMiddlewares = (modules: (Module | ModWithProviders)[] = []): any[] => {
     let middlewares: any[] = [];
 
     modules.forEach(mod => {
-        let annotation: Module = getModule(mod);
+        const annotation: Module = getModule(mod);
         middlewares = middlewares.concat(annotation.middlewares || []);
         if (annotation.imports) middlewares = middlewares.concat(cycleMiddlewares(annotation.imports));
     });
@@ -115,16 +130,13 @@ const cycleOrbitals = (modules: (Module | ModWithProviders)[] = [], prefix: stri
     let routes: Orbital[] = [];
 
     modules.forEach((mod) => {
-        let annotation: Module = getModule(mod);
+        const annotation: Module = getModule(mod);
 
         const modPath = (annotation.config ? annotation.config.path || '/' : '/');
 
         if (annotation.orbitals) {
-            for (let route of annotation.orbitals) {
-                console.log(route);
-                console.log(Reflect.getMetadata('design:paramtypes', route));
-                
-                let orbital: Orbital = Reflect.getMetadata('annotations', route)[0];
+            for (const route of annotation.orbitals) {
+                const orbital: Orbital = Reflect.getMetadata('annotations', route)[0];
                 orbital.path = path.join(prefix || '/', modPath || '/', orbital.path || '/');
                 Reflect.defineMetadata('annotations', orbital, route);
                 routes.push(route);

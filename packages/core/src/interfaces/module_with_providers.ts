@@ -1,5 +1,5 @@
-import { Module } from '../decorators/module';
-import { Provider } from 'injection-js';
+import { Module } from '../metadata/module';
+import { Provider } from '../di/provider';
 
 export interface ModWithProviders {
     obModule: Module;

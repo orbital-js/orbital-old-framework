@@ -14,16 +14,14 @@ import {
     ReplSet,
     Server
 } from 'mongodb';
-import { Inject, Injectable } from '@orbital/core';
+import { Inject, Injectable } from '@wbhob/core';
 
-import { MongoClientConfig } from './db_configuration';
+import { MongoClientConfig } from './mongo_client_config';
 
 export type Default = any;
 
 @Injectable()
 export class Mongo {
-    db: Db;
-
     serverConfig: Server | ReplSet | Mongos = this.db.serverConfig;
     bufferMaxEntries: number = this.db.bufferMaxEntries;
     databaseName: string = this.db.databaseName;
@@ -31,14 +29,6 @@ export class Mongo {
     native_parser: boolean = this.db.native_parser;
     slaveOk: boolean = this.db.slaveOk;
     writeConcern: any = this.db.writeConcern;
-
-    constructor(
-        config: MongoClientConfig
-    ) {
-        MongoClient.connect(config.uri, config.options = {}).then((db: Db) => {
-            this.db = db;
-        });
-    }
 
     addUser = this.db.addUser;
     admin = this.db.admin;
@@ -60,6 +50,10 @@ export class Mongo {
     renameCollection = this.db.renameCollection;
     stats = this.db.stats;
 
+
+    constructor(
+        private db: Db
+    ) { }
 
     // addUser(username: string, password: string, options?: DbAddUserOptions): Promise<any>;
     // admin(): Admin;

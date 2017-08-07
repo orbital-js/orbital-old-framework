@@ -1,5 +1,5 @@
 {
-    "name": "@orbital/http",
+    "name": "@wbhob/http",
     "version": "0.0.0-PLACEHOLDER",
     "description": "Orbital - RequestJS wrappers for Orbital",
     "main": "./index",
@@ -10,7 +10,7 @@
         "rxjs": "^5.4.2"
     },
     "devDependencies": {
-        "@orbital/core": "^1.0.0-alpha.22",
+        "@wbhob/core": "^1.0.0-alpha.22",
         "@types/lodash": "^4.14.71",
         "@types/request": "^2.0.0",
         "rxjs": "^5.4.2",

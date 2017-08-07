@@ -1,8 +1,12 @@
-export { Module } from './decorators/module';
-export { Route } from './decorators/route';
-export { Middleware } from './decorators/middleware';
-export { Orbital } from './decorators/orbital';
-export { Injectable, Inject, InjectionToken } from 'injection-js';
+import { ClassProvider, TypeProvider, ValueProvider } from 'injection-js';
+export { Module } from './metadata/module';
+export { Route } from './metadata/route';
+export { Middleware } from './metadata/middleware';
+export { Orbital } from './metadata/orbital';
+
+export { InjectionToken } from './di/injection_token';
+export { Inject, Injectable } from './di/metadata';
+export { Provider, AsyncFactoryProvider, FactoryProvider, ClassProvider, ExistingProvider, TypeProvider, ValueProvider } from './di/provider';
 
 export { All } from './interfaces/all';
 export { Delete } from './interfaces/delete';
