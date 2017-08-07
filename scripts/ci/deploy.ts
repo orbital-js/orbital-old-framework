@@ -1,4 +1,3 @@
-import * as async from 'async';
 import * as fs from 'fs';
 import * as moment from 'moment';
 import * as npm from 'npm';
@@ -8,16 +7,16 @@ const config = require('../../package.json');
 
 let projectHome: string;
 npm.load(() => {
-  npm.commands.show(['@orbital/core'], (err: Error, old: any) => {
+  npm.commands.show(['@orbital/core'], async (err: Error, old: any) => {
     if (err) {
       throw err;
     } else {
-      detectRelease(err, Object.keys(old)[0]);
+      await detectRelease(err, Object.keys(old)[0]);
     }
   });
 });
 
-function detectRelease(err: Error, old: string) {
+async function detectRelease(err: Error, old: string) {
   console.log(old);
 
   const version = config.version;
@@ -35,10 +34,10 @@ function detectRelease(err: Error, old: string) {
   projectHome = path.join(process.cwd(), 'dist/packages/');
 
   let dirs = fs.readdirSync(projectHome);
-  async.eachSeries(dirs, async (directory, callback) => {
+
+  for (const directory of dirs) {
     await cycleOverPackages(is_release, versioncode, directory);
-    callback();
-  });
+  }
 
 }
 
