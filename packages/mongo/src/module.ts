@@ -1,11 +1,11 @@
 import { InjectionToken, Module } from '@orbital/core';
 
 import { Mongo } from './mongo';
-import { MongoClientConfig } from './db_configuration';
+import { MongoClientConfig } from './mongo_client_config';
+import { MongoConfig } from './mongo_config';
 
 @Module({
     providers: [
-        MongoClientConfig,
         Mongo
     ]
 })
@@ -14,7 +14,7 @@ export class MongoModule {
         return {
             obModule: MongoModule,
             providers: [
-                { provider: MongoClientConfig, useValue: dbConfig },
+                { provide: MongoConfig, useValue: dbConfig },
                 Mongo
             ]
         };

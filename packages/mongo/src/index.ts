@@ -2,4 +2,5 @@
 
 export { MongoModule } from './module';
 export { Mongo } from './mongo';
-export { MongoClientConfig } from './db_configuration';
+export { MongoClientConfig } from './mongo_client_config';
+export { MongoConfig } from './mongo_config';

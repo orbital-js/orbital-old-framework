@@ -1,10 +1,7 @@
 import { Injectable } from '@orbital/core';
 import { MongoClientOptions } from 'mongodb';
 
-@Injectable()
 export class MongoClientConfig {
-    uri: string;
+    url: string;
     options?: MongoClientOptions;
-    
-    constructor() { }
 }
