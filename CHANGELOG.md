@@ -1,5 +1,23 @@
+<a name="1.0.0-alpha.23"></a>
+# [1.0.0-alpha.23](https://github.com/orbital-js/orbital/compare/1.0.0-alpha.22...v1.0.0-alpha.23) (2017-08-11)
+
+
+### Bug Fixes
+
+* **core:** take any middleware as argument to Use ([65cc310](https://github.com/orbital-js/orbital/commit/65cc310))
+
+
+### Features
+
+* **core:** add ModuleWithProviders ([bed29d5](https://github.com/orbital-js/orbital/commit/bed29d5))
+* **mongo:** complete mongo interface ([1cb44aa](https://github.com/orbital-js/orbital/commit/1cb44aa))
+* **mongo:** configure mongo database provider ([17655fb](https://github.com/orbital-js/orbital/commit/17655fb))
+* **mongo:** create mongo module ([d1ee287](https://github.com/orbital-js/orbital/commit/d1ee287))
+
+
+
 <a name="1.0.0-alpha.22"></a>
-# [1.0.0-alpha.22](https://github.com/orbital-js/orbital/compare/v1.0.0-alpha.18...v1.0.0-alpha.22) (2017-08-03)
+# [1.0.0-alpha.22](https://github.com/orbital-js/orbital/compare/v1.0.0-alpha.18...1.0.0-alpha.22) (2017-08-03)
 
 
 ### Bug Fixes
