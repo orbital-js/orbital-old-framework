@@ -1,30 +1,28 @@
 {
-    "name": "@orbital/core",
-    "version": "0.0.0-PLACEHOLDER",
-    "description": "Orbital - the core framework",
-    "main": "./core",
-    "typings": "./core.d.ts",
-    "author": "wbhob",
-    "license": "MIT",
-    "peerDependencies": {
-        "typescript": ">=2.1.0"
-    },
-    "dependencies": {
-        "async": "^2.5.0",
-        "body-parser": "^1.16.0",
-        "compression": "^1.6.2",
-        "express": "^4.14.0",
-        "helmet": "^3.4.0",
-        "injection-js": "^2.1.0",
-        "mongodb": "^2.2.21",
-        "reflect-metadata": "^0.1.10"
-    },
-    "repository": {
-        "type": "git",
-        "url": "https://github.com/orbital-js/orbital.git"
-    },
-    "devDependencies": {
-        "@types/async": "^2.0.40",
-        "typescript": "^2.4.2"
-    }
+  "name": "@orbital/core",
+  "version": "0.0.0-PLACEHOLDER",
+  "description": "Orbital - the core framework",
+  "main": "./core",
+  "typings": "./core.d.ts",
+  "author": "wbhob",
+  "license": "MIT",
+  "peerDependencies": {
+    "typescript": ">=2.1.0"
+  },
+  "dependencies": {
+    "body-parser": "^1.16.0",
+    "compression": "^1.6.2",
+    "express": "^4.14.0",
+    "helmet": "^3.4.0",
+    "injection-js": "^2.1.0",
+    "mongodb": "^2.2.21",
+    "reflect-metadata": "^0.1.10"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/orbital-js/orbital.git"
+  },
+  "devDependencies": {
+    "typescript": "^2.4.2"
+  }
 }
