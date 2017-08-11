@@ -1,3 +1,8 @@
+/** 
+ * @ngdoc module
+ * @module core
+ * @private
+ */
 export { Module } from './decorators/module';
 export { Route } from './decorators/route';
 export { Middleware } from './decorators/middleware';

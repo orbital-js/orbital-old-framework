@@ -13,6 +13,11 @@ export interface Module {
     };
 }
 
+/**
+ * @description 
+ * @export
+ * @interface ModuleDecorator
+ */
 export interface ModuleDecorator {
     (obj: Module): TypeDecorator;
 
