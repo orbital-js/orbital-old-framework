@@ -1,13 +1,15 @@
 import { TypeDecorator, makeDecorator } from './util';
 
-// export interface Middleware { }
+export interface Middleware {
+    path?: string;
+}
 
 export interface MiddlewareDecorator {
-    (): TypeDecorator;
+    (m: Middleware): TypeDecorator;
 
-    new(): any;
+    new(m: Middleware): any;
 }
 
 
 export const Middleware: MiddlewareDecorator =
-    <MiddlewareDecorator>makeDecorator('Middleware');
+    <MiddlewareDecorator>makeDecorator('Middleware', (m: Middleware = { path: '/' }) => m);

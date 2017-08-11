@@ -46,7 +46,8 @@ export function bootstrap(mod: any, item?: any): void {
 
     middlewares.forEach((middleware: any) => {
         let m = injector.get(middleware);
-        app.use((req: express.Request, res: express.Response, next: express.NextFunction) => m.use(req, res, next));
+        let annotation = Reflect.getMetadata('annotations', m);
+        app.use(annotation.path || '/', (req: express.Request, res: express.Response, next: express.NextFunction) => m.use(req, res, next));
     });
 
     /* Notify express of all of the routes */
@@ -95,17 +96,25 @@ const cycleProviders = (modules: (Module | ModWithProviders)[] = []): Provider[]
         }
     });
     console.log(providers);
-    
+
     return providers;
 };
 
-const cycleMiddlewares = (modules: (Module | ModWithProviders)[] = []): any[] => {
+const cycleMiddlewares = (modules: (Module | ModWithProviders)[] = [], prefix: string = '/'): any[] => {
     let middlewares: any[] = [];
+
 
     modules.forEach(mod => {
         let annotation: Module = getModule(mod);
+
+        const modPath = (annotation.config ? annotation.config.path || '/' : '/');
+
         middlewares = middlewares.concat(annotation.middlewares || []);
-        if (annotation.imports) middlewares = middlewares.concat(cycleMiddlewares(annotation.imports));
+
+        if (annotation.imports) {
+            const p = path.join(prefix, modPath);
+            middlewares = middlewares.concat(cycleMiddlewares(annotation.imports, p));
+        }
     });
 
     return middlewares;
@@ -123,7 +132,7 @@ const cycleOrbitals = (modules: (Module | ModWithProviders)[] = [], prefix: stri
             for (let route of annotation.orbitals) {
                 console.log(route);
                 console.log(Reflect.getMetadata('design:paramtypes', route));
-                
+
                 let orbital: Orbital = Reflect.getMetadata('annotations', route)[0];
                 orbital.path = path.join(prefix || '/', modPath || '/', orbital.path || '/');
                 Reflect.defineMetadata('annotations', orbital, route);
