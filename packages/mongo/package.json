@@ -1,26 +1,26 @@
 {
-    "name": "@orbital/mongo",
-    "version": "0.0.0-PLACEHOLDER",
-    "description": "Orbital - MongoDB driver wrappers for Orbital",
-    "main": "./index",
-    "typings": "./index.d.ts",
-    "author": "wbhob",
-    "license": "MIT",
-    "peerDependencies": {
-        "@orbital/core": "^1.0.0-alpha.23",
-        "rxjs": "^5.4.2"
-    },
-    "devDependencies": {
-        "@orbital/core": "^1.0.0-alpha.22",
-        "@types/mongodb": "^2.2.9",
-        "typescript": "^2.4.2"
-    },
-    "dependencies": {
-        "mongodb": "^2.2.30",
-        "reflect-metadata": "^0.1.10"
-    },
-    "repository": {
-        "type": "git",
-        "url": "https://github.com/orbital-js/orbital.git"
-    }
+  "name": "@orbital/mongo",
+  "version": "0.0.0-PLACEHOLDER",
+  "description": "Orbital - MongoDB driver wrappers for Orbital",
+  "main": "./index",
+  "typings": "./index.d.ts",
+  "author": "wbhob",
+  "license": "MIT",
+  "peerDependencies": {
+    "@orbital/core": "^1.0.0-alpha.23",
+    "rxjs": "^5.4.2"
+  },
+  "devDependencies": {
+    "@orbital/core": "^1.0.0-alpha.22",
+    "@types/mongodb": "^2.2.9",
+    "typescript": "^2.4.2"
+  },
+  "dependencies": {
+    "mongodb": "^2.2.31",
+    "reflect-metadata": "^0.1.10"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/orbital-js/orbital.git"
+  }
 }
