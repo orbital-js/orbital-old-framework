@@ -31,11 +31,11 @@ import { Observer } from 'rxjs/Observer';
 export class GraphQL {
     constructor() { }
 
-    useSchema(options: graphQLHTTP.Options) {
+    useSchema(options: graphQLHTTP.Options): graphQLHTTP.Middleware {
         return graphQLHTTP(options);
     }
 
-    async query(schema: GraphQLSchema, query: string) {
+    async query(schema: GraphQLSchema, query: string): Promise<ExecutionResult> {
         return await graphql(schema, query);
     }
 
@@ -43,35 +43,35 @@ export class GraphQL {
         return new GraphQLSchema(schema);
     }
 
-    createScalar(conf: GraphQLScalarTypeConfig<any, any>) {
+    createScalar(conf: GraphQLScalarTypeConfig<any, any>): GraphQLScalarType {
         return new GraphQLScalarType(conf);
     }
 
-    createObject(conf: GraphQLObjectTypeConfig<any, any>) {
+    createObject(conf: GraphQLObjectTypeConfig<any, any>): GraphQLObjectType {
         return new GraphQLObjectType(conf);
     }
 
-    createInterface(conf: GraphQLInterfaceTypeConfig<any, any>) {
+    createInterface(conf: GraphQLInterfaceTypeConfig<any, any>): GraphQLInterfaceType {
         return new GraphQLInterfaceType(conf);
     }
 
-    createUnion(conf: GraphQLUnionTypeConfig<any, any>) {
+    createUnion(conf: GraphQLUnionTypeConfig<any, any>): GraphQLUnionType {
         return new GraphQLUnionType(conf);
     }
 
-    createEnum(conf: GraphQLEnumTypeConfig) {
+    createEnum(conf: GraphQLEnumTypeConfig): GraphQLEnumType {
         return new GraphQLEnumType(conf);
     }
 
-    createInputObject(conf: GraphQLInputObjectTypeConfig) {
+    createInputObject(conf: GraphQLInputObjectTypeConfig): GraphQLInputObjectType {
         return new GraphQLInputObjectType(conf);
     }
 
-    createList(conf: GraphQLType) {
+    createList(conf: GraphQLType): GraphQLList<any> {
         return new GraphQLList(conf);
     }
 
-    createNonNull(conf: GraphQLType) {
+    createNonNull(conf: GraphQLType): GraphQLNonNull<any> {
         return new GraphQLNonNull(conf);
     }
 }
