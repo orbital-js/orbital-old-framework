@@ -5,9 +5,9 @@ export interface Middleware {
 }
 
 export interface MiddlewareDecorator {
-    (m: Middleware): TypeDecorator;
+    (m?: Middleware): TypeDecorator;
 
-    new(m: Middleware): any;
+    new(m?: Middleware): any;
 }
 
 
