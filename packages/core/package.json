@@ -23,6 +23,9 @@
     "url": "https://github.com/orbital-js/orbital.git"
   },
   "devDependencies": {
+    "@types/body-parser": "^1.16.4",
+    "@types/express": "^4.0.36",
+    "@types/helmet": "0.0.36",
     "typescript": "^2.4.2"
   }
 }

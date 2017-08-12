@@ -11,7 +11,7 @@
         "removeComments": false,
         "preserveConstEnums": true,
         "sourceMap": true,
-        "outDir": "../../dist/packages/core",
+        "outDir": "../../dist/packages/http",
         "target": "es6",
         "lib": [
             "es6",
