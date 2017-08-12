@@ -1,4 +1,5 @@
-import { ApplicationRequestHandler } from 'express-serve-static-core';
+import { ApplicationRequestHandler, RequestHandler } from 'express-serve-static-core';
+
 export interface Use {
-    use: ApplicationRequestHandler<this>;
+    use: ApplicationRequestHandler<any> | RequestHandler;
 }
