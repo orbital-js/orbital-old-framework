@@ -1,0 +1,30 @@
+{
+  "name": "@orbital/middlewares",
+  "version": "0.0.0-PLACEHOLDER",
+  "description": "Orbital - RequestJS wrappers for Orbital",
+  "main": "./index",
+  "typings": "./index.d.ts",
+  "author": "wbhob",
+  "license": "MIT",
+  "peerDependencies": {
+    "@orbital/core": "^1.0.0-alpha.23",
+    "rxjs": "^5.4.2"
+  },
+  "devDependencies": {
+    "@orbital/core": "^1.0.0-alpha.22",
+    "@types/body-parser": "^1.16.4",
+    "@types/lodash": "^4.14.71",
+    "@types/request": "^2.0.0",
+    "rxjs": "^5.4.2",
+    "typescript": "^2.4.2"
+  },
+  "dependencies": {
+    "body-parser": "^1.17.2",
+    "reflect-metadata": "^0.1.10",
+    "request": "^2.81.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/orbital-js/orbital.git"
+  }
+}
