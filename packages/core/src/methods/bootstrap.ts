@@ -1,6 +1,5 @@
 import 'reflect-metadata';
 
-import * as async from 'async';
 import * as bodyParser from 'body-parser';
 import * as compression from 'compression';
 import * as express from 'express';
