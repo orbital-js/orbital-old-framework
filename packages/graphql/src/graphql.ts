@@ -2,6 +2,7 @@ import * as graphQLHTTP from 'express-graphql';
 import * as request from 'request';
 
 import {
+    ExecutionResult,
     GraphQLEnumType,
     GraphQLEnumTypeConfig,
     GraphQLInputObjectType,
