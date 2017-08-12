@@ -1,31 +1,51 @@
 import * as bodyParser from 'body-parser';
 
-import { Middleware, NextFunction, Request, Response, Use } from '@orbital/core';
+import { Middleware, NextFunction, Optional, Request, Response, Use } from '@orbital/core';
 
 @Middleware()
 export class BodyParserJson implements Use {
-    use(req: Request, res: Response, next: NextFunction) { 
-        bodyParser.json()(req, res, next);
+
+    constructor(
+        @Optional() public options: bodyParser.OptionsJson = {}
+    ) { }
+
+    use(req: Request, res: Response, next: NextFunction) {
+        bodyParser.json(this.options)(req, res, next);
     }
 }
 
 @Middleware()
 export class BodyParserRaw implements Use {
-    use(req: Request, res: Response, next: NextFunction) { 
-        bodyParser.raw()(req, res, next);
+
+    constructor(
+        @Optional() public options: bodyParser.Options = {}
+    ) { }
+
+    use(req: Request, res: Response, next: NextFunction) {
+        bodyParser.raw(this.options)(req, res, next);
     }
 }
 
 @Middleware()
 export class BodyParserText implements Use {
-    use(req: Request, res: Response, next: NextFunction) { 
-        bodyParser.text()(req, res, next);
+
+    constructor(
+        @Optional() public options: bodyParser.OptionsText = {}
+    ) { }
+
+    use(req: Request, res: Response, next: NextFunction) {
+        bodyParser.text(this.options)(req, res, next);
     }
 }
 
 @Middleware()
 export class BodyParserUrlEncoded implements Use {
-    use(req: Request, res: Response, next: NextFunction) { 
-        bodyParser.urlencoded()(req, res, next);
+    
+    constructor(
+        @Optional() public options: bodyParser.OptionsUrlencoded = {}
+    ) { }
+
+    use(req: Request, res: Response, next: NextFunction) {
+        bodyParser.urlencoded(this.options)(req, res, next);
     }
 }
