@@ -21,11 +21,10 @@
         "skipLibCheck": true,
         "emitDecoratorMetadata": true,
         "typeRoots": [
-            "node_modules/@types",
-            "./types"
+            "./node_modules/@types"
         ]
     },
-    "files": [
-        "index.ts"
+    "include": [
+        "./index.ts"
     ]
 }

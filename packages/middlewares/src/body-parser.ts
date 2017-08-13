@@ -1,13 +1,12 @@
 import * as bodyParser from 'body-parser';
 
 import { Middleware, NextFunction, Optional, Request, Response, Use } from '@orbital/core';
-import { Options, OptionsJson, OptionsText, OptionsUrlencoded } from 'body-parser';
 
 @Middleware()
 export class BodyParserJson implements Use {
 
     constructor(
-        @Optional() public options: OptionsJson = {}
+        @Optional() public options: bodyParser.OptionsJson = {}
     ) { }
 
     use(req: Request, res: Response, next: NextFunction) {
@@ -19,7 +18,7 @@ export class BodyParserJson implements Use {
 export class BodyParserRaw implements Use {
 
     constructor(
-        @Optional() public options: Options = {}
+        @Optional() public options: bodyParser.Options = {}
     ) { }
 
     use(req: Request, res: Response, next: NextFunction) {
@@ -31,7 +30,7 @@ export class BodyParserRaw implements Use {
 export class BodyParserText implements Use {
 
     constructor(
-        @Optional() public options: OptionsText = {}
+        @Optional() public options: bodyParser.OptionsText = {}
     ) { }
 
     use(req: Request, res: Response, next: NextFunction) {
@@ -43,7 +42,7 @@ export class BodyParserText implements Use {
 export class BodyParserUrlEncoded implements Use {
 
     constructor(
-        @Optional() public options: OptionsUrlencoded = {}
+        @Optional() public options: bodyParser.OptionsUrlencoded = {}
     ) { }
 
     use(req: Request, res: Response, next: NextFunction) {
