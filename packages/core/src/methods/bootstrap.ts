@@ -1,10 +1,6 @@
 import 'reflect-metadata';
 
-import * as bodyParser from 'body-parser';
-import * as compression from 'compression';
 import * as express from 'express';
-import * as helmet from 'helmet';
-import * as http from 'http';
 import * as path from 'path';
 
 import { Injector, Provider, ReflectiveInjector } from 'injection-js';
@@ -38,10 +34,6 @@ export function bootstrap(mod: any, item?: any): void {
     const app = express();
     /* Here, we start with some simple instantiation code.
        Orbital includes a few middlewares we suggest, just to keep you safe. */
-
-    app.use(bodyParser.json());
-    app.use(helmet());
-    app.use(compression());
 
     middlewares.forEach((middleware: any) => {
         let m = injector.get(middleware);
