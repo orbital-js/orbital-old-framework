@@ -1,3 +1,34 @@
+<a name="1.0.0-alpha.24"></a>
+# [1.0.0-alpha.24](https://github.com/orbital-js/orbital/compare/1.0.0-alpha.23...v1.0.0-alpha.24) (2017-08-14)
+
+
+### Bug Fixes
+
+* remove extra console logs ([1b79de5](https://github.com/orbital-js/orbital/commit/1b79de5))
+* **core:** add optional path property to middleware ([a71cc04](https://github.com/orbital-js/orbital/commit/a71cc04))
+* **core:** allow middleware factories with RequestHandler type on use ([d437b97](https://github.com/orbital-js/orbital/commit/d437b97))
+* **core:** cycle path of middlewares ([88ff6d8](https://github.com/orbital-js/orbital/commit/88ff6d8))
+* **core:** export additional classes from injection ([9310c8f](https://github.com/orbital-js/orbital/commit/9310c8f))
+* **core:** make middleware config optional ([1c98e6b](https://github.com/orbital-js/orbital/commit/1c98e6b))
+* **graphql:** add ExecutionResult type ([c12aea2](https://github.com/orbital-js/orbital/commit/c12aea2))
+* **graphql:** explicitly type methods ([7777ae0](https://github.com/orbital-js/orbital/commit/7777ae0))
+* **middlewares:** restructure to accomodate typescript's weirdness ([4910d31](https://github.com/orbital-js/orbital/commit/4910d31))
+* **middlewares/body-parser:** add internal typings for modules ([29cdf30](https://github.com/orbital-js/orbital/commit/29cdf30))
+* **middlewares/body-parser:** take options parameter from factory ([4e179c9](https://github.com/orbital-js/orbital/commit/4e179c9))
+
+
+### Features
+
+* **graphql:** add graphql wrapper for Orbital! Looking for feature requests and PRs to improve the module ([ca3f6c4](https://github.com/orbital-js/orbital/commit/ca3f6c4))
+* **middlewares:** add middlewares package with body parser ([5d6f67b](https://github.com/orbital-js/orbital/commit/5d6f67b))
+
+
+
+<a name="1.0.0-alpha.23"></a>
+# [1.0.0-alpha.23](https://github.com/orbital-js/orbital/compare/v1.0.0-alpha.23...1.0.0-alpha.23) (2017-08-11)
+
+
+
 <a name="1.0.0-alpha.23"></a>
 # [1.0.0-alpha.23](https://github.com/orbital-js/orbital/compare/1.0.0-alpha.22...v1.0.0-alpha.23) (2017-08-11)
 
