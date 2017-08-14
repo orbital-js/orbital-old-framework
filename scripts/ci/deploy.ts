@@ -6,6 +6,8 @@ import * as shell from 'shelljs';
 const config = require('../../package.json');
 
 let projectHome: string;
+const datecode = moment().format('YYYYMMDDhhmmss');
+
 npm.load(() => {
   npm.commands.show(['@orbital/core'], async (err: Error, old: any) => {
     if (err) {
@@ -64,7 +66,6 @@ async function cycleOverPackages(release: boolean, version: string, directory: s
         } else {
 
           console.log('NIGHTLY DETECTED');
-          const datecode = moment().format('YYYYMMDDhhmmss');
           let ver = `${config.version}-${datecode}`;
 
 
