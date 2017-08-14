@@ -35,13 +35,9 @@ export function isFunction(functionToCheck: Function) {
 }
 
 export function getModule(mod: any): Module {
-    console.log(mod);
-
     if ((<ModWithProviders>mod).obModule) {
-        console.log('ob', Reflect.getOwnMetadataKeys(mod.obModule));
         return Reflect.getMetadata('annotations', (<ModWithProviders>mod).obModule)[0];
     } else {
-        console.log('!ob', Reflect.getOwnMetadataKeys(mod));
         return Reflect.getMetadata('annotations', mod)[0];
     }
 

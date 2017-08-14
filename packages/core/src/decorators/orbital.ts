@@ -13,6 +13,5 @@ export interface OrbitalDecorator {
 
 export const Orbital: OrbitalDecorator =
     <OrbitalDecorator>makeDecorator('Orbital', (orbital: Orbital = { path: '/' }) => {
-        console.log(orbital);
         return orbital;
     });

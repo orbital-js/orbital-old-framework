@@ -86,7 +86,6 @@ const cycleProviders = (modules: (Module | ModWithProviders)[] = []): Provider[]
             providers = providers.concat(cycleProviders(annotation.imports));
         }
     });
-    console.log(providers);
 
     return providers;
 };
@@ -102,9 +101,10 @@ const cycleMiddlewares = (modules: (Module | ModWithProviders)[] = [], prefix: s
 
         if (annotation.middlewares) {
             for (let middleware of annotation.middlewares) {
-                let m: Orbital = Reflect.getMetadata('annotations', middleware)[0];
+                const note = Reflect.getMetadata('annotations', middleware.provider || middleware);
+                let m: Middleware = note ? note[0] : {};
                 m.path = path.join(prefix || '/', modPath || '/', m.path || '/');
-                Reflect.defineMetadata('annotations', m, middleware);
+                Reflect.defineMetadata('annotations', m, middleware.provider || middleware);
                 middlewares.push(middleware);
             }
         }
@@ -128,9 +128,6 @@ const cycleOrbitals = (modules: (Module | ModWithProviders)[] = [], prefix: stri
 
         if (annotation.orbitals) {
             for (let route of annotation.orbitals) {
-                console.log(route);
-                console.log(Reflect.getMetadata('design:paramtypes', route));
-
                 let orbital: Orbital = Reflect.getMetadata('annotations', route)[0];
                 orbital.path = path.join(prefix || '/', modPath || '/', orbital.path || '/');
                 Reflect.defineMetadata('annotations', orbital, route);

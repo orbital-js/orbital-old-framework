@@ -77,7 +77,6 @@ export class Mongo {
     constructor(
         @Inject(MongoConfig) config: MongoClientConfig
     ) {
-        console.log(config);
         if (config.options) {
             MongoClient.connect(config.url, config.options).then(db => this.db = db);
         } else {
