@@ -38,7 +38,7 @@ export function bootstrap(mod: any, item?: any): void {
     middlewares.forEach((middleware: any) => {
         let m = injector.get(middleware);
         let annotation = Reflect.getMetadata('annotations', m);
-        app.use(annotation.path || '/', (req: express.Request, res: express.Response, next: express.NextFunction) => m.use(req, res, next));
+        app.use(annotation && annotation.path ? annotation.path : '/', (req: express.Request, res: express.Response, next: express.NextFunction) => m.use(req, res, next));
     });
 
     /* Notify express of all of the routes */
@@ -100,7 +100,14 @@ const cycleMiddlewares = (modules: (Module | ModWithProviders)[] = [], prefix: s
 
         const modPath = (annotation.config ? annotation.config.path || '/' : '/');
 
-        middlewares = middlewares.concat(annotation.middlewares || []);
+        if (annotation.middlewares) {
+            for (let middleware of annotation.middlewares) {
+                let m: Orbital = Reflect.getMetadata('annotations', middleware)[0];
+                m.path = path.join(prefix || '/', modPath || '/', m.path || '/');
+                Reflect.defineMetadata('annotations', m, middleware);
+                middlewares.push(middleware);
+            }
+        }
 
         if (annotation.imports) {
             const p = path.join(prefix, modPath);
