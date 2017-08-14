@@ -5,11 +5,15 @@ import { Middleware, NextFunction, Optional, Request, Response, Use } from '@orb
 @Middleware()
 export class Cors implements Use {
 
-    constructor(
-        @Optional() public options: cors.CorsOptions = {}
-    ) { }
+    public static options: cors.CorsOptions = {};
+
+    constructor() { }
+
+    static configure(options: cors.CorsOptions) {
+        this.options = options;
+    }
 
     use(req: Request, res: Response, next: NextFunction) {
-        cors(this.options)(req, res, next);
+        cors(Cors.options)(req, res, next);
     }
 }
