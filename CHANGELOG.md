@@ -25,11 +25,6 @@
 
 
 <a name="1.0.0-alpha.23"></a>
-# [1.0.0-alpha.23](https://github.com/orbital-js/orbital/compare/v1.0.0-alpha.23...1.0.0-alpha.23) (2017-08-11)
-
-
-
-<a name="1.0.0-alpha.23"></a>
 # [1.0.0-alpha.23](https://github.com/orbital-js/orbital/compare/1.0.0-alpha.22...v1.0.0-alpha.23) (2017-08-11)
 
 

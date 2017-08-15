@@ -3,6 +3,8 @@ node_modules
 dist 
 .vscode
 npm-debug.log
-docs
+docs/www
+docs/node_modules
 **/*.js
 !scripts/**/*.js
+!docs/*.js

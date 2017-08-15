@@ -1,0 +1,136 @@
+* {
+  box-sizing: border-box;
+}
+::selection {
+  background: #e7e7f2;
+}
+::-moz-selection {
+  background: #e7e7f2;
+}
+html, body {
+  font-family: -apple-system,
+    BlinkMacSystemFont,
+    "Segoe UI",
+    Helvetica,
+    Arial,
+    sans-serif,
+    "Apple Color Emoji",
+    "Segoe UI Emoji",
+    "Segoe UI Symbol";
+  font-weight: 300;
+  height: 100%;
+  width: 100%;
+  padding: 0;
+  margin: 0;
+}
+h1, h2, h3, h4 {
+  color: #16161d;
+}
+h1 {
+  font-size: 28px;
+  font-weight: bold;
+}
+h1:not(:first-child){
+  margin-top: 48px;
+}
+h2 {
+  font-size: 20px;
+  font-weight: bold;
+}
+h2,h3 {
+  margin-top: 48px;
+  margin-bottom: 8px;
+}
+p, ul {
+  color: #484854;
+  font-size: 14px;
+}
+a, stencil-route-link {
+  color: #5850ff;
+}
+stencil-route-link:hover {
+  text-decoration: underline;
+  cursor: pointer;
+}
+.app {
+  height: 100%;
+  max-width: 1080px;
+  margin: auto;
+}
+.wrapper {
+  line-height: 32px;
+  min-height: 100%;
+  padding-top: 60px;
+  margin: 15px;
+
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  justify-content: flex-start;
+  align-content: stretch;
+  align-items: flex-start;
+}
+pre {
+  word-break: break-all;
+  word-wrap: break-word;
+  white-space: pre-wrap;
+  background-color: #16161d;
+  color: #ffffff;
+   margin: 24px 0px 28px;
+  padding: 16px 24px;
+  border-radius: 4px;
+
+code {
+   box-sizing: border-box;
+    color: #fff;
+    font-size: 14px;
+}
+}
+
+@media screen and (max-width: 450px) {
+  .wrapper {
+    padding-top: 80px;
+  }
+}
+@media screen and (max-width: 590px) {
+  .wrapper {
+    margin-right: 0;
+    margin-left: 0;
+    -webkit-justify-content: space-between;
+    -ms-flex-pack: justify;
+    justify-content: space-between;
+
+    -webkit-flex-direction: column-reverse;
+    -ms-flex-direction: column-reverse;
+    flex-direction: column-reverse;
+  }
+  .pull-right {
+    margin-right: 15px;
+    margin-left: 15px;
+  }
+  .pull-left {
+    position: relative;
+    padding: 15px;
+    width: 100%;
+    bottom: 0;
+    background-color: #16161d;
+
+    * {
+      color: #ffffff;
+    }
+  }
+}
+@media screen and (min-width: 590px) {
+  .pull-left {
+    min-width: 250px;
+    max-width: 250px;
+    position: -webkit-sticky;
+    position: sticky;
+    top: 50px;
+  }
+  .pull-right {
+    padding-left: 15px;
+    padding-right: 40px;
+    flex: 1 1 auto;
+  }
+}
