@@ -7,7 +7,7 @@ Stencil supports Node.js servers out of the box, and the SSR rendering engine is
 
 ## Node.js example
 
-```javascript
+```js
 var express = require('express');
 var app = express();
 var fs = require('fs');

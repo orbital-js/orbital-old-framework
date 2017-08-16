@@ -10,44 +10,102 @@ export class SiteMenu {
       <div>
         <ul>
           <li>
-            <h4>Introduction</h4>
+            <h4>Packages</h4>
             <ul>
               <li>
-                <stencil-route-link url="/docs" router="#router">
-                  What is stencil
+                <stencil-route-link url="/docs/core" router="#router">
+                  Core
                 </stencil-route-link>
               </li>
               <li>
-                <stencil-route-link url="/docs/getting-started" router="#router">
-                  Getting Started
+                <stencil-route-link url="/docs/graphql" router="#router">
+                  GraphQL
+                </stencil-route-link>
+              </li>
+              <li>
+                <stencil-route-link url="/docs/http" router="#router">
+                  HTTP
+                </stencil-route-link>
+              </li>
+              <li>
+                <stencil-route-link url="/docs/middlewares" router="#router">
+                  Middlewares
+                </stencil-route-link>
+              </li>
+              <li>
+                <stencil-route-link url="/docs/mongo" router="#router">
+                  Mongo
                 </stencil-route-link>
               </li>
             </ul>
           </li>
-
           <li>
-            <h4>Basics</h4>
+            <h2>Core</h2>
             <ul>
               <li>
-                <stencil-route-link url="/docs/components" router="#router">
-                  Components
-                </stencil-route-link>
+                <h4>Methods</h4>
+                <ul>
+                  <li>
+                    <stencil-route-link url="/docs/core/methods/bootstrap" router="#router">
+                      bootstrap
+                     </stencil-route-link>
+                  </li>
+                </ul>
               </li>
               <li>
-                <stencil-route-link url="/docs/routing" router="#router">
-                  Router
-                </stencil-route-link>
+                <h4>Decorators</h4>
+                <ul>
+                  <li>
+                    <stencil-route-link url="/docs/core/decorators/module" router="#router">
+                      Module
+                     </stencil-route-link>
+                  </li>
+                  <li>
+                    <stencil-route-link url="/docs/core/decorators/orbital" router="#router">
+                      Orbital
+                     </stencil-route-link>
+                  </li>
+                  <li>
+                    <stencil-route-link url="/docs/core/decorators/injectable" router="#router">
+                      Injectable
+                     </stencil-route-link>
+                  </li>
+                  <li>
+                    <stencil-route-link url="/docs/core/decorators/middleware" router="#router">
+                      Middleware
+                     </stencil-route-link>
+                  </li>
+                  <li>
+                    <stencil-route-link url="/docs/core/decorators/route" router="#router">
+                      Route
+                     </stencil-route-link>
+                  </li>
+                </ul>
               </li>
             </ul>
           </li>
-
           <li>
-            <h4>Advanced</h4>
+            <h2>Mongo</h2>
             <ul>
               <li>
-                <stencil-route-link url="/docs/server-side-rendering" router="#router">
-                  Server Side Rendering
-                </stencil-route-link>
+                <h4>Providers</h4>
+                <ul>
+                  <li>
+                    <stencil-route-link url="/docs/mongo/providers/mongo" router="#router">
+                      Mongo
+                     </stencil-route-link>
+                  </li>
+                </ul>
+              </li>
+              <li>
+                <h4>Modules</h4>
+                <ul>
+                  <li>
+                    <stencil-route-link url="/docs/mongo/providers/mongo-module" router="#router">
+                      MongoModule
+                     </stencil-route-link>
+                  </li>
+                </ul>
               </li>
             </ul>
           </li>

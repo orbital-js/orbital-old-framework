@@ -18,6 +18,7 @@ export class App {
             </div>
             <div class="pull-right">
               <stencil-route url="/docs" component="what-is" router="#router" exact={true} />
+              <stencil-route url="/docs/core/methods/bootstrap" component="bootstrap-method" router="#router" />
               <stencil-route url="/docs/getting-started" component="getting-started" router="#router" />
               <stencil-route url="/docs/components" component="basics-components" router="#router" />
               <stencil-route url="/docs/routing" component="basics-routing" router="#router" />
