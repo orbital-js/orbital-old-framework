@@ -14,7 +14,7 @@ export class SiteHeader {
             Home
           </stencil-route-link>
           <stencil-route-link router="#router" url="/docs">
-            Docs
+            API Docs
           </stencil-route-link>
           <a
             class="svg-button"

@@ -1,10 +1,56 @@
-import { Component } from '@stencil/core';
+import { Component, State } from '@stencil/core';
+
+import { ROUTES } from '../routes';
+import { join } from '../path';
 
 @Component({
   tag: 'site-menu',
   styleUrl: 'site-menu.scss'
 })
 export class SiteMenu {
+
+  @State() routes = ROUTES;
+
+  capitalize(str) {
+    let words = str.split(' ');
+    return words.map((word) => {
+      return word.substr(0, 1).toUpperCase() + word.substr(1, Infinity);
+    }).join(' ');
+  }
+
+  generateRoutes() {
+    console.log('calling gen');
+
+    return this.routes.map((pack) =>
+      <li>
+        <h2>{this.capitalize(pack.package)}</h2>
+        <ul>
+          {Object.keys(pack.groups).map(groupName => {
+            let group = pack.groups[groupName];
+            console.log(groupName);
+            
+            return (<li id={groupName.toLowerCase()}>
+              <h4>{this.capitalize(groupName)}</h4>
+              <ul>
+                {group.map(name => {
+                  let url = join('/docs', pack.urlSegment.toLowerCase(), groupName.toLowerCase(), name.toLowerCase())
+                  return (<li>
+                    <stencil-route-link url={url} router="#router">
+                      {this.capitalize(name)}
+                    </stencil-route-link>
+                  </li>
+                  )
+                })}
+
+              </ul>
+            </li>
+            )
+          })}
+
+        </ul>
+      </li>);
+  }
+
   render() {
     return (
       <div>
@@ -39,7 +85,7 @@ export class SiteMenu {
               </li>
             </ul>
           </li>
-          <li>
+          {/* <li>
             <h2>Core</h2>
             <ul>
               <li>
@@ -108,7 +154,8 @@ export class SiteMenu {
                 </ul>
               </li>
             </ul>
-          </li>
+          </li> */}
+          {this.generateRoutes()}
         </ul>
       </div>
     );

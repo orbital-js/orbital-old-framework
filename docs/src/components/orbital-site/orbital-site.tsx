@@ -1,31 +1,61 @@
-import { Component } from '@stencil/core';
+import { Component, State } from '@stencil/core';
+
+import { ROUTES } from '../routes'
+import { join } from '../path';
 
 @Component({
   tag: 'orbital-site',
   styleUrl: 'orbital-site.scss'
 })
 export class App {
+
   constructor() { }
+
+  @State() routes = ROUTES;
+
+  generateRoutes() {
+    console.log('calling gen');
+
+    let routes = [];
+    for (let pack of this.routes) {
+      let root = '/docs';
+      let rootProp = { pages: [join(pack.urlSegment.toLowerCase(), 'index.html')] }
+
+      routes.push(<stencil-route
+        url={join(root, pack.urlSegment.toLowerCase())}
+        router="#router"
+        component="document-component"
+        componentProps={rootProp}
+        exact={true}
+      />)
+      for (let group in pack.groups) {
+        for (let element of pack.groups[group]) {
+          let url = join(root, pack.urlSegment.toLowerCase(), group.toLowerCase(), element.toLowerCase())
+          let props = { pages: [join(pack.urlSegment.toLowerCase(), group.toLowerCase(), element.toLowerCase() + '.html')] }
+
+          routes.push(<stencil-route
+            url={url}
+            router="#router"
+            component="document-component"
+            componentProps={props}
+            exact={true}
+          />)
+        }
+      }
+    }
+    return routes;
+  }
+
   render() {
     return (
       <div class="app">
         <site-header />
         <stencil-router id="router">
           <stencil-route url="/" component="landing-page" router="#router" exact={true} />
-          <div class="wrapper">
-            <div class="pull-left">
-              <site-menu />
-            </div>
-            <div class="pull-right">
-              <stencil-route url="/docs" component="what-is" router="#router" exact={true} />
-              <stencil-route url="/docs/core/methods/bootstrap" component="bootstrap-method" router="#router" />
-              <stencil-route url="/docs/getting-started" component="getting-started" router="#router" />
-              <stencil-route url="/docs/components" component="basics-components" router="#router" />
-              <stencil-route url="/docs/routing" component="basics-routing" router="#router" />
-              <stencil-route url="/docs/config" component="compiler-config" router="#router" />
-              <stencil-route url="/docs/server-side-rendering" component="stencil-ssr" router="#router" />
-            </div>
-          </div>
+          <stencil-route url="/docs" component="docs-home" router="#router" exact={true} />
+
+          {this.generateRoutes()}
+
         </stencil-router>
       </div>
     );
