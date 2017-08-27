@@ -13,6 +13,7 @@
     "start": "npm run dev"
   },
   "dependencies": {
+    "@fortawesome/fontawesome": "0.0.8",
     "@stencil/core": "0.0.5-0",
     "@stencil/router": "0.0.4",
     "path": "^0.12.7"

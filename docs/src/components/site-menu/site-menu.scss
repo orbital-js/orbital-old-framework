@@ -1,29 +1,33 @@
 site-menu {
-  h4 {
-    font-size: 16px;
-    font-weight: bold;
-    margin-bottom: 0;
-  }
-  ul {
-    list-style-type: none;
-    margin: 0;
-    padding: 0;
-    -webkit-padding-start: 0;
-  }
-  li {
-    list-style: none;
-    margin: 0;
-    text-indent: 0;
-    font-size: 14px;
-    font-weight: 300;
-    h2 {
-      color: #2222ee;
+    h4 {
+        font-size: 16px;
+        font-weight: bold;
+        margin-bottom: 0;
     }
-  }
-
- a, stencil-route-link{
-  color: #484854;
-  text-decoration: none;
-}
-
+    ul {
+        list-style-type: none;
+        margin: 0;
+        padding: 0;
+        -webkit-padding-start: 0;
+    }
+    li {
+        list-style: none;
+        margin: 0;
+        text-indent: 0;
+        font-size: 14px;
+        font-weight: 300;
+        h2 {
+            color: #2222ee;
+            margin-top: 16px;
+            cursor: pointer;
+        }
+    }
+    a,
+    stencil-route-link {
+        color: #484854;
+        text-decoration: none;
+    }
+    drop-icon {
+        margin-right: 10px;
+    }
 }

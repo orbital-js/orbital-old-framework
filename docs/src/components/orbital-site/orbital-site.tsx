@@ -14,8 +14,6 @@ export class App {
   @State() routes = ROUTES;
 
   generateRoutes() {
-    console.log('calling gen');
-
     let routes = [];
     for (let pack of this.routes) {
       let root = '/docs';
@@ -31,7 +29,7 @@ export class App {
       for (let group in pack.groups) {
         for (let element of pack.groups[group]) {
           let url = join(root, pack.urlSegment.toLowerCase(), group.toLowerCase(), element.toLowerCase())
-          let props = { pages: [join(pack.urlSegment.toLowerCase(), group.toLowerCase(), element.toLowerCase() + '.html')] }
+          let props = { pages: [join('/api', pack.urlSegment.toLowerCase(), group.toLowerCase(), element.toLowerCase() + '.html')] }
 
           routes.push(<stencil-route
             url={url}
@@ -52,9 +50,10 @@ export class App {
         <site-header />
         <stencil-router id="router">
           <stencil-route url="/" component="landing-page" router="#router" exact={true} />
-          <stencil-route url="/docs" component="docs-home" router="#router" exact={true} />
 
-          {this.generateRoutes()}
+          <stencil-route url="/docs" component="documentation-container" router="#router" />
+
+          {/* {this.generateRoutes()} */}
 
         </stencil-router>
       </div>

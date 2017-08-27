@@ -8,7 +8,6 @@ export class AppMarked {
   @State() content: any;
 
   ionViewWillLoad() {
-    console.log('generating docs');
     fetch(`/docs-content/${this.doc}`)
     .then(response => response.text())
     .then(data => this.content = data)

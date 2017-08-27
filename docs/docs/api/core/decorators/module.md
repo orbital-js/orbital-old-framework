@@ -1,5 +1,7 @@
 # Module
 
+<type-card type="decorator"></type-card>
+
 The `@Module()` decorator functions similarly to an Angular `NgModule`. It is a centralized place to deposit your routes, providers, and middlewares. You can then import that module into another module, or you can use [bootstrap()](/docs/core/methods/bootstrap) it and serve the module as an entry point to the application.
 
 ```ts
@@ -15,7 +17,7 @@ import { Module } from '@orbital/core';
 export class AppModule { }
 ```
 
-## API
+## Decorator Properties
 ------
 | Property      | Description                                                                                              |
 | ------------- | -------------------------------------------------------------------------------------------------------- |

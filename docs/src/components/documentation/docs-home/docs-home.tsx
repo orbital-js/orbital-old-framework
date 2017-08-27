@@ -7,13 +7,8 @@ import { Component } from '@stencil/core';
 export class DocsHome {
     render() {
         return (
-            <div class="wrapper">
-                <div class="pull-left">
-                    <site-menu />
-                </div>
-                <div class="pull-right">
-                    <h1>API Documentation</h1>
-                </div>
+            <div>
+                <h1>API Documentation</h1>
             </div>
         )
     }

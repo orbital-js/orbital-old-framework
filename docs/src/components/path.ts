@@ -43,12 +43,9 @@ export const normalize = function (path) {
 };
 
 export const join = function (...args) {
-    console.log(args);
-
     var path = '';
     for (var i = 0; i < args.length; i++) {
         var segment = args[i];
-        console.log(typeof segment);
 
         if (typeof segment != 'string') {
             throw new TypeError('Arguments to path.join must be strings');

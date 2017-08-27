@@ -10,6 +10,7 @@ import { join } from '../path';
 export class SiteMenu {
 
   @State() routes = ROUTES;
+  @State() active: string = null;
 
   capitalize(str) {
     let words = str.split(' ');
@@ -18,37 +19,9 @@ export class SiteMenu {
     }).join(' ');
   }
 
-  generateRoutes() {
-    console.log('calling gen');
-
-    return this.routes.map((pack) =>
-      <li>
-        <h2>{this.capitalize(pack.package)}</h2>
-        <ul>
-          {Object.keys(pack.groups).map(groupName => {
-            let group = pack.groups[groupName];
-            console.log(groupName);
-            
-            return (<li id={groupName.toLowerCase()}>
-              <h4>{this.capitalize(groupName)}</h4>
-              <ul>
-                {group.map(name => {
-                  let url = join('/docs', pack.urlSegment.toLowerCase(), groupName.toLowerCase(), name.toLowerCase())
-                  return (<li>
-                    <stencil-route-link url={url} router="#router">
-                      {this.capitalize(name)}
-                    </stencil-route-link>
-                  </li>
-                  )
-                })}
-
-              </ul>
-            </li>
-            )
-          })}
-
-        </ul>
-      </li>);
+  activate(pack) {
+    if (this.active !== pack) this.active = pack;
+    else this.active = null;
   }
 
   render() {
@@ -59,103 +32,62 @@ export class SiteMenu {
             <h4>Packages</h4>
             <ul>
               <li>
-                <stencil-route-link url="/docs/core" router="#router">
+                <stencil-route-link url="/docs/core" router="#router" onClick={() => this.active = 'Core'}>
                   Core
                 </stencil-route-link>
               </li>
               <li>
-                <stencil-route-link url="/docs/graphql" router="#router">
+                <stencil-route-link url="/docs/graphql" router="#router" onClick={() => this.active = 'GraphQL'}>
                   GraphQL
                 </stencil-route-link>
               </li>
               <li>
-                <stencil-route-link url="/docs/http" router="#router">
+                <stencil-route-link url="/docs/http" router="#router" onClick={() => this.active = 'HTTP'}>
                   HTTP
                 </stencil-route-link>
               </li>
               <li>
-                <stencil-route-link url="/docs/middlewares" router="#router">
+                <stencil-route-link url="/docs/middlewares" router="#router" onClick={() => this.active = 'Middlewares'}>
                   Middlewares
                 </stencil-route-link>
               </li>
               <li>
-                <stencil-route-link url="/docs/mongo" router="#router">
+                <stencil-route-link url="/docs/mongo" router="#router" onClick={() => this.active = 'Mongo'}>
                   Mongo
                 </stencil-route-link>
               </li>
             </ul>
           </li>
-          {/* <li>
-            <h2>Core</h2>
-            <ul>
-              <li>
-                <h4>Methods</h4>
-                <ul>
-                  <li>
-                    <stencil-route-link url="/docs/core/methods/bootstrap" router="#router">
-                      bootstrap
-                     </stencil-route-link>
+          {this.routes.map((pack) =>
+            <li>
+              <h2 onClick={() => this.activate(pack.package)}>
+                <drop-icon activated={this.active == pack.package} />
+                {this.capitalize(pack.package)}
+              </h2>
+              <ul style={{ 'display': this.active == pack.package ? 'block' : 'none' }}>
+                {Object.keys(pack.groups).map(groupName => {
+                  let group = pack.groups[groupName];
+
+                  return (<li id={groupName.toLowerCase()}>
+                    <h4>{this.capitalize(groupName)} </h4>
+                    <ul>
+                      {group.map(name => {
+                        let url = join('/docs', pack.urlSegment.toLowerCase(), groupName.toLowerCase(), name.toLowerCase())
+                        return (<li>
+                          <stencil-route-link url={url} router="#router">
+                            {this.capitalize(name)}
+                          </stencil-route-link>
+                        </li>
+                        )
+                      })}
+
+                    </ul>
                   </li>
-                </ul>
-              </li>
-              <li>
-                <h4>Decorators</h4>
-                <ul>
-                  <li>
-                    <stencil-route-link url="/docs/core/decorators/module" router="#router">
-                      Module
-                     </stencil-route-link>
-                  </li>
-                  <li>
-                    <stencil-route-link url="/docs/core/decorators/orbital" router="#router">
-                      Orbital
-                     </stencil-route-link>
-                  </li>
-                  <li>
-                    <stencil-route-link url="/docs/core/decorators/injectable" router="#router">
-                      Injectable
-                     </stencil-route-link>
-                  </li>
-                  <li>
-                    <stencil-route-link url="/docs/core/decorators/middleware" router="#router">
-                      Middleware
-                     </stencil-route-link>
-                  </li>
-                  <li>
-                    <stencil-route-link url="/docs/core/decorators/route" router="#router">
-                      Route
-                     </stencil-route-link>
-                  </li>
-                </ul>
-              </li>
-            </ul>
-          </li>
-          <li>
-            <h2>Mongo</h2>
-            <ul>
-              <li>
-                <h4>Providers</h4>
-                <ul>
-                  <li>
-                    <stencil-route-link url="/docs/mongo/providers/mongo" router="#router">
-                      Mongo
-                     </stencil-route-link>
-                  </li>
-                </ul>
-              </li>
-              <li>
-                <h4>Modules</h4>
-                <ul>
-                  <li>
-                    <stencil-route-link url="/docs/mongo/providers/mongo-module" router="#router">
-                      MongoModule
-                     </stencil-route-link>
-                  </li>
-                </ul>
-              </li>
-            </ul>
-          </li> */}
-          {this.generateRoutes()}
+                  )
+                })}
+
+              </ul>
+            </li>)}
         </ul>
       </div>
     );
