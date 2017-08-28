@@ -12,3 +12,9 @@ import { AppModule } from './app.module';
 
 bootstrap(AppModule);
 ```
+
+## Arguments
+------
+| Property | Description                                                                             |
+| -------- | --------------------------------------------------------------------------------------- |
+| `module` | **required** The root app module that will serve as the entry point to the application. |

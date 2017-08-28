@@ -11,6 +11,8 @@ export class TypeCard {
         function: 'F',
         module: 'M',
         provider: 'P',
+        interface: 'I',
+        middleware: 'MW',
         package: <span>📦&nbsp;</span>
     }
 
