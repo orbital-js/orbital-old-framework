@@ -5,7 +5,7 @@ import { Provider } from 'injection-js';
 export interface Module {
     imports?: any[];
     providers?: Provider[];
-    orbitals?: any[];
+    controllers?: any[];
     middlewares?: any[];
     config?: {
         port?: number;

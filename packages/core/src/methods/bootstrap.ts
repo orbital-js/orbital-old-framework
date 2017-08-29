@@ -6,34 +6,31 @@ import * as path from 'path';
 import { Injector, Provider, ReflectiveInjector } from 'injection-js';
 import { getModule, isFunction, joinPath, methods, unique } from './util';
 
+import { Controller } from '../decorators/controller';
 import { Middleware } from '../decorators/middleware';
 import { ModWithProviders } from '../interfaces/module_with_providers';
 import { Module } from '../decorators/module';
-import { Orbital } from '../decorators/orbital';
 import { Route } from '../decorators/route';
 
 /**
  * @description The method to start up a Orbital instance. 
  * This compiles all of the dependencies and prepares them to be served.
  * 
- * @export
  * @param {Module} mod 
  * @returns {void} 
  */
-export function bootstrap(mod: any, item?: any): void {
+function bootstrap(mod: any): void {
 
     /* We strip some data from the type annotation on the module. */
     let middlewares: any[] = cycleMiddlewares([mod]);
     let providers: Provider[] = cycleProviders([mod]);
-    let orbitals: Orbital[] = cycleOrbitals([mod]);
+    let controllers: Controller[] = cycleControllers([mod]);
     let annotations: Module = Reflect.getMetadata('annotations', mod)[0];
 
 
     /* Use Angular's dependency injection to assosciate all providers to their respective places */
-    let injector: ReflectiveInjector = ReflectiveInjector.resolveAndCreate(<any[]>[...orbitals, ...providers, ...middlewares]);
+    let injector: ReflectiveInjector = ReflectiveInjector.resolveAndCreate(<any[]>[...controllers, ...providers, ...middlewares]);
     const app = express();
-    /* Here, we start with some simple instantiation code.
-       Orbital includes a few middlewares we suggest, just to keep you safe. */
 
     middlewares.forEach((middleware: any) => {
         let m = injector.get(middleware);
@@ -42,7 +39,7 @@ export function bootstrap(mod: any, item?: any): void {
     });
 
     /* Notify express of all of the routes */
-    orbitals.forEach((route: any) => {
+    controllers.forEach((route: any) => {
         useRoute(injector, route, app);
     });
 
@@ -118,29 +115,35 @@ const cycleMiddlewares = (modules: (Module | ModWithProviders)[] = [], prefix: s
     return middlewares;
 };
 
-const cycleOrbitals = (modules: (Module | ModWithProviders)[] = [], prefix: string = '/'): Orbital[] => {
-    let routes: Orbital[] = [];
+const cycleControllers = (modules: (Module | ModWithProviders)[] = [], prefix: string = '/'): Controller[] => {
+    let routes: Controller[] = [];
 
     modules.forEach((mod) => {
         let annotation: Module = getModule(mod);
 
         const modPath = (annotation.config ? annotation.config.path || '/' : '/');
 
-        if (annotation.orbitals) {
-            for (let route of annotation.orbitals) {
-                let orbital: Orbital = Reflect.getMetadata('annotations', route)[0];
-                orbital.path = path.join(prefix || '/', modPath || '/', orbital.path || '/');
-                Reflect.defineMetadata('annotations', orbital, route);
+        if (annotation.controllers) {
+            for (let route of annotation.controllers) {
+                let controller: Controller = Reflect.getMetadata('annotations', route)[0];
+                controller.path = path.join(prefix || '/', modPath || '/', controller.path || '/');
+                Reflect.defineMetadata('annotations', controller, route);
                 routes.push(route);
             }
         }
 
         if (annotation.imports) {
             const p = path.join(prefix, modPath);
-            routes = routes.concat(cycleOrbitals(annotation.imports, p));
+            routes = routes.concat(cycleControllers(annotation.imports, p));
         }
 
     });
 
     return routes;
 };
+
+export function platformServer() {
+    return {
+        bootstrap
+    };
+}

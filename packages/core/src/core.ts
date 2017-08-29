@@ -6,7 +6,7 @@
 export { Module } from './decorators/module';
 export { Route } from './decorators/route';
 export { Middleware } from './decorators/middleware';
-export { Orbital } from './decorators/orbital';
+export { Controller } from './decorators/controller';
 export {
     ClassProvider,
     ExistingProvider,
@@ -17,6 +17,7 @@ export {
     OpaqueToken,
     Optional,
     Provider,
+    ReflectiveInjector,
     SkipSelf,
     TypeProvider,
     ValueProvider,
