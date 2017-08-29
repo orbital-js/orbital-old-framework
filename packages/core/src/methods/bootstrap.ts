@@ -32,6 +32,8 @@ function bootstrap(mod: any): void {
     let injector: ReflectiveInjector = ReflectiveInjector.resolveAndCreate(<any[]>[...controllers, ...providers, ...middlewares]);
     const app = express();
 
+    const config = annotations.config;
+    if (config.engine) app.use(config.engine);
     middlewares.forEach((middleware: any) => {
         let m = injector.get(middleware);
         let annotation = Reflect.getMetadata('annotations', m);
@@ -44,7 +46,6 @@ function bootstrap(mod: any): void {
     });
 
     /* Now we set up the listener and are ready to take requests. */
-    const config = annotations.config;
     const port = config && config.port ? config.port : process.env.PORT ? process.env.PORT : 8080;
     app.listen(port);
     console.info('LISTENING ON PORT ' + port);

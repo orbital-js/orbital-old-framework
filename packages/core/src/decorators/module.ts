@@ -10,6 +10,7 @@ export interface Module {
     config?: {
         port?: number;
         path?: string;
+        engine?: string;
     };
 }
 
