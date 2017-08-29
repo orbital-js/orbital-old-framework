@@ -1,6 +1,6 @@
 {
     "compilerOptions": {
-        "baseUrl": ".",
+        "baseUrl": "./src",
         "declaration": true,
         "stripInternal": true,
         "experimentalDecorators": true,
@@ -22,9 +22,23 @@
         "emitDecoratorMetadata": true,
         "typeRoots": [
             "node_modules/@types"
-        ]
+        ],
+        "paths": {
+            "body-parser": [
+                "../node_modules/body-parser"
+            ],
+            "compression": [
+                "../node_modules/compression"
+            ],
+            "cors": [
+                "../node_modules/cors"
+            ],
+            "helmet": [
+                "../node_modules/helmet"
+            ]
+        }
     },
     "files": [
-        "index.ts"
+        "src/index.ts"
     ]
 }
