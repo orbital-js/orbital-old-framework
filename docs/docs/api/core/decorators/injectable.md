@@ -22,7 +22,7 @@ export class MyService {
 ```
 Now, we can import it into an Orbital, and have a globally-available, centralized method with which we can say "Hello"!
 ```ts
-import { Orbital } from '@orbital/core';
+import { Controller } from '@orbital/core';
 import { MyService } from './my-service.ts';
 
 @Controller()
