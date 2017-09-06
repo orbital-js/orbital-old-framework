@@ -25,7 +25,7 @@ Now, we can import it into an Orbital, and have a globally-available, centralize
 import { Orbital } from '@orbital/core';
 import { MyService } from './my-service.ts';
 
-@Orbital()
+@Controller()
 export class MyRoute {
     constructor(
         public myService: MyService
