@@ -9,7 +9,7 @@ The name of the method property should be descriptive, but it generally does not
 ```ts
 import { Controller, Route } from '@orbital/core';
 
-@Component()
+@Controller()
 export class RootHandler {
     @Route({
         method: 'post',
