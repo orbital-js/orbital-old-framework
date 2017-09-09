@@ -25,6 +25,7 @@
         ]
     },
     "files": [
-        "index.ts"
+        "index.ts",
+        "cli.ts"
     ]
 }

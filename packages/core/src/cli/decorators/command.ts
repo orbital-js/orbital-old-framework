@@ -1,22 +1,10 @@
 import { TypeDecorator, makeDecorator } from '../../decorators/util';
 
-export interface Argument {
-    name: string;
-    required?: boolean;
-    variadic?: boolean;
-}
-
-export interface Option {
-    long: string;
-    short?: string;
-    description?: string;
-    arguments?: Argument[];
-    coercionFn?: (val: any) => any;
-    coercionMemory?: any;
-}
+import { Argument } from '../interfaces/argument';
+import { Option } from '../interfaces/option';
 
 export interface Command {
-    command: string;
+    command?: string | null;
     arguments?: Argument[];
     options?: Option[];
     description?: string;
@@ -31,6 +19,6 @@ export interface CommandDecorator {
 
 
 export const Command: CommandDecorator =
-    <CommandDecorator>makeDecorator('Command', (command: Command = { command: '' }) => {
+    <CommandDecorator>makeDecorator('Command', (command: Command = { command: null }) => {
         return command;
     });

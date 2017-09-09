@@ -13,11 +13,11 @@ import { Module } from '../decorators/module';
 import { Route } from '../decorators/route';
 
 /**
- * @description The method to start up a Orbital instance. 
+ * @description The method to start up a Orbital instance.
  * This compiles all of the dependencies and prepares them to be served.
- * 
- * @param {Module} mod 
- * @returns {void} 
+ *
+ * @param {Module} mod
+ * @returns {void}
  */
 function bootstrap(mod: any): void {
 
@@ -32,7 +32,7 @@ function bootstrap(mod: any): void {
     let injector: ReflectiveInjector = ReflectiveInjector.resolveAndCreate(<any[]>[...controllers, ...providers, ...middlewares]);
     const app: express.Application = express();
 
-    const config = annotations.config;
+    const config = annotations.config || {};
     if (config.engine) app.engine(config.engine.name, config.engine.engine);
     middlewares.forEach((middleware: any) => {
         let m = injector.get(middleware);

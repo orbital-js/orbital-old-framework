@@ -11,12 +11,14 @@
   },
   "dependencies": {
     "body-parser": "^1.16.0",
+    "chalk": "^2.1.0",
     "commander": "^2.11.0",
     "compression": "^1.7.0",
     "consolidate": "^0.14.5",
     "express": "^4.14.0",
     "helmet": "^3.8.1",
     "injection-js": "^2.1.0",
+    "minimist": "^1.2.0",
     "mongodb": "^2.2.21",
     "reflect-metadata": "^0.1.10"
   },
@@ -26,11 +28,13 @@
   },
   "devDependencies": {
     "@types/body-parser": "^1.16.4",
+    "@types/chalk": "^0.4.31",
     "@types/commander": "^2.9.2",
     "@types/compression": "0.0.33",
     "@types/consolidate": "0.0.33",
     "@types/express": "^4.0.36",
     "@types/helmet": "0.0.36",
+    "@types/minimist": "^1.2.0",
     "typescript": "^2.4.2"
   }
 }
