@@ -30,10 +30,10 @@ function bootstrap(mod: any): void {
 
     /* Use Angular's dependency injection to assosciate all providers to their respective places */
     let injector: ReflectiveInjector = ReflectiveInjector.resolveAndCreate(<any[]>[...controllers, ...providers, ...middlewares]);
-    const app = express();
+    const app: express.Application = express();
 
     const config = annotations.config;
-    if (config.engine) app.use(config.engine);
+    if (config.engine) app.engine(config.engine.name, config.engine.engine);
     middlewares.forEach((middleware: any) => {
         let m = injector.get(middleware);
         let annotation = Reflect.getMetadata('annotations', m);

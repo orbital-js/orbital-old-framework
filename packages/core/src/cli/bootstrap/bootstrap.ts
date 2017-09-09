@@ -11,13 +11,13 @@ import { Command } from '../decorators/command';
 import { ModWithProviders } from '../../interfaces/module_with_providers';
 
 /**
- * @description The method to start up a Orbital instance. 
+ * @description The method to start up a Orbital instance.
  * This compiles all of the dependencies and prepares them to be served.
- * 
- * @param {Module} mod 
- * @returns {void} 
+ *
+ * @param {Module} mod
+ * @returns {void}
  */
-function bootstrap(mod: any): void {
+export function bootstrap(mod: any): void {
 
     /* We strip some data from the type annotation on the module. */
     let providers: Provider[] = cycleProviders([mod]);
@@ -36,7 +36,7 @@ function bootstrap(mod: any): void {
     commands.forEach((command: any) => {
         buildCommand(injector, command);
     });
-    
+
     program.parse(process.argv);
 
     return;

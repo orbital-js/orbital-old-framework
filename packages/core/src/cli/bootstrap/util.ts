@@ -2,8 +2,8 @@ import 'reflect-metadata';
 
 import * as path from 'path';
 
-import { ModWithProviders } from '../interfaces/module_with_providers';
-import { Module } from '../decorators/module';
+import { CliModule } from '../decorators/cli-module';
+import { ModWithProviders } from '../../interfaces/module_with_providers';
 
 export function unique(array: any) {
     let a = array.concat();
@@ -34,7 +34,7 @@ export function isFunction(functionToCheck: Function) {
     return functionToCheck && getType.toString.call(functionToCheck) === '[object Function]';
 }
 
-export function getModule(mod: any): Module {
+export function getModule(mod: any): CliModule {
     if ((<ModWithProviders>mod).obModule) {
         return Reflect.getMetadata('annotations', (<ModWithProviders>mod).obModule)[0];
     } else {

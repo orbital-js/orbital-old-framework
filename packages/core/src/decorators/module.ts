@@ -1,5 +1,6 @@
 import { TypeDecorator, makeDecorator } from './util';
 
+import { Engine } from '../engines';
 import { Provider } from 'injection-js';
 
 export interface Module {
@@ -10,7 +11,7 @@ export interface Module {
     config?: {
         port?: number;
         path?: string;
-        engine?: string;
+        engine?: Engine;
     };
 }
 

@@ -13,6 +13,7 @@
     "body-parser": "^1.16.0",
     "commander": "^2.11.0",
     "compression": "^1.7.0",
+    "consolidate": "^0.14.5",
     "express": "^4.14.0",
     "helmet": "^3.8.1",
     "injection-js": "^2.1.0",
@@ -27,6 +28,7 @@
     "@types/body-parser": "^1.16.4",
     "@types/commander": "^2.9.2",
     "@types/compression": "0.0.33",
+    "@types/consolidate": "0.0.33",
     "@types/express": "^4.0.36",
     "@types/helmet": "0.0.36",
     "typescript": "^2.4.2"

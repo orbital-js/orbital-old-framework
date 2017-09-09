@@ -1,4 +1,4 @@
-import { TypeDecorator, makeDecorator } from './util';
+import { TypeDecorator, makeDecorator } from '../../decorators/util';
 
 import { Provider } from 'injection-js';
 

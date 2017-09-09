@@ -33,6 +33,7 @@
     "@types/body-parser": "^1.16.4",
     "@types/chai": "^3.5.2",
     "@types/compression": "0.0.33",
+    "@types/consolidate": "0.0.33",
     "@types/cors": "^2.8.1",
     "@types/helmet": "0.0.36",
     "@types/mocha": "^2.2.41",
@@ -64,5 +65,8 @@
     "commitizen": {
       "path": "./node_modules/cz-conventional-changelog"
     }
+  },
+  "dependencies": {
+    "consolidate": "^0.14.5"
   }
 }
