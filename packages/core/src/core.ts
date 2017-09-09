@@ -1,4 +1,4 @@
-/** 
+/**
  * @ngdoc module
  * @module core
  * @private
@@ -32,5 +32,6 @@ export { Post } from './interfaces/post';
 export { Put } from './interfaces/put';
 export { Use } from './interfaces/use';
 export { Request, Response, NextFunction, RequestHandler } from 'express';
+export { Engines } from './engines';
 
-export { bootstrap } from './methods/bootstrap';
+export { platformServer } from './methods/bootstrap';
