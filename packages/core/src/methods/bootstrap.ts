@@ -1,5 +1,6 @@
 import 'reflect-metadata';
 
+import * as chalk from 'chalk';
 import * as express from 'express';
 import * as path from 'path';
 
@@ -48,7 +49,7 @@ function bootstrap(mod: any): void {
     /* Now we set up the listener and are ready to take requests. */
     const port = config && config.port ? config.port : process.env.PORT ? process.env.PORT : 8080;
     app.listen(port);
-    console.info('LISTENING ON PORT ' + port);
+    console.info(chalk.green('LISTENING ON PORT ' + port));
     return;
 }
 

@@ -35,9 +35,13 @@ export function bootstrap(mod: any): void {
     /* Use Angular's dependency injection to assosciate all providers to their respective places */
     let injector: ReflectiveInjector = ReflectiveInjector.resolveAndCreate(<any[]>[...commands, ...providers]);
 
-    console.log(input);
+    let chosenCommand;
+    if (process.argv[slice] && process.argv[slice].substr(0, 1) !== '-') {
+        chosenCommand = checkCommands(injector, commands, input._[0], input);
+    } else {
+        chosenCommand = checkCommands(injector, commands, undefined);
+    }
 
-    let chosenCommand = checkCommands(injector, commands, input._[0]);
     if (chosenCommand) {
         let commandAnnotation: Command = Reflect.getMetadata('annotations', chosenCommand);
 
@@ -53,7 +57,7 @@ export function bootstrap(mod: any): void {
     }
 }
 
-function checkCommands(injector: ReflectiveInjector, commands: any[], command: string) {
+function checkCommands(injector: ReflectiveInjector, commands: any[], command: string | undefined, input?: minimist.ParsedArgs) {
     let annotations = commands.map(cmd => {
         const annotation = Reflect.getMetadata('annotations', cmd).command;
 
@@ -71,11 +75,13 @@ function checkCommands(injector: ReflectiveInjector, commands: any[], command: s
     const index = annotations.indexOf(command);
     const aliasIndex = aliases.indexOf(command);
     if (index > -1) {
+        input && input._.splice(0, 1);
         return commands[index];
     } else if (aliasIndex > -1) {
+        input && input._.splice(0, 1);
         return commands[aliasIndex];
     } else {
-        return commands[annotations.indexOf(null)];
+        return commands[annotations.indexOf(undefined)];
     }
 }
 
@@ -124,30 +130,34 @@ const cycleCommands = (modules: (CliModule | ModWithProviders)[] = [], prefix: s
 
 function getArguments(commandAnnotation: Command, input: minimist.ParsedArgs) {
     let args: any = {};
+    let varCount = 0;
     if (commandAnnotation && commandAnnotation.arguments) {
+        let i = 0;
         for (let argument in commandAnnotation.arguments) {
             let arg = commandAnnotation.arguments[argument];
-            let varCount = 0;
             if (!arg.variadic) {
-                args[arg.name] = input._.indexOf(arg.name) > -1;
+                args[arg.name] = input._[i];
+                input._.splice(0, 1);
             } else {
                 varCount++;
                 if (varCount > 1) {
                     throw new Error('Command should only have one set of variadic arguments, but more were found.');
                 } else {
-                    args[arg.name] = input._.map(item => {
-                        if (commandAnnotation.arguments) {
-                            let mappedArgs = commandAnnotation.arguments.map(a => a ? a.name : '');
-                            let i: number = mappedArgs.indexOf(item);
-                            return i < 0;
-                        } else {
-                            return [undefined];
-                        }
-                    });
+                    args[arg.name] = input._;
                 }
             }
         }
     }
+    if (commandAnnotation && commandAnnotation.arguments) {
+        commandAnnotation.arguments.forEach((arg) => {
+            if (arg.required && !args[arg.name]) {
+                console.error(chalk.red(`Uh oh, looks like you forgot the required argument '${arg.name}'.`));
+                process.exit(1);
+            }
+        });
+    }
+
+
     return args;
 }
 
@@ -156,7 +166,6 @@ function getOptions(commandAnnotation: Command, input: minimist.ParsedArgs) {
     if (commandAnnotation && commandAnnotation.options) {
         for (const option in commandAnnotation.options) {
             const opt = commandAnnotation.options[option];
-            console.log(input);
             if (opt.short && input[opt.short]) {
                 opts[opt.long] = input[opt.short];
             } else {
