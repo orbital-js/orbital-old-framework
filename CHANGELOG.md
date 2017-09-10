@@ -1,5 +1,35 @@
+<a name="1.0.0-alpha.25"></a>
+# [1.0.0-alpha.25](https://github.com/orbital-js/orbital/compare/1.0.0-alpha.24...v1.0.0-alpha.25) (2017-09-10)
+
+
+### Bug Fixes
+
+* **core/cli:** options and default commands function as expected ([74e82a6](https://github.com/orbital-js/orbital/commit/74e82a6))
+* **core/cli:** point to the right places ([5365b15](https://github.com/orbital-js/orbital/commit/5365b15))
+* **core/cli:** properly address variadic arguments and methods ([6022569](https://github.com/orbital-js/orbital/commit/6022569))
+
+
+### Code Refactoring
+
+* **middlewares:** move to path based syntax ([7ad1ece](https://github.com/orbital-js/orbital/commit/7ad1ece))
+
+
+### Features
+
+* **core:** add engine property to config ([25df99c](https://github.com/orbital-js/orbital/commit/25df99c))
+* **core:** add engines constant ([817a97a](https://github.com/orbital-js/orbital/commit/817a97a))
+* **core/cli:** add CLI platform! ([4b540d4](https://github.com/orbital-js/orbital/commit/4b540d4))
+* **middlewares/morgan:** add Morgan middleware ([fe25348](https://github.com/orbital-js/orbital/commit/fe25348))
+
+
+### BREAKING CHANGES
+
+* **middlewares:** Middlewares are now valid subfolder modules for code minimalism and organization
+
+
+
 <a name="1.0.0-alpha.24"></a>
-# [1.0.0-alpha.24](https://github.com/orbital-js/orbital/compare/1.0.0-alpha.23...v1.0.0-alpha.24) (2017-08-14)
+# [1.0.0-alpha.24](https://github.com/orbital-js/orbital/compare/1.0.0-alpha.23...1.0.0-alpha.24) (2017-08-14)
 
 
 ### Bug Fixes
@@ -21,6 +51,11 @@
 
 * **graphql:** add graphql wrapper for Orbital! Looking for feature requests and PRs to improve the module ([ca3f6c4](https://github.com/orbital-js/orbital/commit/ca3f6c4))
 * **middlewares:** add middlewares package with body parser ([5d6f67b](https://github.com/orbital-js/orbital/commit/5d6f67b))
+
+
+
+<a name="1.0.0-alpha.23"></a>
+# [1.0.0-alpha.23](https://github.com/orbital-js/orbital/compare/v1.0.0-alpha.23...1.0.0-alpha.23) (2017-08-11)
 
 
 
