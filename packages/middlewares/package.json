@@ -17,6 +17,7 @@
     "@types/cors": "^2.8.1",
     "@types/helmet": "0.0.36",
     "@types/lodash": "^4.14.71",
+    "@types/morgan": "^1.7.32",
     "@types/request": "^2.0.0",
     "rxjs": "^5.4.2",
     "typescript": "^2.4.2"
@@ -26,6 +27,7 @@
     "compression": "^1.7.0",
     "cors": "^2.8.4",
     "helmet": "^3.8.1",
+    "morgan": "^1.8.2",
     "reflect-metadata": "^0.1.10",
     "request": "^2.81.0"
   },
