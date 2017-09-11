@@ -1,5 +1,6 @@
 import * as cp from 'cp';
 import * as fs from 'fs';
+import * as ncp from 'ncp';
 import * as path from 'path';
 import * as rimraf from 'rimraf';
 import * as shell from 'shelljs';
@@ -27,9 +28,12 @@ rimraf(path.join(process.cwd(), 'dist'), (err) => {
             let readme: string = fs.readFileSync(path.join(process.cwd(), 'packages/README.md')).toString();
             readme = readme.replace(/PACKAGE_NAME/g, convertPackageName(directory));
             fs.writeFileSync(path.join(dest, 'README.md'), readme);
-
+            if (directory.indexOf('core') > -1) {
+                ncp.ncp(path.join(process.cwd(), 'packages/core/templates'), path.join(process.cwd(), 'dist/packages/core/templates'), () => {});
+            }
         }
     });
+
 });
 
 function convertPackageName(pack: string) {
