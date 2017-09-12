@@ -37,7 +37,7 @@ function bootstrap(mod: any): void {
     if (config.engine) app.engine(config.engine.name, config.engine.engine);
     middlewares.forEach((middleware: any) => {
         let m = injector.get(middleware);
-        let annotation = Reflect.getMetadata('annotations', m);
+        let annotation = Reflect.getMetadata('annotations', middleware);
         app.use(annotation && annotation.path ? annotation.path : '/', (req: express.Request, res: express.Response, next: express.NextFunction) => m.use(req, res, next));
     });
 
@@ -97,7 +97,6 @@ const cycleMiddlewares = (modules: (Module | ModWithProviders)[] = [], prefix: s
         let annotation: Module = getModule(mod);
 
         const modPath = (annotation.config ? annotation.config.path || '/' : '/');
-
         if (annotation.middlewares) {
             for (let middleware of annotation.middlewares) {
                 const note = Reflect.getMetadata('annotations', middleware.provider || middleware);
