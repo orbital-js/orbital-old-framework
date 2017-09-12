@@ -57,12 +57,7 @@ function useRoute(injector: Injector, route: Route, router: any) {
     const rt = injector.get(route);
     const routeAnnotation = Reflect.getMetadata('annotations', route);
     if (!routeAnnotation.path) routeAnnotation.path = '/';
-    for (let method of methods) {
-        if (rt[method]) {
-            router[method](routeAnnotation.path, (req: express.Request, res: express.Response, next: express.NextFunction) => rt[method](req, res, next));
-        }
-    }
-    const propAnnotation: { [propName: string]: Route }[] = Reflect.getMetadata('propMetadata', rt['constructor']);
+    const propAnnotation: { [propName: string]: Route }[] = Reflect.getMetadata('propMetadata', rt['constructor'])
     for (let prop in propAnnotation) {
         const method: Route = propAnnotation[prop][0];
         method.method = method.method || 'get';
