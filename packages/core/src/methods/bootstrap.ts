@@ -87,26 +87,28 @@ const cycleProviders = (modules: (Module | ModWithProviders)[] = []): Provider[]
 const cycleMiddlewares = (modules: (Module | ModWithProviders)[] = [], prefix: string = '/'): any[] => {
     let middlewares: any[] = [];
 
+    if (modules) {
+        modules.forEach(mod => {
+            let annotation: Module = getModule(mod);
 
-    modules.forEach(mod => {
-        let annotation: Module = getModule(mod);
-
-        const modPath = (annotation.config ? annotation.config.path || '/' : '/');
-        if (annotation.middlewares) {
-            for (let middleware of annotation.middlewares) {
-                const note = Reflect.getMetadata('annotations', middleware.provider || middleware);
-                let m: Middleware = note ? note[0] : {};
-                m.path = path.join(prefix || '/', modPath || '/', m.path || '/');
-                Reflect.defineMetadata('annotations', m, middleware.provider || middleware);
-                middlewares.push(middleware);
+            const modPath = (annotation.config ? annotation.config.path || '/' : '/');
+            if (annotation.middlewares) {
+                for (let middleware of annotation.middlewares) {
+                    const note = Reflect.getMetadata('annotations', middleware.provider || middleware);
+                    let m: Middleware = note && note[0] ? note[0] : {};
+                    m.path = path.join(prefix || '/', modPath || '/', m.path || '/');
+                    console.log(m.path);
+                    Reflect.defineMetadata('annotations', m, middleware.provider || middleware);
+                    middlewares.push(middleware);
+                }
             }
-        }
 
-        if (annotation.imports) {
-            const p = path.join(prefix, modPath);
-            middlewares = middlewares.concat(cycleMiddlewares(annotation.imports, p));
-        }
-    });
+            if (annotation.imports) {
+                const p = path.join(prefix, modPath);
+                middlewares = middlewares.concat(cycleMiddlewares(annotation.imports, p));
+            }
+        });
+    }
 
     return middlewares;
 };
