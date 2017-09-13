@@ -97,7 +97,6 @@ const cycleMiddlewares = (modules: (Module | ModWithProviders)[] = [], prefix: s
                     const note = Reflect.getMetadata('annotations', middleware.provider || middleware);
                     let m: Middleware = note && note[0] ? note[0] : {};
                     m.path = path.join(prefix || '/', modPath || '/', m.path || '/');
-                    console.log(m.path);
                     Reflect.defineMetadata('annotations', m, middleware.provider || middleware);
                     middlewares.push(middleware);
                 }
