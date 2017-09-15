@@ -22,7 +22,7 @@
         "emitDecoratorMetadata": true,
         "typeRoots": [
             "node_modules/@types",
-            "./types"
+            "./src/types"
         ],
         "paths": {
             "*": [
