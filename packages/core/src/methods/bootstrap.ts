@@ -7,6 +7,7 @@ import * as path from 'path';
 import { Injector, Provider, ReflectiveInjector } from 'injection-js';
 import { getModule, isFunction, joinPath, methods, unique } from './util';
 
+import { Application } from 'express';
 import { Controller } from '../decorators/controller';
 import { Middleware } from '../decorators/middleware';
 import { ModWithProviders } from '../interfaces/module_with_providers';
@@ -20,7 +21,7 @@ import { Route } from '../decorators/route';
  * @param {Module} mod
  * @returns {void}
  */
-function bootstrap(mod: any): void {
+function bootstrap(mod: any): Application {
 
     /* We strip some data from the type annotation on the module. */
     let middlewares: any[] = cycleMiddlewares([mod]);
@@ -50,14 +51,15 @@ function bootstrap(mod: any): void {
     const port = config && config.port ? config.port : process.env.PORT ? process.env.PORT : 8080;
     app.listen(port);
     console.info(chalk.green('LISTENING ON PORT ' + port));
-    return;
+
+    return app;
 }
 
 function useRoute(injector: Injector, route: Route, router: any) {
     const rt = injector.get(route);
     const routeAnnotation = Reflect.getMetadata('annotations', route);
     if (!routeAnnotation.path) routeAnnotation.path = '/';
-    const propAnnotation: { [propName: string]: Route }[] = Reflect.getMetadata('propMetadata', rt['constructor'])
+    const propAnnotation: { [propName: string]: Route }[] = Reflect.getMetadata('propMetadata', rt['constructor']);
     for (let prop in propAnnotation) {
         const method: Route = propAnnotation[prop][0];
         method.method = method.method || 'get';

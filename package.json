@@ -42,7 +42,7 @@
     "@types/npm": "^2.0.28",
     "@types/rimraf": "0.0.28",
     "@types/shelljs": "^0.7.2",
-    "@types/supertest": "^2.0.2",
+    "@types/supertest": "^2.0.3",
     "canonical-path": "0.0.2",
     "chai": "^3.5.0",
     "commitizen": "^2.9.6",
