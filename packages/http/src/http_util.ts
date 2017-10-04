@@ -1,7 +1,9 @@
 import * as _ from 'lodash';
-import * as request from 'request';
 
-export function mergeOptions(...options: request.Options[]): request.Options {
-    let opts: request.Options = _.assign({}, <any>request.defaults, ...options);
-    return opts;
+import { GotJSONOptions } from 'got';
+import { Http } from './http';
+import { RequestOptions } from 'http';
+
+export function mergeOptions(...options: GotJSONOptions[]): GotJSONOptions {
+    return _.assign({}, Http._defaults, ...options);
 }

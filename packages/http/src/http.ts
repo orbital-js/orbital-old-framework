@@ -1,5 +1,10 @@
-import * as request from 'request';
+import 'rxjs/add/observable/fromPromise';
 
+import * as got from 'got';
+
+import { IncomingMessage, RequestOptions } from 'http';
+
+import { GotJSONOptions } from 'got';
 import { Injectable } from '@orbital/core';
 import { Observable } from 'rxjs/Observable';
 import { Observer } from 'rxjs/Observer';
@@ -8,53 +13,43 @@ import { mergeOptions } from './http_util';
 @Injectable()
 export class Http {
 
-    private _defaults: request.Options;
+    static _defaults: GotJSONOptions = <GotJSONOptions>{};
 
     constructor() { }
 
-    request(options: request.Options) {
-        return Observable.create((observer: Observer<request.RequestResponse>) => {
-            request(options, (err, response: request.RequestResponse, body) => {
-                observer.next(response);
-                observer.complete();
-            });
-        });
+    request(url: string, options: RequestOptions): Observable<got.Response<any>> {
+        return Observable.fromPromise(got(url, options));
     }
 
-    get(url: string, options: request.Options = <any>{}): Observable<request.RequestResponse> {
-        return this.request(mergeOptions(options, { url: url, method: 'get' }));
+    get(url: string, options: GotJSONOptions) {
+        return this.request(url, mergeOptions(options, <GotJSONOptions>{ method: 'get' }));
     }
 
-    post(url: string, body: any, options: request.Options = <any>{}): Observable<request.RequestResponse> {
-        return this.request(mergeOptions(options, { url: url, method: 'post', body: body }));
+    post(url: string, body: any, options: GotJSONOptions) {
+        return this.request(url, mergeOptions(options, { json: body, method: 'post' }));
     }
 
-    put(url: string, body: any, options: request.Options = <any>{}): Observable<request.RequestResponse> {
-        return this.request(mergeOptions(options, { url: url, method: 'put', body: body }));
+    put(url: string, body: any, options: GotJSONOptions) {
+        return this.request(url, mergeOptions(options, { json: body, method: 'put' }));
     }
 
-    patch(url: string, body: any, options: request.Options = <any>{}): Observable<request.RequestResponse> {
-        return this.request(mergeOptions(options, { url: url, method: 'patch', body: body }));
+    patch(url: string, body: any, options: GotJSONOptions) {
+        return this.request(url, mergeOptions(options, { json: body, method: 'patch' }));
     }
 
-    delete(url: string, options: request.Options = <any>{}): Observable<request.RequestResponse> {
-        return this.request(mergeOptions(options, { url: url, method: 'delete' }));
+    delete(url: string, options: GotJSONOptions) {
+        return this.request(url, mergeOptions(options, <GotJSONOptions>{ method: 'delete' }));
     }
 
-    head(url: string, options: request.Options = <any>{}): Observable<request.RequestResponse> {
-        return this.request(mergeOptions(options, { url: url, method: 'head' }));
+    head(url: string, options: GotJSONOptions) {
+        return this.request(url, mergeOptions(options, <GotJSONOptions>{ method: 'head' }));
     }
 
-    options(url: string, options: request.Options = <any>{}): Observable<request.RequestResponse> {
-        return this.request(mergeOptions(options, { url: url, method: 'options' }));
+    set defaults(opts: GotJSONOptions) {
+        Http._defaults = mergeOptions(opts);
     }
 
-    set defaults(opts: any) {
-        this._defaults = mergeOptions(opts);
-        request.defaults(this._defaults);
-    }
-
-    get defaults(): any {
-        return this._defaults;
+    get defaults(): GotJSONOptions {
+        return Http._defaults;
     }
 }
