@@ -1,12 +1,17 @@
-<a name="1.0.0-alpha.25"></a>
-# [1.0.0-alpha.25](https://github.com/orbital-js/orbital/compare/1.0.0-alpha.24...v1.0.0-alpha.25) (2017-09-10)
+<a name="1.0.0-alpha.26"></a>
+# [1.0.0-alpha.26](https://github.com/orbital-js/orbital/compare/1.0.0-alpha.25...v1.0.0-alpha.26) (2017-10-04)
 
 
 ### Bug Fixes
 
+* **core:** fix route resolution ([6d4b7aa](https://github.com/orbital-js/orbital/commit/6d4b7aa))
+* **core:** properly inject middlewares ([66bdf88](https://github.com/orbital-js/orbital/commit/66bdf88))
+* **core:** properly pull annotation off middlewares ([83f8c00](https://github.com/orbital-js/orbital/commit/83f8c00))
 * **core/cli:** options and default commands function as expected ([74e82a6](https://github.com/orbital-js/orbital/commit/74e82a6))
 * **core/cli:** point to the right places ([5365b15](https://github.com/orbital-js/orbital/commit/5365b15))
 * **core/cli:** properly address variadic arguments and methods ([6022569](https://github.com/orbital-js/orbital/commit/6022569))
+* **middlewares:** add types as dependencies ([cbf0510](https://github.com/orbital-js/orbital/commit/cbf0510))
+* **mongo:** export ObjectID class in package ([5c8c047](https://github.com/orbital-js/orbital/commit/5c8c047))
 
 
 ### Code Refactoring
@@ -19,11 +24,15 @@
 * **core:** add engine property to config ([25df99c](https://github.com/orbital-js/orbital/commit/25df99c))
 * **core:** add engines constant ([817a97a](https://github.com/orbital-js/orbital/commit/817a97a))
 * **core/cli:** add CLI platform! ([4b540d4](https://github.com/orbital-js/orbital/commit/4b540d4))
+* **middlewares:** add bearerToken middleware ([bdc84f1](https://github.com/orbital-js/orbital/commit/bdc84f1))
 * **middlewares/morgan:** add Morgan middleware ([fe25348](https://github.com/orbital-js/orbital/commit/fe25348))
 
 
 ### BREAKING CHANGES
 
+* **core:** We removed the shorthand of naming functions by their method (`get() {}`, `post()
+{}`, etc.). All route methods must be decorated with `@Route()`, the default config being `{ method:
+'get', path: '/' }`.
 * **middlewares:** Middlewares are now valid subfolder modules for code minimalism and organization
 
 
