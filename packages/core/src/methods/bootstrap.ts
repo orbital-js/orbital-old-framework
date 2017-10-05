@@ -7,8 +7,10 @@ import * as path from 'path';
 import { Injector, Provider, ReflectiveInjector } from 'injection-js';
 import { getModule, isFunction, joinPath, methods, unique } from './util';
 
+import { App } from '../app';
 import { Application } from 'express';
 import { Controller } from '../decorators/controller';
+import { Express } from 'express-serve-static-core';
 import { Middleware } from '../decorators/middleware';
 import { ModWithProviders } from '../interfaces/module_with_providers';
 import { Module } from '../decorators/module';
@@ -31,8 +33,11 @@ function bootstrap(mod: any): Application {
 
 
     /* Use Angular's dependency injection to assosciate all providers to their respective places */
-    let injector: ReflectiveInjector = ReflectiveInjector.resolveAndCreate(<any[]>[...controllers, ...providers, ...middlewares]);
-    const app: express.Application = express();
+    let injector: ReflectiveInjector = ReflectiveInjector.resolveAndCreate(<any[]>[
+        { provide: App, useValue: express() },
+        ...controllers, ...providers, ...middlewares]);
+
+    let app: Express = injector.get(App);
 
     const config = annotations.config || {};
     if (config.engine) app.engine(config.engine.name, config.engine.engine);

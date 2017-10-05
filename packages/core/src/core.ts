@@ -23,15 +23,9 @@ export {
     ValueProvider,
 } from 'injection-js';
 
-export { All } from './interfaces/all';
-export { Delete } from './interfaces/delete';
-export { Get } from './interfaces/get';
-export { ModuleWithProviders } from './interfaces/module_with_providers';
-export { Patch } from './interfaces/patch';
-export { Post } from './interfaces/post';
-export { Put } from './interfaces/put';
-export { Use } from './interfaces/use';
+
 export { Request, Response, NextFunction, RequestHandler } from 'express';
 export { Engines } from './engines';
+export { App } from './app';
 
 export { platformServer } from './methods/bootstrap';
