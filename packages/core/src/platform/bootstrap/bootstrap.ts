@@ -5,16 +5,16 @@ import * as express from 'express';
 import * as path from 'path';
 
 import { Injector, Provider, ReflectiveInjector } from 'injection-js';
-import { getModule, isFunction, joinPath, methods, unique } from './util';
+import { getModule, isFunction, joinPath, unique } from './util';
 
-import { App } from '../app';
+import { App } from '../../app';
 import { Application } from 'express';
-import { Controller } from '../decorators/controller';
+import { Controller } from '../../decorators/controller';
 import { Express } from 'express-serve-static-core';
-import { Middleware } from '../decorators/middleware';
-import { ModWithProviders } from '../interfaces/module_with_providers';
-import { Module } from '../decorators/module';
-import { Route } from '../decorators/route';
+import { Middleware } from '../../decorators/middleware';
+import { ModWithProviders } from '../../interfaces/module_with_providers';
+import { Module } from '../../decorators/module';
+import { Route } from '../../decorators/route';
 
 /**
  * @description The method to start up a Orbital instance.
@@ -23,7 +23,7 @@ import { Route } from '../decorators/route';
  * @param {Module} mod
  * @returns {void}
  */
-function bootstrap(mod: any): Application {
+export function bootstrap(mod: any): Application {
 
     /* We strip some data from the type annotation on the module. */
     let middlewares: any[] = cycleMiddlewares([mod]);
@@ -41,11 +41,7 @@ function bootstrap(mod: any): Application {
 
     const config = annotations.config || {};
     if (config.engine) app.engine(config.engine.name, config.engine.engine);
-    middlewares.forEach((middleware: any) => {
-        let m = injector.get(middleware);
-        let annotation = Reflect.getMetadata('annotations', middleware);
-        app.use(annotation && annotation.path ? annotation.path : '/', (req: express.Request, res: express.Response, next: express.NextFunction) => m.use(req, res, next));
-    });
+    buildMiddlewares(middlewares, injector, app);
 
     /* Notify express of all of the routes */
     controllers.forEach((route: any) => {
@@ -145,9 +141,11 @@ const cycleControllers = (modules: (Module | ModWithProviders)[] = [], prefix: s
 
     return routes;
 };
-
-export function platformServer() {
-    return {
-        bootstrap
-    };
+function buildMiddlewares(middlewares: any[], injector: ReflectiveInjector, app: Express) {
+    middlewares.forEach((middleware: any) => {
+    let m = injector.get (middleware);
+    let annotation = Reflect.getMetadata('annotations', middleware);
+    app.use(annotation && annotation.path?annotation.path: '/', (req: express.Request, res: express.Response, next: express.NextFunction) => m.use(req, res, next));
+});
 }
+

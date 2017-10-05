@@ -2,8 +2,8 @@ import 'reflect-metadata';
 
 import * as path from 'path';
 
-import { ModWithProviders } from '../interfaces/module_with_providers';
-import { Module } from '../decorators/module';
+import { ModWithProviders } from '../../interfaces/module_with_providers';
+import { Module } from '../../decorators/module';
 
 export function unique(array: any) {
     let a = array.concat();
@@ -25,9 +25,6 @@ export function joinPath(...config: any[]) {
     });
     return path.join(pth.join('/'));
 }
-
-export const methods = ['get', 'post', 'patch', 'put', 'delete', 'options', 'all', 'head'];
-export type Methods = 'get' | 'post' | 'patch' | 'put' | 'delete' | 'options' | 'all' | 'head';
 
 export function isFunction(functionToCheck: Function) {
     var getType = {};

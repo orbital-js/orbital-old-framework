@@ -1,5 +1,6 @@
-import { makePropDecorator, TypeDecorator } from './util';
-import { Methods } from '../methods/util';
+import { TypeDecorator, makePropDecorator } from './util';
+
+export type Methods = 'get' | 'post' | 'patch' | 'put' | 'delete' | 'options' | 'all' | 'head';
 
 export interface Route {
     path?: string;

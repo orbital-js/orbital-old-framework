@@ -28,4 +28,4 @@ export { Request, Response, NextFunction, RequestHandler } from 'express';
 export { Engines } from './engines';
 export { App } from './app';
 
-export { platformServer } from './methods/bootstrap';
+export { platformServer } from './platform/platform-server';
