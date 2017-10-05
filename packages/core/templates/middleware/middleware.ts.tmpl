@@ -1,0 +1,9 @@
+import { Middleware, Request, Response, NextFunction } from '@orbital/core';
+
+@Middleware()
+export class %CAMEL_CASE%Middleware {
+    use(req: Request, res: Response, next: NextFunction) {
+        // Your middleware code here...
+        next();
+    }
+}
