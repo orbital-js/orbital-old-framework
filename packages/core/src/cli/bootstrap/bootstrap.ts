@@ -4,10 +4,16 @@ import * as minimist from 'minimist';
 import * as path from 'path';
 import 'reflect-metadata';
 import { ModuleWithProviders } from '../../interfaces/module_with_providers';
+import {
+    cycleProviders,
+    getModule,
+    isFunction,
+    joinPath,
+    methods,
+    unique
+    } from '../../util';
 import { CliModule } from '../decorators/cli-module';
 import { Command } from '../decorators/command';
-import { getModule, isFunction, joinPath, methods, unique } from './util';
-
 
 
 
@@ -24,7 +30,7 @@ let emptyCommands: string[] = [];
 export function bootstrap(mod: any): void {
 
     /* We strip some data from the type annotation on the module. */
-    let providers: Provider[] = cycleProviders([mod]);
+    let providers: Provider[] = cycleProviders<CliModule>([mod]);
     let commands: Function[] = cycleCommands([mod]);
     let annotations: CliModule = Reflect.getMetadata('annotations', mod)[0];
 
@@ -84,26 +90,6 @@ function checkCommands(injector: ReflectiveInjector, commands: any[], command: s
         return commands[annotations.indexOf(undefined)];
     }
 }
-
-
-
-const cycleProviders = (modules: (CliModule | ModuleWithProviders)[] = []): Provider[] => {
-    let providers: Provider[] = [];
-    modules.forEach(mod => {
-        let annotation: CliModule = getModule(mod);
-        if ((<ModuleWithProviders>mod).obModule && (<ModuleWithProviders>mod).providers) {
-            providers = providers.concat(mod.providers || []);
-        } else {
-            providers = providers.concat(annotation.providers || []);
-        }
-
-        if (annotation.imports) {
-            providers = providers.concat(cycleProviders(annotation.imports));
-        }
-    });
-
-    return providers;
-};
 
 const cycleCommands = (modules: (CliModule | ModuleWithProviders)[] = [], prefix: string = '/'): Function[] => {
     let commands: Function[] = [];

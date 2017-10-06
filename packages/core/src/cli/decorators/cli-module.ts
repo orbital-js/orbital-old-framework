@@ -1,8 +1,9 @@
-import { TypeDecorator, makeDecorator } from '../../decorators/util';
-
 import { Provider } from 'injection-js';
+import { makeDecorator, TypeDecorator } from '../../decorators/util';
+import { ModuleBase } from '../../interfaces/module_base';
 
-export interface CliModule {
+
+export interface CliModule extends ModuleBase {
     imports?: any[];
     providers?: Provider[];
     commands?: any[];

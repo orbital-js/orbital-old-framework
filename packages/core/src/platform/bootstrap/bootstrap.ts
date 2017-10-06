@@ -11,7 +11,7 @@ import { Middleware } from '../../decorators/middleware';
 import { Module } from '../../decorators/module';
 import { Route } from '../../decorators/route';
 import { ModuleWithProviders } from '../../interfaces/module_with_providers';
-import { getModule, isFunction, joinPath, unique } from './util';
+import { cycleProviders, getModule, isFunction, joinPath, unique } from '../../util';
 
 /**
  * @description The method to start up a Orbital instance.
@@ -27,7 +27,7 @@ export function bootstrap(test: boolean = false) {
 
         /* We strip some data from the type annotation on the module. */
         let middlewares: any[] = cycleMiddlewares([mod]);
-        let providers: Provider[] = cycleProviders([mod]);
+        let providers: Provider[] = cycleProviders<Module>([mod]);
         let controllers: Controller[] = cycleControllers([mod]);
 
 
@@ -72,24 +72,6 @@ function useRoute(injector: Injector, controller: Controller, router: any) {
                 rt[prop](req, res, next));
     }
 }
-
-const cycleProviders = (modules: (Module | ModuleWithProviders)[] = []): Provider[] => {
-    let providers: Provider[] = [];
-    modules.forEach(mod => {
-        let annotation: Module = getModule(mod);
-        if ((<ModuleWithProviders>mod).obModule && (<ModuleWithProviders>mod).providers) {
-            providers = providers.concat(mod.providers || []);
-        } else {
-            providers = providers.concat(annotation.providers || []);
-        }
-
-        if (annotation.imports) {
-            providers = providers.concat(cycleProviders(annotation.imports));
-        }
-    });
-
-    return providers;
-};
 
 const cycleMiddlewares = (modules: (Module | ModuleWithProviders)[] = [], prefix: string = '/'): any[] => {
     let middlewares: any[] = [];

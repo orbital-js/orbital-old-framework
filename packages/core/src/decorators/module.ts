@@ -1,9 +1,10 @@
-import { TypeDecorator, makeDecorator } from './util';
-
-import { Engine } from '../engines';
 import { Provider } from 'injection-js';
+import { Engine } from '../engines';
+import { ModuleBase } from '../interfaces/module_base';
+import { makeDecorator, TypeDecorator } from './util';
 
-export interface Module {
+
+export interface Module extends ModuleBase {
     imports?: any[];
     providers?: Provider[];
     controllers?: any[];
@@ -16,7 +17,7 @@ export interface Module {
 }
 
 /**
- * @description 
+ * @description
  * @export
  * @interface ModuleDecorator
  */
