@@ -1,20 +1,17 @@
-import 'reflect-metadata';
-
 import * as chalk from 'chalk';
 import * as express from 'express';
-import * as path from 'path';
-
-import { Injector, Provider, ReflectiveInjector } from 'injection-js';
-import { getModule, isFunction, joinPath, unique } from './util';
-
-import { App } from '../../app';
 import { Application } from 'express';
-import { Controller } from '../../decorators/controller';
 import { Express } from 'express-serve-static-core';
+import { Injector, Provider, ReflectiveInjector } from 'injection-js';
+import * as path from 'path';
+import 'reflect-metadata';
+import { App } from '../../app';
+import { Controller } from '../../decorators/controller';
 import { Middleware } from '../../decorators/middleware';
-import { ModWithProviders } from '../../interfaces/module_with_providers';
 import { Module } from '../../decorators/module';
 import { Route } from '../../decorators/route';
+import { ModuleWithProviders } from '../../interfaces/module_with_providers';
+import { getModule, isFunction, joinPath, unique } from './util';
 
 /**
  * @description The method to start up a Orbital instance.
@@ -23,57 +20,64 @@ import { Route } from '../../decorators/route';
  * @param {Module} mod
  * @returns {void}
  */
-export function bootstrap(mod: any): Application {
+export function bootstrap(test: boolean = false) {
+    return (mod: any): Application => {
 
-    /* We strip some data from the type annotation on the module. */
-    let middlewares: any[] = cycleMiddlewares([mod]);
-    let providers: Provider[] = cycleProviders([mod]);
-    let controllers: Controller[] = cycleControllers([mod]);
-    let annotations: Module = Reflect.getMetadata('annotations', mod)[0];
+        let annotations: Module = Reflect.getMetadata('annotations', mod)[0];
+
+        /* We strip some data from the type annotation on the module. */
+        let middlewares: any[] = cycleMiddlewares([mod]);
+        let providers: Provider[] = cycleProviders([mod]);
+        let controllers: Controller[] = cycleControllers([mod]);
 
 
-    /* Use Angular's dependency injection to assosciate all providers to their respective places */
-    let injector: ReflectiveInjector = ReflectiveInjector.resolveAndCreate(<any[]>[
-        { provide: App, useValue: express() },
-        ...controllers, ...providers, ...middlewares]);
+        /* Use Angular's dependency injection to assosciate all providers to their respective places */
+        let injector: ReflectiveInjector = ReflectiveInjector.resolveAndCreate(<any[]>[
+            { provide: App, useValue: express() },
+            ...controllers, ...providers, ...middlewares]);
 
-    let app: Express = injector.get(App);
+        let app: Express = injector.get(App);
 
-    const config = annotations.config || {};
-    if (config.engine) app.engine(config.engine.name, config.engine.engine);
-    buildMiddlewares(middlewares, injector, app);
+        const config = annotations.config || {};
+        if (config.engine) app.engine(config.engine.name, config.engine.engine);
+        buildMiddlewares(middlewares, injector, app);
 
-    /* Notify express of all of the routes */
-    controllers.forEach((route: any) => {
-        useRoute(injector, route, app);
-    });
+        /* Notify express of all of the routes */
+        for (let controller of controllers) {
+            useRoute(injector, controller, app);
+        }
 
-    /* Now we set up the listener and are ready to take requests. */
-    const port = config && config.port ? config.port : process.env.PORT ? process.env.PORT : 8080;
-    app.listen(port);
-    console.info(chalk.green('LISTENING ON PORT ' + port));
-
-    return app;
+        /* Now we set up the listener and are ready to take requests. */
+        const port = config && config.port ? config.port : process.env.PORT ? process.env.PORT : 8080;
+        app.listen(port);
+        console.info(chalk.green('LISTENING ON PORT ' + port));
+        // if (test) {
+        return app;
+        // }
+    };
 }
 
-function useRoute(injector: Injector, route: Route, router: any) {
-    const rt = injector.get(route);
-    const routeAnnotation = Reflect.getMetadata('annotations', route);
+function useRoute(injector: Injector, controller: Controller, router: any) {
+    const rt = injector.get(controller);
+    const routeAnnotation = Reflect.getMetadata('annotations', controller);
     if (!routeAnnotation.path) routeAnnotation.path = '/';
-    const propAnnotation: { [propName: string]: Route }[] = Reflect.getMetadata('propMetadata', rt['constructor']);
+    const propAnnotation: { [propName: string]: Route }[] = Reflect.getMetadata('propMetadata', rt.constructor);
     for (let prop in propAnnotation) {
         const method: Route = propAnnotation[prop][0];
         method.method = method.method || 'get';
         method.path = method.path || '/';
-        router[method.method](path.join(routeAnnotation.path, method.path), (req: express.Request, res: express.Response, next: express.NextFunction) => rt[prop](req, res, next));
+
+        router[method.method](path.join(routeAnnotation.path, method.path),
+            (req: express.Request, res: express.Response, next: express.NextFunction) =>
+                rt[prop](req, res, next));
     }
 }
 
-const cycleProviders = (modules: (Module | ModWithProviders)[] = []): Provider[] => {
+const cycleProviders = (modules: (Module | ModuleWithProviders)[] = []): Provider[] => {
     let providers: Provider[] = [];
     modules.forEach(mod => {
         let annotation: Module = getModule(mod);
-        if ((<ModWithProviders>mod).obModule && (<ModWithProviders>mod).providers) {
+        if ((<ModuleWithProviders>mod).obModule && (<ModuleWithProviders>mod).providers) {
             providers = providers.concat(mod.providers || []);
         } else {
             providers = providers.concat(annotation.providers || []);
@@ -87,7 +91,7 @@ const cycleProviders = (modules: (Module | ModWithProviders)[] = []): Provider[]
     return providers;
 };
 
-const cycleMiddlewares = (modules: (Module | ModWithProviders)[] = [], prefix: string = '/'): any[] => {
+const cycleMiddlewares = (modules: (Module | ModuleWithProviders)[] = [], prefix: string = '/'): any[] => {
     let middlewares: any[] = [];
 
     if (modules) {
@@ -115,17 +119,23 @@ const cycleMiddlewares = (modules: (Module | ModWithProviders)[] = [], prefix: s
     return middlewares;
 };
 
-const cycleControllers = (modules: (Module | ModWithProviders)[] = [], prefix: string = '/'): Controller[] => {
+const cycleControllers = (modules: (Module | ModuleWithProviders)[] = [], prefix: string = '/'): Controller[] => {
     let routes: Controller[] = [];
 
-    modules.forEach((mod) => {
+    for (let mod of modules) {
         let annotation: Module = getModule(mod);
 
         const modPath = (annotation.config ? annotation.config.path || '/' : '/');
 
         if (annotation.controllers) {
             for (let route of annotation.controllers) {
-                let controller: Controller = Reflect.getMetadata('annotations', route)[0];
+                let controller: Controller;
+                let controllerAnnotation = Reflect.getMetadata('annotations', route);
+                if (controllerAnnotation && controllerAnnotation[0]) {
+                    controller = controllerAnnotation[0];
+                } else {
+                    controller = { path: '/' };
+                }
                 controller.path = path.join(prefix || '/', modPath || '/', controller.path || '/');
                 Reflect.defineMetadata('annotations', controller, route);
                 routes.push(route);
@@ -137,15 +147,15 @@ const cycleControllers = (modules: (Module | ModWithProviders)[] = [], prefix: s
             routes = routes.concat(cycleControllers(annotation.imports, p));
         }
 
-    });
+    }
 
     return routes;
 };
 function buildMiddlewares(middlewares: any[], injector: ReflectiveInjector, app: Express) {
     middlewares.forEach((middleware: any) => {
-    let m = injector.get (middleware);
-    let annotation = Reflect.getMetadata('annotations', middleware);
-    app.use(annotation && annotation.path?annotation.path: '/', (req: express.Request, res: express.Response, next: express.NextFunction) => m.use(req, res, next));
-});
+        let m = injector.get(middleware);
+        let annotation = Reflect.getMetadata('annotations', middleware);
+        app.use(annotation && annotation.path ? annotation.path : '/', (req: express.Request, res: express.Response, next: express.NextFunction) => m.use(req, res, next));
+    });
 }
 

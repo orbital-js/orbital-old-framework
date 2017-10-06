@@ -9,7 +9,7 @@ dependencies:
     - sudo apt-get install jq
   override:
     - sh ./scripts/ci/install.sh
-compile: 
+compile:
   override:
     - ./node_modules/.bin/tslint packages/**/*.ts
     - ./node_modules/.bin/ts-node ./scripts/ci/build.ts
@@ -17,5 +17,5 @@ compile:
       if [ "${CIRCLE_BRANCH}" == "master" ]; then
         ./node_modules/.bin/ts-node ./scripts/ci/deploy.ts
       else
-        echo "We are on ${CIRCLE_BRANCH} branch, not going to update docs."
+        echo "We are on '${CIRCLE_BRANCH}' branch, not going to update docs."
       fi

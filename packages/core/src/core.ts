@@ -23,6 +23,9 @@ export {
     ValueProvider,
 } from 'injection-js';
 
+export { ModuleWithProviders } from './interfaces/module_with_providers';
+export { Use } from './interfaces/use';
+
 
 export { Request, Response, NextFunction, RequestHandler } from 'express';
 export { Engines } from './engines';

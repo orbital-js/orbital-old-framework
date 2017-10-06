@@ -1,9 +1,7 @@
-import { Module } from '../decorators/module';
 import { Provider } from 'injection-js';
+import { Module } from '../decorators/module';
 
-export interface ModWithProviders {
-    obModule: Module;
-    providers: Provider[];
+export interface ModuleWithProviders {
+    obModule: any;
+    providers: Provider[] | any[];
 }
-
-export type ModuleWithProviders = (...args: any[]) => ModWithProviders;

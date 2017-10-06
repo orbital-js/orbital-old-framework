@@ -1,9 +1,9 @@
-import 'reflect-metadata';
-
 import * as path from 'path';
-
+import 'reflect-metadata';
+import { ModuleWithProviders } from '../../interfaces/module_with_providers';
 import { CliModule } from '../decorators/cli-module';
-import { ModWithProviders } from '../../interfaces/module_with_providers';
+
+
 
 export function unique(array: any) {
     let a = array.concat();
@@ -35,8 +35,8 @@ export function isFunction(functionToCheck: Function) {
 }
 
 export function getModule(mod: any): CliModule {
-    if ((<ModWithProviders>mod).obModule) {
-        return Reflect.getMetadata('annotations', (<ModWithProviders>mod).obModule)[0];
+    if ((<ModuleWithProviders>mod).obModule) {
+        return Reflect.getMetadata('annotations', (<ModuleWithProviders>mod).obModule)[0];
     } else {
         return Reflect.getMetadata('annotations', mod)[0];
     }

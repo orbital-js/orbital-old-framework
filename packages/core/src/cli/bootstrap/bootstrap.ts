@@ -1,15 +1,15 @@
-import 'reflect-metadata';
-
 import * as chalk from 'chalk';
+import { Injector, Provider, ReflectiveInjector } from 'injection-js';
 import * as minimist from 'minimist';
 import * as path from 'path';
-
-import { Injector, Provider, ReflectiveInjector } from 'injection-js';
-import { getModule, isFunction, joinPath, methods, unique } from './util';
-
+import 'reflect-metadata';
+import { ModuleWithProviders } from '../../interfaces/module_with_providers';
 import { CliModule } from '../decorators/cli-module';
 import { Command } from '../decorators/command';
-import { ModWithProviders } from '../../interfaces/module_with_providers';
+import { getModule, isFunction, joinPath, methods, unique } from './util';
+
+
+
 
 /**
  * @description The method to start up a Orbital instance.
@@ -75,10 +75,10 @@ function checkCommands(injector: ReflectiveInjector, commands: any[], command: s
     const index = annotations.indexOf(command);
     const aliasIndex = aliases.indexOf(command);
     if (index > -1) {
-        input && input._.splice(0, 1);
+        // input && input._.splice(0, 1);
         return commands[index];
     } else if (aliasIndex > -1) {
-        input && input._.splice(0, 1);
+        // input && input._.splice(0, 1);
         return commands[aliasIndex];
     } else {
         return commands[annotations.indexOf(undefined)];
@@ -87,11 +87,11 @@ function checkCommands(injector: ReflectiveInjector, commands: any[], command: s
 
 
 
-const cycleProviders = (modules: (CliModule | ModWithProviders)[] = []): Provider[] => {
+const cycleProviders = (modules: (CliModule | ModuleWithProviders)[] = []): Provider[] => {
     let providers: Provider[] = [];
     modules.forEach(mod => {
         let annotation: CliModule = getModule(mod);
-        if ((<ModWithProviders>mod).obModule && (<ModWithProviders>mod).providers) {
+        if ((<ModuleWithProviders>mod).obModule && (<ModuleWithProviders>mod).providers) {
             providers = providers.concat(mod.providers || []);
         } else {
             providers = providers.concat(annotation.providers || []);
@@ -105,7 +105,7 @@ const cycleProviders = (modules: (CliModule | ModWithProviders)[] = []): Provide
     return providers;
 };
 
-const cycleCommands = (modules: (CliModule | ModWithProviders)[] = [], prefix: string = '/'): Function[] => {
+const cycleCommands = (modules: (CliModule | ModuleWithProviders)[] = [], prefix: string = '/'): Function[] => {
     let commands: Function[] = [];
 
     modules.forEach((mod) => {
