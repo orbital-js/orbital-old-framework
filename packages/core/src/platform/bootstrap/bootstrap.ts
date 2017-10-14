@@ -77,25 +77,26 @@ const cycleMiddlewares = (modules: (Module | ModuleWithProviders)[] = [], prefix
     let middlewares: any[] = [];
 
     if (modules) {
-        modules.forEach(mod => {
-            let annotation: Module = getModule(mod);
-
-            const modPath = (annotation.config ? annotation.config.path || '/' : '/');
-            if (annotation.middlewares) {
-                for (let middleware of annotation.middlewares) {
-                    const note = Reflect.getMetadata('annotations', middleware.provider || middleware);
-                    let m: Middleware = note && note[0] ? note[0] : {};
-                    m.path = path.join(prefix || '/', modPath || '/', m.path || '/');
-                    Reflect.defineMetadata('annotations', m, middleware.provider || middleware);
-                    middlewares.push(middleware);
+        modules
+            .map(mod => getModule(mod))
+            .forEach((mod: Module) => {
+                const modPath = (mod.config ? mod.config.path || '/' : '/');
+                if (mod.middlewares) {
+                    for (let middleware of mod.middlewares) {
+                        const note = Reflect.getMetadata('annotations', middleware.provider || middleware);
+                        let m = note && note[0] ? note[0] : {};
+                        if (!m.paths) m.paths = [];
+                        m.paths.push(path.join(prefix || '/', modPath || '/', m.path || '/'));
+                        Reflect.defineMetadata('annotations', m, middleware.provider || middleware);
+                        middlewares.push(middleware);
+                    }
                 }
-            }
 
-            if (annotation.imports) {
-                const p = path.join(prefix, modPath);
-                middlewares = middlewares.concat(cycleMiddlewares(annotation.imports, p));
-            }
-        });
+                if (mod.imports) {
+                    const p = path.join(prefix, modPath);
+                    middlewares = middlewares.concat(cycleMiddlewares(mod.imports, p));
+                }
+            });
     }
 
     return middlewares;
@@ -137,7 +138,12 @@ function buildMiddlewares(middlewares: any[], injector: ReflectiveInjector, app:
     middlewares.forEach((middleware: any) => {
         let m = injector.get(middleware);
         let annotation = Reflect.getMetadata('annotations', middleware);
-        app.use(annotation && annotation.path ? annotation.path : '/', (req: express.Request, res: express.Response, next: express.NextFunction) => m.use(req, res, next));
+        if (annotation.paths) {
+            for (let p of annotation.paths) {
+                console.log(p);
+                app.use(p, (req: express.Request, res: express.Response, next: express.NextFunction) => m.use(req, res, next));
+            }
+        }
     });
 }
 
