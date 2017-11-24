@@ -2,5 +2,5 @@ import { ApplicationRequestHandler, NextFunction, Request, RequestHandler, Respo
 
 
 export abstract class Use {
-    use: (req: Request, res: Response, next: NextFunction) => any;
+    abstract use(req: Request, res: Response, next: NextFunction): any;
 }

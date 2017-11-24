@@ -1,4 +1,4 @@
-import { TypeDecorator, makeDecorator } from './util';
+import { makeDecorator, TypeDecorator } from './util';
 
 export interface Middleware {
     path?: string;

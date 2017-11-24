@@ -1,4 +1,5 @@
 import { Provider } from 'injection-js';
+import { FactoryProvider } from 'injection-js';
 import { Engine } from '../engines';
 import { ModuleBase } from '../interfaces/module_base';
 import { makeDecorator, TypeDecorator } from './util';
@@ -8,7 +9,7 @@ export interface Module extends ModuleBase {
     imports?: any[];
     providers?: Provider[];
     controllers?: any[];
-    middlewares?: any[];
+    middlewares?: (any | FactoryProvider)[];
     config?: {
         port?: number;
         path?: string;

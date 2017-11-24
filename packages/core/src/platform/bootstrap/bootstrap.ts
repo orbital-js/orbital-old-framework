@@ -1,6 +1,6 @@
 import * as chalk from 'chalk';
+import { Application, NextFunction } from 'express';
 import * as express from 'express';
-import { Application } from 'express';
 import { Express } from 'express-serve-static-core';
 import { Injector, Provider, ReflectiveInjector } from 'injection-js';
 import * as path from 'path';
@@ -11,6 +11,9 @@ import { Middleware } from '../../decorators/middleware';
 import { Module } from '../../decorators/module';
 import { Route } from '../../decorators/route';
 import { ModuleWithProviders } from '../../interfaces/module_with_providers';
+import { Next } from '../../next';
+import { Request } from '../../request';
+import { Response } from '../../response';
 import { cycleProviders, getModule, isFunction, joinPath, unique } from '../../util';
 
 /**
@@ -26,20 +29,32 @@ export function bootstrap(test: boolean = false) {
         let annotations: Module = Reflect.getMetadata('annotations', mod)[0];
 
         /* We strip some data from the type annotation on the module. */
-        let middlewares: any[] = cycleMiddlewares([mod]);
         let providers: Provider[] = cycleProviders<Module>([mod]);
         let controllers: Controller[] = cycleControllers([mod]);
 
+        let a = express();
+        let req: express.Request, res: express.Response, next: express.NextFunction;
+        a.use('/', (request, response, nextFn) => {
+            req = request;
+            res = response;
+            next = nextFn;
+            next();
+        });
 
         /* Use Angular's dependency injection to assosciate all providers to their respective places */
         let injector: ReflectiveInjector = ReflectiveInjector.resolveAndCreate(<any[]>[
-            { provide: App, useValue: express() },
-            ...controllers, ...providers, ...middlewares]);
+            { provide: App, useValue: a },
+            { provide: Request, useValue: req },
+            { provide: Response, useValue: res },
+            { provide: Next, useValue: next },
+            ...controllers, ...providers]);
 
         let app: Express = injector.get(App);
 
         const config = annotations.config || {};
         if (config.engine) app.engine(config.engine.name, config.engine.engine);
+
+        let middlewares: any[] = cycleMiddlewares([mod]);
         buildMiddlewares(middlewares, injector, app);
 
         /* Notify express of all of the routes */
@@ -135,7 +150,12 @@ const cycleControllers = (modules: (Module | ModuleWithProviders)[] = [], prefix
     return routes;
 };
 function buildMiddlewares(middlewares: any[], injector: ReflectiveInjector, app: Express) {
-    middlewares.forEach((middleware: any) => {
+    middlewares.forEach((middleware) => {
+        if (middleware.provide) {
+            if (middleware.deps) {
+
+            }
+        }
         let m = injector.get(middleware);
         let annotation = Reflect.getMetadata('annotations', middleware);
         if (annotation.paths) {
